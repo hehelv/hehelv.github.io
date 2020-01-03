@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hehelv.github.io/</id>
     <title>J.zc 的 Blog</title>
-    <updated>2020-01-03T12:53:02.802Z</updated>
+    <updated>2020-01-03T12:54:41.622Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hehelv.github.io/"/>
     <link rel="self" href="https://hehelv.github.io//atom.xml"/>
@@ -113,7 +113,7 @@ int main()
         </link>
         <updated>2020-01-01T03:39:09.000Z</updated>
         <content type="html"><![CDATA[<p>😀<strong>First time write here!</strong></p>
-<pre><code>    建Blog的目的就是为了用一些简短的方式把自己学的知识记录下来，以及写些琐碎的想法，其他别无他想，其实能把这两点做好就已经十分满足了。                          ————2020.01.03
+<pre><code>    建Blog的目的就是为了用一些简短的方式把自己学的知识记录下来，以及写些琐碎的想法，其他别无他想，其实能把这两点做好就已经十分满足了。                          ————2020.01.01
 </code></pre>
 ]]></content>
     </entry>
