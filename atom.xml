@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hehelv.github.io/</id>
     <title>💤ISpiker</title>
-    <updated>2020-01-03T14:01:36.514Z</updated>
+    <updated>2020-01-04T08:47:38.830Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hehelv.github.io/"/>
     <link rel="self" href="https://hehelv.github.io//atom.xml"/>
@@ -10,6 +10,91 @@
     <logo>https://hehelv.github.io//images/avatar.png</logo>
     <icon>https://hehelv.github.io//favicon.ico</icon>
     <rights>All rights reserved 2020, 💤ISpiker</rights>
+    <entry>
+        <title type="html"><![CDATA[快速排序（quicksort）]]></title>
+        <id>https://hehelv.github.io//post/kuai-su-pai-xu</id>
+        <link href="https://hehelv.github.io//post/kuai-su-pai-xu">
+        </link>
+        <updated>2020-01-04T07:35:31.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>👏这个笔记是看了《啊哈！算法》之后，自己的一些小总结。</strong></p>
+<h1 id="快速排序">快速排序：</h1>
+<ul>
+<li>还是通过一个例子来说明：</li>
+<li>有这样一个序列：3，2，1，5，4</li>
+<li>要求从小到大排序</li>
+<li>快速排序的想法：</li>
+<li>1.先找一个基准数，这里默认为第一个数3；</li>
+<li>2.然后将比3小的数移到3的左边，比3大的数移到3的右边；</li>
+<li>3.后面用递归将3左边和右边的数组在实现一次上述操作。</li>
+</ul>
+<h1 id="代码如下">代码如下：</h1>
+<pre><code class="language-c">#include&lt;stdio.h&gt;
+
+int a[101],n;
+
+void quicksort(int left,int right)
+	{
+		int i,j,t,temp;
+		i = left;
+		j = right;
+		if(i &gt; j)
+			return;
+		temp = a[left];
+		
+		while(i!=j)
+		{
+			while(a[j]&gt;=temp &amp;&amp; i&lt;j)
+			{
+				j--;
+			}
+			while(a[i]&lt;=temp &amp;&amp; i&lt;j)
+			{
+				i++;
+			}
+			if(i!=j)
+			{
+				t = a[i];
+				a[i] = a[j];
+				a[j] = t;
+			}
+		}
+
+		
+		a[left] = a[i];
+		a[i] = temp;
+		
+		quicksort(left,i-1);
+		quicksort(i+1,right);
+	}
+
+int main()
+{
+	int i,j;
+	scanf(&quot;%d&quot;,&amp;n);
+	for(i=1;i&lt;=n;i++)
+	{
+		scanf(&quot;%d&quot;,&amp;a[i]);
+	}
+	quicksort(1,n);
+	for(i=1;i&lt;=n;i++)
+	{
+		printf(&quot;%d &quot;,a[i]);
+	}
+	return 0;
+}
+/*
+示例输出：
+5
+3 3 1 2 5
+1 2 3 3 5
+
+5
+3 2 1 5 4
+1 2 3 4 5
+*/
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[简陋的桶排序，冒泡排序。。。]]></title>
         <id>https://hehelv.github.io//post/algorithm</id>
@@ -65,6 +150,9 @@ return 0;
 </li>
 <li>
 <p>再对后面的数进行操作，数组最终会变成：99，76，35，18，12</p>
+</li>
+<li>
+<figure data-type="image" tabindex="1"><img src="https://hehelv.github.io//post-images/1578127638175.gif" alt=""></figure>
 </li>
 <li>
 <p><strong>我们来总结一下：</strong></p>
