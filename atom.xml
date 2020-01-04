@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hehelv.github.io/</id>
     <title>💤ISpiker</title>
-    <updated>2020-01-04T08:49:40.119Z</updated>
+    <updated>2020-01-04T09:00:36.410Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hehelv.github.io/"/>
     <link rel="self" href="https://hehelv.github.io//atom.xml"/>
@@ -26,6 +26,7 @@
 <li>1.先找一个基准数，这里默认为第一个数3；</li>
 <li>2.然后将比3小的数移到3的左边，比3大的数移到3的右边；</li>
 <li>3.后面用递归将3左边和右边的数组在实现一次上述操作。</li>
+<li><img src="https://hehelv.github.io//post-images/1578128045451.gif" alt=""></li>
 </ul>
 <h1 id="代码如下">代码如下：</h1>
 <pre><code class="language-c">#include&lt;stdio.h&gt;
