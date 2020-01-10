@@ -116,7 +116,7 @@
                     <article class="post-wrap">
                         <header class="post-header">
                             <h1 class="post-title">
-                                快速排序（quicksort）
+                                Ants问题
                             </h1>
                             <div class="post-meta">
                                 Author:
@@ -124,98 +124,14 @@
                                     💤ISpiker
                                 </a>
                                 <span class="post-time">
-                                Date: <a href="#">2020-01-04</a>
+                                Date: <a href="#">2020-01-10</a>
                             </span>
                                 
-                                    <span class="post-category">
-                                Category:
-                                
-                                <a href="https://hehelv.github.io//tag/algorithm">Algorithm</a>
-                                
-                            </span>
-                                    
                             </div>
                         </header>
 
                         <div class="post-content">
-                            <p><strong>👏这个笔记是看了《啊哈！算法》之后，自己的一些小总结。</strong></p>
-<h1 id="快速排序">快速排序：</h1>
-<ul>
-<li>还是通过一个例子来说明：</li>
-<li>有这样一个序列：3，2，1，5，4</li>
-<li>要求从小到大排序</li>
-<li>快速排序的想法：</li>
-<li>1.先找一个基准数，这里默认为第一个数3；</li>
-<li>2.然后将比3小的数移到3的左边，比3大的数移到3的右边；</li>
-<li>3.后面用递归将3左边和右边的数组在实现一次上述操作。</li>
-<li><img src="https://hehelv.github.io//post-images/1578128045451.gif" alt=""></li>
-</ul>
-<h1 id="代码如下">代码如下：</h1>
-<pre><code class="language-c">#include&lt;stdio.h&gt;
-
-int a[101],n;
-
-void quicksort(int left,int right)
-	{
-		int i,j,t,temp;
-		i = left;
-		j = right;
-		if(i &gt; j)
-			return;
-		temp = a[left];
-		
-		while(i!=j)
-		{
-			while(a[j]&gt;=temp &amp;&amp; i&lt;j)
-			{
-				j--;
-			}
-			while(a[i]&lt;=temp &amp;&amp; i&lt;j)
-			{
-				i++;
-			}
-			if(i!=j)
-			{
-				t = a[i];
-				a[i] = a[j];
-				a[j] = t;
-			}
-		}
-
-		
-		a[left] = a[i];
-		a[i] = temp;
-		
-		quicksort(left,i-1);
-		quicksort(i+1,right);
-	}
-
-int main()
-{
-	int i,j;
-	scanf(&quot;%d&quot;,&amp;n);
-	for(i=1;i&lt;=n;i++)
-	{
-		scanf(&quot;%d&quot;,&amp;a[i]);
-	}
-	quicksort(1,n);
-	for(i=1;i&lt;=n;i++)
-	{
-		printf(&quot;%d &quot;,a[i]);
-	}
-	return 0;
-}
-/*
-示例输出：
-5
-3 3 1 2 5
-1 2 3 3 5
-
-5
-3 2 1 5 4
-1 2 3 4 5
-*/
-</code></pre>
+                            <p>问题：</p>
 
                         </div>
                         <section class="post-copyright">
@@ -227,7 +143,7 @@ int main()
 
                             <p class="copyright-item">
                                 <span>Permalink:</span>
-                                <span><a href="https://hehelv.github.io//post/kuai-su-pai-xu">https://hehelv.github.io//post/kuai-su-pai-xu</a></span>
+                                <span><a href="https://hehelv.github.io//post/ants-wen-ti">https://hehelv.github.io//post/ants-wen-ti</a></span>
                             </p>
 
                             <p class="copyright-item">
@@ -241,10 +157,6 @@ int main()
                                 <span>Tag(s):</span>
                                 <span class="tag">
                                 
-                                
-                                <a href="https://hehelv.github.io//tag/algorithm"># Algorithm</a>
-                                
-                                
                             </span>
                             </div>
                             <div>
@@ -255,13 +167,9 @@ int main()
                         </section>
                         <section class="post-nav">
                             
-                                <a class="prev" rel="prev" href="https://hehelv.github.io//post/dfsdepth-first-search">
-                                    DFS（Depth first search）与BFS（Breadth First Search）
-                                </a>
-                                
                                     
-                                        <a class="next" rel="next" href="https://hehelv.github.io//post/algorithm">
-                                            简陋的桶排序，冒泡排序。。。
+                                        <a class="next" rel="next" href="https://hehelv.github.io//post/dfsdepth-first-search">
+                                            DFS（Depth first search）与BFS（Breadth First Search）
                                         </a>
                                         
                         </section>
