@@ -127,11 +127,69 @@
                                 Date: <a href="#">2020-01-10</a>
                             </span>
                                 
+                                    <span class="post-category">
+                                Category:
+                                
+                                <a href="https://hehelv.github.io//tag/R5oSAVBYz">POJ</a>
+                                
+                            </span>
+                                    
                             </div>
                         </header>
 
                         <div class="post-content">
-                            <p>问题：</p>
+                            <h1 id="问题">问题：</h1>
+<figure data-type="image" tabindex="1"><img src="https://hehelv.github.io//post-images/1578666147784.png" alt=""></figure>
+<ul>
+<li>解决思路：</li>
+<li>我们想考虑一下如果两只蚂蚁相遇了的情形：</li>
+<li><img src="https://hehelv.github.io//post-images/1578666310683.png" alt=""></li>
+<li>发现每只蚂蚁都可以看成相遇后仍然不调转方向，因为问题本身不关注个体的蚂蚁，在我们看来所有的蚂蚁都是一样的。</li>
+</ul>
+<h1 id="代码如下">代码如下：</h1>
+<pre><code class="language-c">#include&lt;bits/stdc++.h&gt;
+#define MAX_N 100
+
+int max(int x,int y)
+{
+    if(x-y&gt;0)
+        return x;
+    else return y;
+}
+
+int min(int x,int y)
+{
+    if(x-y&gt;0)
+        return y;
+    else return x;
+}
+
+int main()
+{
+    int L,n;
+    int minT,maxT;
+    int a[MAX_N];  //用来收集每只蚂蚁的信息
+    scanf(&quot;%d%d&quot;,&amp;L,&amp;n);
+    for(int i=1;i&lt;=n;i++)
+    {
+        scanf(&quot;%d&quot;,&amp;a[i]);
+    }
+    for(int i=1;i&lt;=n;i++)
+    {
+        minT = max(minT,min(a[i],L-a[i]));
+        maxT = max(maxT,max(a[i],L-a[i]));
+    }
+    printf(&quot;min:%d max:%d&quot;,minT,maxT);
+    return 0;
+}
+/*
+10 3
+2
+6
+7
+min:4 max:8
+*/
+</code></pre>
 
                         </div>
                         <section class="post-copyright">
@@ -156,6 +214,10 @@
                             <div>
                                 <span>Tag(s):</span>
                                 <span class="tag">
+                                
+                                
+                                <a href="https://hehelv.github.io//tag/R5oSAVBYz"># POJ</a>
+                                
                                 
                             </span>
                             </div>
