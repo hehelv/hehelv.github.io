@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hehelv.github.io/</id>
     <title>💤ISpiker</title>
-    <updated>2020-01-10T14:29:18.920Z</updated>
+    <updated>2020-01-14T03:52:44.779Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hehelv.github.io/"/>
     <link rel="self" href="https://hehelv.github.io//atom.xml"/>
@@ -10,6 +10,15 @@
     <logo>https://hehelv.github.io//images/avatar.png</logo>
     <icon>https://hehelv.github.io//favicon.ico</icon>
     <rights>All rights reserved 2020, 💤ISpiker</rights>
+    <entry>
+        <title type="html"><![CDATA[二分查找（binary_search）]]></title>
+        <id>https://hehelv.github.io//post/er-fen-cha-zhao-binary_search</id>
+        <link href="https://hehelv.github.io//post/er-fen-cha-zhao-binary_search">
+        </link>
+        <updated>2020-01-14T03:50:01.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="一个例子">一个例子：</h1>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Ants问题]]></title>
         <id>https://hehelv.github.io//post/ants-wen-ti</id>
