@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hehelv.github.io/</id>
     <title>💤ISpiker</title>
-    <updated>2020-01-14T04:39:37.040Z</updated>
+    <updated>2020-01-18T13:56:21.655Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hehelv.github.io/"/>
     <link rel="self" href="https://hehelv.github.io//atom.xml"/>
@@ -10,6 +10,65 @@
     <logo>https://hehelv.github.io//images/avatar.png</logo>
     <icon>https://hehelv.github.io//favicon.ico</icon>
     <rights>All rights reserved 2020, 💤ISpiker</rights>
+    <entry>
+        <title type="html"><![CDATA[八皇后]]></title>
+        <id>https://hehelv.github.io//post/ba-huang-hou</id>
+        <link href="https://hehelv.github.io//post/ba-huang-hou">
+        </link>
+        <updated>2020-01-18T13:47:19.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="代码">代码：</h1>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+
+int n,a[50],total;
+int b[100],c[100],d[100];//b,c,d分别代表列，主对角线，副对角线，初始值为0，当有一个皇后出现时，需要将其所占的列，主，副对角线标记为1
+
+void dfs(int i)//这里i代表的是第i个皇后
+{
+    if(i&gt;n)//i&gt;n时说明已经有了一种解法
+    {
+        total++;
+        if(total&lt;=3)
+        {
+            for(int j=1;j&lt;=n;j++)
+            {
+                printf(&quot;%d &quot;,a[j]);
+            }
+            printf(&quot;\n&quot;);
+        }
+        return;
+    }
+    for(int j=1;j&lt;=n;j++)
+    {
+        if(!b[j]&amp;&amp;!c[i+j]&amp;&amp;!d[i-j+n])//（i，j）所占列，主，副对角线都未被标记的情况下
+        {
+            a[i] = j;
+            b[j] = 1;
+            c[i+j] = 1;
+            d[i-j+n] = 1;//打标记
+            dfs(i+1);
+            b[j] = 0;
+            c[i+j] = 0;
+            d[i-j+n] = 0;//回溯的时候，需要把标记去掉
+        }
+    }
+}
+int main()
+{
+    scanf(&quot;%d&quot;,&amp;n);
+    dfs(1);
+    printf(&quot;%d&quot;,total);
+    return 0;
+}
+</code></pre>
+<ul>
+<li>需要注意的几点性质（关于这个性质可以很容易画图得到）：<br>
+1.主对角线上所有点的坐标x+y相等（这里的主对角线表示的是左下到右上）<br>
+2.副对角线上所有点的坐标x-y相等（副对角线表示左上到右下）<br>
+3.代码中d[i-j+n]，加n的原因是i-j会出现负数，而我们对其加任意大小的数不会改变她表示副对角线的唯一性，至于加n的原因是i-j最大的负数是1-n，所以我们只需要加n即可。</li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[二分查找（binary_search）]]></title>
         <id>https://hehelv.github.io//post/er-fen-cha-zhao-binary_search</id>
