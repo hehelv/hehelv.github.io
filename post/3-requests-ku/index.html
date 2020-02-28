@@ -132,7 +132,7 @@
                     <article class="post-wrap">
                         <header class="post-header">
                             <h1 class="post-title">
-                                快速排序（quicksort）
+                                3-requests库
                             </h1>
                             <div class="post-meta">
                                 Author:
@@ -140,13 +140,13 @@
                                     💤ISpiker
                                 </a>
                                 <span class="post-time">
-                                Date: <a href="#">2020-01-04</a>
+                                Date: <a href="#">2020-02-28</a>
                             </span>
                                 
                                     <span class="post-category">
                                 Category:
                                 
-                                <a href="https://hehelv.github.io//tag/algorithm">Algorithm</a>
+                                <a href="https://hehelv.github.io//tag/Spider Note">Python爬虫笔记</a>
                                 
                             </span>
                                     
@@ -154,83 +154,132 @@
                         </header>
 
                         <div class="post-content">
-                            <p><strong>👏这个笔记是看了《啊哈！算法》之后，自己的一些小总结。</strong></p>
-<h1 id="快速排序">快速排序：</h1>
-<ul>
-<li>还是通过一个例子来说明：</li>
-<li>有这样一个序列：3，2，1，5，4</li>
-<li>要求从小到大排序</li>
-<li>快速排序的想法：</li>
-<li>1.先找一个基准数，这里默认为第一个数3；</li>
-<li>2.然后将比3小的数移到3的左边，比3大的数移到3的右边；</li>
-<li>3.后面用递归将3左边和右边的数组在实现一次上述操作。</li>
-<li><img src="https://hehelv.github.io//post-images/1578128045451.gif" alt=""></li>
-</ul>
-<h1 id="代码如下">代码如下：</h1>
-<pre><code class="language-c">#include&lt;stdio.h&gt;
+                            <h1 id="3-requests库">3-requests库</h1>
+<p>虽然Python的标准库中 urllib模块已经包含了平常我们使用的大多数功能，但是它的 API 使用起来让人感觉不太好，而 Requests宣传是 “HTTP for Humans”，说明使用更简洁方便。</p>
+<h2 id="安装和文档地址">安装和文档地址：</h2>
+<p>利用<code>pip</code>可以非常方便的安装：</p>
+<pre><code>pip install requests
+</code></pre>
+<p>中文文档：http://docs.python-requests.org/zh_CN/latest/index.html<br>
+github地址：https://github.com/requests/requests</p>
+<h2 id="发送get请求">发送GET请求：</h2>
+<ol>
+<li>
+<p>最简单的发送<code>get</code>请求就是通过<code>requests.get</code>来调用：</p>
+<pre><code class="language-python">response = requests.get(&quot;http://www.baidu.com/&quot;)
+</code></pre>
+</li>
+<li>
+<p>添加headers和查询参数：<br>
+如果想添加 headers，可以传入headers参数来增加请求头中的headers信息。如果要将参数放在url中传递，可以利用 params 参数。相关示例代码如下：</p>
+<pre><code class="language-python"> import requests
 
-int a[101],n;
+ kw = {'wd':'中国'}
 
-void quicksort(int left,int right)
-	{
-		int i,j,t,temp;
-		i = left;
-		j = right;
-		if(i &gt; j)
-			return;
-		temp = a[left];
-		
-		while(i!=j)
-		{
-			while(a[j]&gt;=temp &amp;&amp; i&lt;j)
-			{
-				j--;
-			}
-			while(a[i]&lt;=temp &amp;&amp; i&lt;j)
-			{
-				i++;
-			}
-			if(i!=j)
-			{
-				t = a[i];
-				a[i] = a[j];
-				a[j] = t;
-			}
-		}
+ headers = {&quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36&quot;}
 
-		
-		a[left] = a[i];
-		a[i] = temp;
-		
-		quicksort(left,i-1);
-		quicksort(i+1,right);
-	}
+ # params 接收一个字典或者字符串的查询参数，字典类型自动转换为url编码，不需要urlencode()
+ response = requests.get(&quot;http://www.baidu.com/s&quot;, params = kw, headers = headers)
 
-int main()
-{
-	int i,j;
-	scanf(&quot;%d&quot;,&amp;n);
-	for(i=1;i&lt;=n;i++)
-	{
-		scanf(&quot;%d&quot;,&amp;a[i]);
-	}
-	quicksort(1,n);
-	for(i=1;i&lt;=n;i++)
-	{
-		printf(&quot;%d &quot;,a[i]);
-	}
-	return 0;
+ # 查看响应内容，response.text 返回的是Unicode格式的数据
+ print(response.text)
+
+ # 查看响应内容，response.content返回的字节流数据
+ print(response.content)
+
+ # 查看完整url地址
+ print(response.url)
+
+ # 查看响应头部字符编码
+ print(response.encoding)
+
+ # 查看响应码
+ print(response.status_code)
+</code></pre>
+</li>
+</ol>
+<h2 id="发送post请求">发送POST请求：</h2>
+<ol>
+<li>
+<p>最基本的POST请求可以使用<code>post</code>方法：</p>
+<pre><code class="language-python">response = requests.post(&quot;http://www.baidu.com/&quot;,data=data)
+</code></pre>
+</li>
+<li>
+<p>传入data数据：<br>
+这时候就不要再使用<code>urlencode</code>进行编码了，直接传入一个字典进去就可以了。比如请求拉勾网的数据的代码：</p>
+<pre><code class="language-python"> import requests
+
+ url = &quot;https://www.lagou.com/jobs/positionAjax.json?city=%E6%B7%B1%E5%9C%B3&amp;needAddtionalResult=false&amp;isSchoolJob=0&quot;
+
+ headers = {
+     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
+     'Referer': 'https://www.lagou.com/jobs/list_python?labelWords=&amp;fromSearch=true&amp;suginput='
+ }
+
+ data = {
+     'first': 'true',
+     'pn': 1,
+     'kd': 'python'
+ }
+
+ resp = requests.post(url,headers=headers,data=data)
+ # 如果是json数据，直接可以调用json方法
+ print(resp.json())
+</code></pre>
+</li>
+</ol>
+<h2 id="使用代理">使用代理：</h2>
+<p>使用<code>requests</code>添加代理也非常简单，只要在请求的方法中（比如<code>get</code>或者<code>post</code>）传递<code>proxies</code>参数就可以了。示例代码如下：</p>
+<pre><code class="language-python">import requests
+
+url = &quot;http://httpbin.org/get&quot;
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
 }
-/*
-示例输出：
-5
-3 3 1 2 5
-1 2 3 3 5
 
-5
-3 2 1 5 4
-1 2 3 4 5
-*/
+proxy = {
+    'http': '171.14.209.180:27829'
+}
+
+resp = requests.get(url,headers=headers,proxies=proxy)
+with open('xx.html','w',encoding='utf-8') as fp:
+    fp.write(resp.text)
+</code></pre>
+<h2 id="cookie">cookie：</h2>
+<p>如果在一个响应中包含了<code>cookie</code>，那么可以利用<code>cookies</code>属性拿到这个返回的<code>cookie</code>值：</p>
+<pre><code class="language-python">import requests
+
+url = &quot;http://www.renren.com/PLogin.do&quot;
+data = {&quot;email&quot;:&quot;970138074@qq.com&quot;,'password':&quot;pythonspider&quot;}
+resp = requests.get('http://www.baidu.com/')
+print(resp.cookies)
+print(resp.cookies.get_dict())
+</code></pre>
+<h2 id="session">session：</h2>
+<p>之前使用<code>urllib</code>库，是可以使用<code>opener</code>发送多个请求，多个请求之间是可以共享<code>cookie</code>的。那么如果使用<code>requests</code>，也要达到共享<code>cookie</code>的目的，那么可以使用<code>requests</code>库给我们提供的<code>session</code>对象。注意，这里的<code>session</code>不是web开发中的那个session，这个地方只是一个会话的对象而已。还是以登录人人网为例，使用<code>requests</code>来实现。示例代码如下：</p>
+<pre><code class="language-python">import requests
+
+url = &quot;http://www.renren.com/PLogin.do&quot;
+data = {&quot;email&quot;:&quot;970138074@qq.com&quot;,'password':&quot;pythonspider&quot;}
+headers = {
+    'User-Agent': &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36&quot;
+}
+
+# 登录
+session = requests.session()
+session.post(url,data=data,headers=headers)
+
+# 访问大鹏个人中心
+resp = session.get('http://www.renren.com/880151247/profile')
+
+print(resp.text)
+</code></pre>
+<h2 id="处理不信任的ssl证书">处理不信任的SSL证书：</h2>
+<p>对于那些已经被信任的SSL整数的网站，比如<code>https://www.baidu.com/</code>，那么使用<code>requests</code>直接就可以正常的返回响应。示例代码如下：</p>
+<pre><code class="language-python">resp = requests.get('http://www.12306.cn/mormhweb/',verify=False)
+print(resp.content.decode())
 </code></pre>
 
                         </div>
@@ -243,7 +292,7 @@ int main()
 
                             <p class="copyright-item">
                                 <span>Permalink:</span>
-                                <span><a href="https://hehelv.github.io//post/kuai-su-pai-xu">https://hehelv.github.io//post/kuai-su-pai-xu</a></span>
+                                <span><a href="https://hehelv.github.io//post/3-requests-ku">https://hehelv.github.io//post/3-requests-ku</a></span>
                             </p>
 
                             <p class="copyright-item">
@@ -258,7 +307,7 @@ int main()
                                 <span class="tag">
                                 
                                 
-                                <a href="https://hehelv.github.io//tag/algorithm"># Algorithm</a>
+                                <a href="https://hehelv.github.io//tag/Spider Note"># Python爬虫笔记</a>
                                 
                                 
                             </span>
@@ -271,13 +320,13 @@ int main()
                         </section>
                         <section class="post-nav">
                             
-                                <a class="prev" rel="prev" href="https://hehelv.github.io//post/dfsdepth-first-search">
-                                    DFS（Depth first search）与BFS（Breadth First Search）
+                                <a class="prev" rel="prev" href="https://hehelv.github.io//post/4-xpath-yu-fa-yu-lxml-ku">
+                                    4-xpath语法与lxml库
                                 </a>
                                 
                                     
-                                        <a class="next" rel="next" href="https://hehelv.github.io//post/algorithm">
-                                            简陋的桶排序，冒泡排序。。。
+                                        <a class="next" rel="next" href="https://hehelv.github.io//post/2-urllib-ku">
+                                            2-urllib库
                                         </a>
                                         
                         </section>

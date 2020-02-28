@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hehelv.github.io/</id>
     <title>💤ISpiker</title>
-    <updated>2020-02-28T06:26:44.247Z</updated>
+    <updated>2020-02-28T06:37:53.682Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hehelv.github.io/"/>
     <link rel="self" href="https://hehelv.github.io//atom.xml"/>
@@ -11,12 +11,1625 @@
     <icon>https://hehelv.github.io//favicon.ico</icon>
     <rights>All rights reserved 2020, 💤ISpiker</rights>
     <entry>
+        <title type="html"><![CDATA[6-正则表达式和re模块]]></title>
+        <id>https://hehelv.github.io//post/6-zheng-ze-biao-da-shi-he-re-mo-kuai</id>
+        <link href="https://hehelv.github.io//post/6-zheng-ze-biao-da-shi-he-re-mo-kuai">
+        </link>
+        <updated>2020-02-28T06:37:22.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="6-正则表达式和re模块">6-正则表达式和re模块</h1>
+<h2 id="什么是正则表达式">什么是正则表达式：</h2>
+<p>通俗理解：按照一定的规则，从某个字符串中匹配出想要的数据。这个规则就是正则表达式。<br>
+标准答案：https://baike.baidu.com/item/正则表达式/1700215?fr=aladdin</p>
+<h2 id="一个段子">一个段子：</h2>
+<p>世界是分为两种人，一种是懂正则表达式的，一种是不懂正则表达式的。</p>
+<h2 id="正则表达式常用匹配规则">正则表达式常用匹配规则：</h2>
+<h3 id="匹配某个字符串">匹配某个字符串：</h3>
+<pre><code class="language-python">text = 'hello'
+ret = re.match('he',text)
+print(ret.group())
+&gt;&gt; he
+</code></pre>
+<p>以上便可以在<code>hello</code>中，匹配出<code>he</code>。</p>
+<h3 id="点匹配任意的字符">点（.）匹配任意的字符：</h3>
+<pre><code class="language-python">text = &quot;ab&quot;
+ret = re.match('.',text)
+print(ret.group())
+&gt;&gt; a
+</code></pre>
+<p>但是点（.）不能匹配不到换行符。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;ab&quot;
+ret = re.match('.',text)
+print(ret.group())
+&gt;&gt; AttributeError: 'NoneType' object has no attribute 'group'
+</code></pre>
+<h3 id="d匹配任意的数字">\d匹配任意的数字：</h3>
+<pre><code class="language-python">text = &quot;123&quot;
+ret = re.match('\d',text)
+print(ret.group())
+&gt;&gt; 1
+</code></pre>
+<h3 id="d匹配任意的非数字">\D匹配任意的非数字：</h3>
+<pre><code class="language-python">text = &quot;a&quot;
+ret = re.match('\D',text)
+print(ret.group())
+&gt;&gt; a
+</code></pre>
+<p>而如果text是等于一个数字，那么就匹配不成功了。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;1&quot;
+ret = re.match('\D',text)
+print(ret.group())
+&gt;&gt; AttributeError: 'NoneType' object has no attribute 'group'
+</code></pre>
+<h3 id="s匹配的是空白字符包括ntr和空格">\s匹配的是空白字符（包括：\n，\t，\r和空格）：</h3>
+<pre><code class="language-python">text = &quot;\t&quot;
+ret = re.match('\s',text)
+print(ret.group())
+&gt;&gt; 空白
+</code></pre>
+<h3 id="w匹配的是a-z和a-z以及数字和下划线">\w匹配的是<code>a-z</code>和<code>A-Z</code>以及数字和下划线：</h3>
+<pre><code class="language-python">text = &quot;_&quot;
+ret = re.match('\w',text)
+print(ret.group())
+&gt;&gt; _
+</code></pre>
+<p>而如果要匹配一个其他的字符，那么就匹配不到。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;+&quot;
+ret = re.match('\w',text)
+print(ret.group())
+&gt;&gt; AttributeError: 'NoneType' object has no attribute
+</code></pre>
+<h3 id="w匹配的是和w相反的">\W匹配的是和\w相反的：</h3>
+<pre><code class="language-python">text = &quot;+&quot;
+ret = re.match('\W',text)
+print(ret.group())
+&gt;&gt; +
+</code></pre>
+<p>而如果你的text是一个下划线或者英文字符，那么就匹配不到了。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;_&quot;
+ret = re.match('\W',text)
+print(ret.group())
+&gt;&gt; AttributeError: 'NoneType' object has no attribute
+</code></pre>
+<h3 id="组合的方式只要满足中括号中的某一项都算匹配成功">[]组合的方式，只要满足中括号中的某一项都算匹配成功：</h3>
+<pre><code class="language-python">text = &quot;0731-88888888&quot;
+ret = re.match('[\d\-]+',text)
+print(ret.group())
+&gt;&gt; 0731-88888888
+</code></pre>
+<p>之前讲到的几种匹配规则，其实可以使用中括号的形式来进行替代：</p>
+<ul>
+<li>\d：[0-9]</li>
+<li>\D：<a href="#fn_0-9">0-9</a></li>
+<li>\w：[0-9a-zA-Z_]</li>
+<li>\W：[^0-9a-zA-Z_]</li>
+</ul>
+<h3 id="匹配多个字符">匹配多个字符：</h3>
+<ol>
+<li>
+<p><code>*</code>：可以匹配0或者任意多个字符。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;0731&quot;
+ ret = re.match('\d*',text)
+ print(ret.group())
+ &gt;&gt; 0731
+</code></pre>
+<p>以上因为匹配的要求是<code>\d</code>，那么就要求是数字，后面跟了一个星号，就可以匹配到0731这四个字符。</p>
+</li>
+<li>
+<p><code>+</code>：可以匹配1个或者多个字符。最少一个。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;abc&quot;
+ ret = re.match('\w+',text)
+ print(ret.group())
+ &gt;&gt; abc
+</code></pre>
+<p>因为匹配的是<code>\w</code>，那么就要求是英文字符，后面跟了一个加号，意味着最少要有一个满足<code>\w</code>的字符才能够匹配到。如果text是一个空白字符或者是一个不满足\w的字符，那么就会报错。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;&quot;
+ ret = re.match('\w+',text)
+ print(ret.group())
+ &gt;&gt; AttributeError: 'NoneType' object has no attribute
+</code></pre>
+</li>
+<li>
+<p><code>?</code>：匹配的字符可以出现一次或者不出现（0或者1）。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;123&quot;
+ ret = re.match('\d?',text)
+ print(ret.group())
+ &gt;&gt; 1
+</code></pre>
+</li>
+<li>
+<p><code>{m}</code>：匹配m个字符。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;123&quot;
+ ret = re.match('\d{2}',text)
+ print(ret.group())
+ &gt;&gt; 12
+</code></pre>
+</li>
+<li>
+<p><code>{m,n}</code>：匹配m-n个字符。在这中间的字符都可以匹配到。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;123&quot;
+ ret = re.match('\d{1,2}',text)
+ prit(ret.group())
+ &gt;&gt; 12
+</code></pre>
+<p>如果text只有一个字符，那么也可以匹配出来。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;1&quot;
+ ret = re.match('\d{1,2}',text)
+ prit(ret.group())
+ &gt;&gt; 1
+</code></pre>
+</li>
+</ol>
+<h3 id="小案例">小案例：</h3>
+<ol>
+<li>
+<p>验证手机号码：手机号码的规则是以<code>1</code>开头，第二位可以是<code>34587</code>，后面那9位就可以随意了。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;18570631587&quot;
+ ret = re.match('1[34587]\d{9}',text)
+ print(ret.group())
+ &gt;&gt; 18570631587
+</code></pre>
+<p>而如果是个不满足条件的手机号码。那么就匹配不到了。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;1857063158&quot;
+ ret = re.match('1[34587]\d{9}',text)
+ print(ret.group())
+ &gt;&gt; AttributeError: 'NoneType' object has no attribute
+</code></pre>
+</li>
+<li>
+<p>验证邮箱：邮箱的规则是邮箱名称是用<code>数字、数字、下划线</code>组成的，然后是<code>@</code>符号，后面就是域名了。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;hynever@163.com&quot;
+ ret = re.match('\w+@\w+\.[a-zA-Z\.]+',text)
+ print(ret.group())
+</code></pre>
+</li>
+<li>
+<p>验证URL：URL的规则是前面是<code>http</code>或者<code>https</code>或者是<code>ftp</code>然后再加上一个冒号，再加上一个斜杠，再后面就是可以出现任意非空白字符了。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;http://www.baidu.com/&quot;
+ ret = re.match('(http|https|ftp)://[^\s]+',text)
+ print(ret.group())
+</code></pre>
+</li>
+<li>
+<p>验证身份证：身份证的规则是，总共有18位，前面17位都是数字，后面一位可以是数字，也可以是小写的x，也可以是大写的X。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;3113111890812323X&quot;
+ ret = re.match('\d{17}[\dxX]',text)
+ print(ret.group())
+</code></pre>
+</li>
+</ol>
+<h3 id="脱字号表示以开始">^（脱字号）：表示以...开始：</h3>
+<pre><code class="language-python">text = &quot;hello&quot;
+ret = re.match('^h',text)
+print(ret.group())
+</code></pre>
+<p>如果是在中括号中，那么代表的是取反操作.</p>
+<h3 id="表示以结束">$：表示以...结束：</h3>
+<pre><code class="language-python"># 匹配163.com的邮箱
+text = &quot;xxx@163.com&quot;
+ret = re.search('\w+@163\.com$',text)
+print(ret.group())
+&gt;&gt; xxx@163.com
+</code></pre>
+<h3 id="匹配多个表达式或者字符串">|：匹配多个表达式或者字符串：</h3>
+<pre><code class="language-python">text = &quot;hello|world&quot;
+ret = re.search('hello',text)
+print(ret.group())
+&gt;&gt; hello
+</code></pre>
+<h3 id="贪婪模式和非贪婪模式">贪婪模式和非贪婪模式：</h3>
+<p>贪婪模式：正则表达式会匹配尽量多的字符。默认是贪婪模式。<br>
+非贪婪模式：正则表达式会尽量少的匹配字符。<br>
+示例代码如下：</p>
+<pre><code class="language-python">text = &quot;0123456&quot;
+ret = re.match('\d+',text)
+print(ret.group())
+# 因为默认采用贪婪模式，所以会输出0123456
+&gt;&gt; 0123456
+</code></pre>
+<p>可以改成非贪婪模式，那么就只会匹配到0。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;0123456&quot;
+ret = re.match('\d+?',text)
+print(ret.group())
+</code></pre>
+<h3 id="案例匹配0-100之间的数字">案例：匹配<code>0-100</code>之间的数字：</h3>
+<pre><code class="language-python">text = '99'
+ret = re.match('[1-9]?\d$|100$',text)
+print(ret.group())
+&gt;&gt; 99
+</code></pre>
+<p>而如果<code>text=101</code>，那么就会抛出一个异常。示例代码如下：</p>
+<pre><code class="language-python">text = '101'
+ret = re.match('[1-9]?\d$|100$',text)
+print(ret.group())
+&gt;&gt; AttributeError: 'NoneType' object has no attribute 'group'
+</code></pre>
+<h3 id="转义字符和原生字符串">转义字符和原生字符串：</h3>
+<p>在正则表达式中，有些字符是有特殊意义的字符。因此如果想要匹配这些字符，那么就必须使用反斜杠进行转义。比如<code>$</code>代表的是以...结尾，如果想要匹配<code>$</code>，那么就必须使用<code>\$</code>。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;apple price is \$99,orange paice is $88&quot;
+ret = re.search('\$(\d+)',text)
+print(ret.group())
+&gt;&gt; $99
+</code></pre>
+<p>原生字符串：<br>
+在正则表达式中，<code>\</code>是专门用来做转义的。在Python中<code>\</code>也是用来做转义的。因此如果想要在普通的字符串中匹配出<code>\</code>，那么要给出四个<code>\</code>。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;apple \c&quot;
+ret = re.search('\\\\c',text)
+print(ret.group())
+</code></pre>
+<p>因此要使用原生字符串就可以解决这个问题：</p>
+<pre><code class="language-python">text = &quot;apple \c&quot;
+ret = re.search(r'\\c',text)
+print(ret.group())
+</code></pre>
+<hr>
+<h2 id="re模块中常用函数">re模块中常用函数：</h2>
+<h3 id="match">match：</h3>
+<p>从开始的位置进行匹配。如果开始的位置没有匹配到。就直接失败了。示例代码如下：</p>
+<pre><code class="language-python">text = 'hello'
+ret = re.match('h',text)
+print(ret.group())
+&gt;&gt; h
+</code></pre>
+<p>如果第一个字母不是<code>h</code>，那么就会失败。示例代码如下：</p>
+<pre><code class="language-python">text = 'ahello'
+ret = re.match('h',text)
+print(ret.group())
+&gt;&gt; AttributeError: 'NoneType' object has no attribute 'group'
+</code></pre>
+<p>如果想要匹配换行的数据，那么就要传入一个<code>flag=re.DOTALL</code>，就可以匹配换行符了。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;abc\nabc&quot;
+ret = re.match('abc.*abc',text,re.DOTALL)
+print(ret.group())
+</code></pre>
+<h3 id="search">search：</h3>
+<p>在字符串中找满足条件的字符。如果找到，就返回。说白了，就是只会找到第一个满足条件的。</p>
+<pre><code class="language-python">text = 'apple price $99 orange price $88'
+ret = re.search('\d+',text)
+print(ret.group())
+&gt;&gt; 99
+</code></pre>
+<h3 id="分组">分组：</h3>
+<p>在正则表达式中，可以对过滤到的字符串进行分组。分组使用圆括号的方式。</p>
+<ol>
+<li><code>group</code>：和<code>group(0)</code>是等价的，返回的是整个满足条件的字符串。</li>
+<li><code>groups</code>：返回的是里面的子组。索引从1开始。</li>
+<li><code>group(1)</code>：返回的是第一个子组，可以传入多个。<br>
+示例代码如下：</li>
+</ol>
+<pre><code class="language-python">text = &quot;apple price is $99,orange price is $10&quot;
+ret = re.search(r&quot;.*(\$\d+).*(\$\d+)&quot;,text)
+print(ret.group())
+print(ret.group(0))
+print(ret.group(1))
+print(ret.group(2))
+print(ret.groups())
+</code></pre>
+<h3 id="findall">findall：</h3>
+<p>找出所有满足条件的，返回的是一个列表。</p>
+<pre><code class="language-python">text = 'apple price $99 orange price $88'
+ret = re.findall('\d+',text)
+print(ret)
+&gt;&gt; ['99', '88']
+</code></pre>
+<h3 id="sub">sub：</h3>
+<p>用来替换字符串。将匹配到的字符串替换为其他字符串。</p>
+<pre><code class="language-python">text = 'apple price $99 orange price $88'
+ret = re.sub('\d+','0',text)
+print(ret)
+&gt;&gt; apple price $0 orange price $0
+</code></pre>
+<p><code>sub</code>函数的案例，获取拉勾网中的数据：</p>
+<pre><code class="language-python">html = &quot;&quot;&quot;
+&lt;div&gt;
+&lt;p&gt;基本要求：&lt;/p&gt;
+&lt;p&gt;1、精通HTML5、CSS3、 JavaScript等Web前端开发技术，对html5页面适配充分了解，熟悉不同浏览器间的差异，熟练写出兼容各种浏览器的代码；&lt;/p&gt;
+&lt;p&gt;2、熟悉运用常见JS开发框架，如JQuery、vue、angular，能快速高效实现各种交互效果；&lt;/p&gt;
+&lt;p&gt;3、熟悉编写能够自动适应HTML5界面，能让网页格式自动适应各款各大小的手机；&lt;/p&gt;
+&lt;p&gt;4、利用HTML5相关技术开发移动平台、PC终端的前端页面，实现HTML5模板化；&lt;/p&gt;
+&lt;p&gt;5、熟悉手机端和PC端web实现的差异，有移动平台web前端开发经验，了解移动互联网产品和行业，有在Android,iOS等平台下HTML5+CSS+JavaScript（或移动JS框架）开发经验者优先考虑；6、良好的沟通能力和团队协作精神，对移动互联网行业有浓厚兴趣，有较强的研究能力和学习能力；&lt;/p&gt;
+&lt;p&gt;7、能够承担公司前端培训工作，对公司各业务线的前端（HTML5\CSS3）工作进行支撑和指导。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;岗位职责：&lt;/p&gt;
+&lt;p&gt;1、利用html5及相关技术开发移动平台、微信、APP等前端页面，各类交互的实现；&lt;/p&gt;
+&lt;p&gt;2、持续的优化前端体验和页面响应速度，并保证兼容性和执行效率；&lt;/p&gt;
+&lt;p&gt;3、根据产品需求，分析并给出最优的页面前端结构解决方案；&lt;/p&gt;
+&lt;p&gt;4、协助后台及客户端开发人员完成功能开发和调试；&lt;/p&gt;
+&lt;p&gt;5、移动端主流浏览器的适配、移动端界面自适应研发。&lt;/p&gt;
+&lt;/div&gt;
+&quot;&quot;&quot;
+
+ret = re.sub('&lt;/?[a-zA-Z0-9]+&gt;',&quot;&quot;,html)
+print(ret)
+</code></pre>
+<h3 id="split">split：</h3>
+<p>使用正则表达式来分割字符串。</p>
+<pre><code class="language-python">text = &quot;hello world ni hao&quot;
+ret = re.split('\W',text)
+print(ret)
+&gt;&gt; [&quot;hello&quot;,&quot;world&quot;,&quot;ni&quot;,&quot;hao&quot;]
+</code></pre>
+<h3 id="compile">compile：</h3>
+<p>对于一些经常要用到的正则表达式，可以使用<code>compile</code>进行编译，后期再使用的时候可以直接拿过来用，执行效率会更快。而且<code>compile</code>还可以指定<code>flag=re.VERBOSE</code>，在写正则表达式的时候可以做好注释。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;the number is 20.50&quot;
+r = re.compile(r&quot;&quot;&quot;
+                \d+ # 小数点前面的数字
+                \.? # 小数点
+                \d* # 小数点后面的数字
+                &quot;&quot;&quot;,re.VERBOSE)
+ret = re.search(r,text)
+print(ret.group())
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[5-BeautifulSoup4库]]></title>
+        <id>https://hehelv.github.io//post/5-beautifulsoup4-ku</id>
+        <link href="https://hehelv.github.io//post/5-beautifulsoup4-ku">
+        </link>
+        <updated>2020-02-28T06:36:42.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="5-beautifulsoup4库">5-BeautifulSoup4库</h1>
+<p>和 lxml 一样，Beautiful Soup 也是一个HTML/XML的解析器，主要的功能也是如何解析和提取 HTML/XML 数据。<br>
+lxml 只会局部遍历，而Beautiful Soup 是基于HTML DOM（Document Object Model）的，会载入整个文档，解析整个DOM树，因此时间和内存开销都会大很多，所以性能要低于lxml。<br>
+BeautifulSoup 用来解析 HTML 比较简单，API非常人性化，支持CSS选择器、Python标准库中的HTML解析器，也支持 lxml 的 XML解析器。<br>
+Beautiful Soup 3 目前已经停止开发，推荐现在的项目使用Beautiful Soup 4。</p>
+<h2 id="安装和文档">安装和文档：</h2>
+<ol>
+<li>安装：<code>pip install bs4</code>。</li>
+<li>中文文档：https://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html</li>
+</ol>
+<h2 id="几大解析工具对比">几大解析工具对比：</h2>
+<table>
+<thead>
+<tr>
+<th>解析工具</th>
+<th>解析速度</th>
+<th>使用难度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BeautifulSoup</td>
+<td>最慢</td>
+<td>最简单</td>
+</tr>
+<tr>
+<td>lxml</td>
+<td>快</td>
+<td>简单</td>
+</tr>
+<tr>
+<td>正则</td>
+<td>最快</td>
+<td>最难</td>
+</tr>
+</tbody>
+</table>
+<h2 id="简单使用">简单使用：</h2>
+<pre><code class="language-python">from bs4 import BeautifulSoup
+
+html = &quot;&quot;&quot;
+&lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse's story&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;p class=&quot;title&quot; name=&quot;dromouse&quot;&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;
+&lt;p class=&quot;story&quot;&gt;Once upon a time there were three little sisters; and their names were
+&lt;a href=&quot;http://example.com/elsie&quot; class=&quot;sister&quot; id=&quot;link1&quot;&gt;&lt;!-- Elsie --&gt;&lt;/a&gt;,
+&lt;a href=&quot;http://example.com/lacie&quot; class=&quot;sister&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt; and
+&lt;a href=&quot;http://example.com/tillie&quot; class=&quot;sister&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;;
+and they lived at the bottom of a well.&lt;/p&gt;
+&lt;p class=&quot;story&quot;&gt;...&lt;/p&gt;
+&quot;&quot;&quot;
+
+#创建 Beautiful Soup 对象
+# 使用lxml来进行解析
+soup = BeautifulSoup(html,&quot;lxml&quot;)
+
+print(soup.prettify())
+</code></pre>
+<h2 id="四个常用的对象">四个常用的对象：</h2>
+<p>Beautiful Soup将复杂HTML文档转换成一个复杂的树形结构,每个节点都是Python对象,所有对象可以归纳为4种:</p>
+<ol>
+<li>Tag</li>
+<li>NavigatableString</li>
+<li>BeautifulSoup</li>
+<li>Comment</li>
+</ol>
+<h3 id="1-tag">1. Tag：</h3>
+<p>Tag 通俗点讲就是 HTML 中的一个个标签。示例代码如下：</p>
+<pre><code class="language-python">(from bs4 import BeautifulSoup)
+
+html = &quot;&quot;&quot;
+&lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse's story&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;p class=&quot;title&quot; name=&quot;dromouse&quot;&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;
+&lt;p class=&quot;story&quot;&gt;Once upon a time there were three little sisters; and their names were
+&lt;a href=&quot;http://example.com/elsie&quot; class=&quot;sister&quot; id=&quot;link1&quot;&gt;&lt;!-- Elsie --&gt;&lt;/a&gt;,
+&lt;a href=&quot;http://example.com/lacie&quot; class=&quot;sister&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt; and
+&lt;a href=&quot;http://example.com/tillie&quot; class=&quot;sister&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;;
+and they lived at the bottom of a well.&lt;/p&gt;
+&lt;p class=&quot;story&quot;&gt;...&lt;/p&gt;
+&quot;&quot;&quot;
+
+#创建 Beautiful Soup 对象
+soup = BeautifulSoup(html,'lxml')
+
+
+print (soup.title)
+# &lt;title&gt;The Dormouse's story&lt;/title&gt;
+
+print (soup.head)
+# &lt;head&gt;&lt;title&gt;The Dormouse's story&lt;/title&gt;&lt;/head&gt;
+
+print (soup.a)
+# &lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;&lt;!-- Elsie --&gt;&lt;/a&gt;
+
+print( soup.p)
+# &lt;p class=&quot;title&quot; name=&quot;dromouse&quot;&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;
+
+print (type(soup.p))
+# &lt;class 'bs4.element.Tag'&gt;
+</code></pre>
+<p>我们可以利用 soup 加标签名轻松地获取这些标签的内容，这些对象的类型是bs4.element.Tag。但是注意，它查找的是在所有内容中的第一个符合要求的标签。如果要查询所有的标签，后面会进行介绍。<br>
+对于Tag，它有两个重要的属性，分别是name和attrs。示例代码如下：</p>
+<pre><code class="language-python">print soup.name
+# [document] #soup 对象本身比较特殊，它的 name 即为 [document]
+
+print soup.head.name
+# head #对于其他内部标签，输出的值便为标签本身的名称
+
+print soup.p.attrs
+# {'class': ['title'], 'name': 'dromouse'}
+# 在这里，我们把 p 标签的所有属性打印输出了出来，得到的类型是一个字典。
+
+print soup.p['class'] # soup.p.get('class')
+# ['title'] #还可以利用get方法，传入属性的名称，二者是等价的
+
+soup.p['class'] = &quot;newClass&quot;
+print soup.p # 可以对这些属性和内容等等进行修改
+# &lt;p class=&quot;newClass&quot; name=&quot;dromouse&quot;&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;
+</code></pre>
+<h3 id="2-navigablestring">2. NavigableString：</h3>
+<p>如果拿到标签后，还想获取标签中的内容。那么可以通过<code>tag.string</code>获取标签中的文字。示例代码如下：</p>
+<pre><code class="language-python">print (soup.p.string)
+# The Dormouse's story
+
+print (type(soup.p.string))
+# &lt;class 'bs4.element.NavigableString'&gt;thon
+</code></pre>
+<h3 id="3-beautifulsoup">3. BeautifulSoup：</h3>
+<p>BeautifulSoup 对象表示的是一个文档的全部内容.大部分时候,可以把它当作 Tag 对象,它支持 遍历文档树 和 搜索文档树 中描述的大部分的方法.<br>
+因为 BeautifulSoup 对象并不是真正的HTML或XML的tag,所以它没有name和attribute属性.但有时查看它的 .name 属性是很方便的,所以 BeautifulSoup 对象包含了一个值为 “[document]” 的特殊属性 .name</p>
+<pre><code class="language-python">soup.name
+# '[document]'
+</code></pre>
+<h3 id="4-comment">4. Comment：</h3>
+<p>Tag , NavigableString , BeautifulSoup 几乎覆盖了html和xml中的所有内容,但是还有一些特殊对象.容易让人担心的内容是文档的注释部分:</p>
+<pre><code class="language-python">markup = &quot;&lt;b&gt;&lt;!--Hey, buddy. Want to buy a used parser?--&gt;&lt;/b&gt;&quot;
+soup = BeautifulSoup(markup)
+comment = soup.b.string
+type(comment)
+# &lt;class 'bs4.element.Comment'&gt;
+</code></pre>
+<p>Comment 对象是一个特殊类型的 NavigableString 对象:</p>
+<pre><code class="language-python">comment
+# 'Hey, buddy. Want to buy a used parser'
+</code></pre>
+<h2 id="遍历文档树">遍历文档树：</h2>
+<h3 id="1-contents和children">1. contents和children：</h3>
+<pre><code class="language-python">html_doc = &quot;&quot;&quot;
+&lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse's story&lt;/title&gt;&lt;/head&gt;
+
+&lt;p class=&quot;title&quot;&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;
+
+&lt;p class=&quot;story&quot;&gt;Once upon a time there were three little sisters; and their names were
+&lt;a href=&quot;http://example.com/elsie&quot; class=&quot;sister&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;,
+&lt;a href=&quot;http://example.com/lacie&quot; class=&quot;sister&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt; and
+&lt;a href=&quot;http://example.com/tillie&quot; class=&quot;sister&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;;
+and they lived at the bottom of a well.&lt;/p&gt;
+
+&lt;p class=&quot;story&quot;&gt;...&lt;/p&gt;
+&quot;&quot;&quot;
+
+from bs4 import BeautifulSoup
+soup = BeautifulSoup(html_doc,'lxml')
+
+head_tag = soup.head
+# 返回所有子节点的列表
+print(head_tag.contents)
+
+# 返回所有子节点的迭代器
+for child in head_tag.children:
+    print(child)
+</code></pre>
+<h3 id="2-strings-和-stripped_strings">2. strings 和 stripped_strings</h3>
+<p>如果tag中包含多个字符串 [2] ,可以使用 .strings 来循环获取：</p>
+<pre><code class="language-python">for string in soup.strings:
+    print(repr(string))
+    # u&quot;The Dormouse's story&quot;
+    # u'\n\n'
+    # u&quot;The Dormouse's story&quot;
+    # u'\n\n'
+    # u'Once upon a time there were three little sisters; and their names were\n'
+    # u'Elsie'
+    # u',\n'
+    # u'Lacie'
+    # u' and\n'
+    # u'Tillie'
+    # u';\nand they lived at the bottom of a well.'
+    # u'\n\n'
+    # u'...'
+    # u'\n'
+</code></pre>
+<p>输出的字符串中可能包含了很多空格或空行,使用 .stripped_strings 可以去除多余空白内容：</p>
+<pre><code class="language-python">for string in soup.stripped_strings:
+    print(repr(string))
+    # u&quot;The Dormouse's story&quot;
+    # u&quot;The Dormouse's story&quot;
+    # u'Once upon a time there were three little sisters; and their names were'
+    # u'Elsie'
+    # u','
+    # u'Lacie'
+    # u'and'
+    # u'Tillie'
+    # u';\nand they lived at the bottom of a well.'
+    # u'...'
+</code></pre>
+<h3 id="获取标签属性">获取标签属性</h3>
+<p>1.通过下标获取</p>
+<pre><code class="language-python">href = a['href']
+</code></pre>
+<p>2.通过attrs属性获取</p>
+<pre><code class="language-python">href=a.attrs['href']
+</code></pre>
+<h3 id="小结">小结</h3>
+<ol>
+<li>string: 获取某个标签下的非标签字符串。返回来的是个字符串。</li>
+<li>strings: 获取某个标签下的子孙非标签字符串。返回来的是个生成器。</li>
+<li>stripped_strings:获取某个标签下的子孙非标签字符串，会去掉空白字符。返回来的<br>
+是个生成器。</li>
+<li>get_ _text:获取某个标签下的子孙非标签字符串。不是以列表的形式返回，是以普通字<br>
+符串返回。</li>
+</ol>
+<h2 id="搜索文档树">搜索文档树：</h2>
+<h3 id="1-find和find_all方法">1. find和find_all方法：</h3>
+<p>搜索文档树，一般用得比较多的就是两个方法，一个是<code>find</code>，一个是<code>find_all</code>。<code>find</code>方法是找到第一个满足条件的标签后就立即返回，只返回一个元素。<code>find_all</code>方法是把所有满足条件的标签都选到，然后返回回去。使用这两个方法，最常用的用法是出入<code>name</code>以及<code>attr</code>参数找出符合要求的标签。</p>
+<pre><code class="language-python">soup.find_all(&quot;a&quot;,attrs={&quot;id&quot;:&quot;link2&quot;})
+</code></pre>
+<p>或者是直接传入属性的的名字作为关键字参数：</p>
+<pre><code class="language-python">soup.find_all(&quot;a&quot;,id='link2')
+</code></pre>
+<h3 id="2-select方法">2. select方法：</h3>
+<p>使用以上方法可以方便的找出元素。但有时候使用<code>css</code>选择器的方式可以更加的方便。使用<code>css</code>选择器的语法，应该使用<code>select</code>方法。以下列出几种常用的<code>css</code>选择器方法：</p>
+<h4 id="1通过标签名查找">（1）通过标签名查找：</h4>
+<pre><code class="language-python">print(soup.select('a'))
+</code></pre>
+<h4 id="2通过类名查找">（2）通过类名查找：</h4>
+<p>通过类名，则应该在类的前面加一个<code>.</code>。比如要查找<code>class=sister</code>的标签。示例代码如下：</p>
+<pre><code class="language-python">print(soup.select('.sister'))
+</code></pre>
+<h4 id="3通过id查找">（3）通过id查找：</h4>
+<p>通过id查找，应该在id的名字前面加一个＃号。示例代码如下：</p>
+<pre><code class="language-python">print(soup.select(&quot;#link1&quot;))
+</code></pre>
+<h4 id="4组合查找">（4）组合查找：</h4>
+<p>组合查找即和写 class 文件时，标签名与类名、id名进行的组合原理是一样的，例如查找 p 标签中，id 等于 link1的内容，二者需要用空格分开：</p>
+<pre><code class="language-python">print(soup.select(&quot;p #link1&quot;))
+</code></pre>
+<p>直接子标签查找，则使用 &gt; 分隔：</p>
+<pre><code class="language-python">print(soup.select(&quot;head &gt; title&quot;))
+</code></pre>
+<h4 id="5通过属性查找">（5）通过属性查找：</h4>
+<p>查找时还可以加入属性元素，属性需要用中括号括起来，注意属性和标签属于同一节点，所以中间不能加空格，否则会无法匹配到。示例代码如下：</p>
+<pre><code class="language-python">print(soup.select('a[href=&quot;http://example.com/elsie&quot;]'))
+</code></pre>
+<h4 id="6获取内容">（6）获取内容</h4>
+<p>以上的 select 方法返回的结果都是列表形式，可以遍历形式输出，然后用 get_text() 方法来获取它的内容。</p>
+<pre><code class="language-python">soup = BeautifulSoup(html, 'lxml')
+print type(soup.select('title'))
+print soup.select('title')[0].get_text()
+
+for title in soup.select('title'):
+    print title.get_text()
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[4-xpath语法与lxml库]]></title>
+        <id>https://hehelv.github.io//post/4-xpath-yu-fa-yu-lxml-ku</id>
+        <link href="https://hehelv.github.io//post/4-xpath-yu-fa-yu-lxml-ku">
+        </link>
+        <updated>2020-02-28T06:36:15.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="4-xpath语法与lxml库">4-xpath语法与lxml库</h1>
+<h2 id="什么是xpath">什么是XPath？</h2>
+<p>xpath（XML Path Language）是一门在XML和HTML文档中查找信息的语言，可用来在XML和HTML文档中对元素和属性进行遍历。</p>
+<h2 id="xpath开发工具">XPath开发工具</h2>
+<ol>
+<li>Chrome插件XPath Helper。</li>
+<li>Firefox插件Try XPath。</li>
+</ol>
+<h2 id="xpath语法">XPath语法</h2>
+<h3 id="选取节点">选取节点：</h3>
+<p>XPath 使用路径表达式来选取 XML 文档中的节点或者节点集。这些路径表达式和我们在常规的电脑文件系统中看到的表达式非常相似。</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>描述</th>
+<th>示例</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nodename</td>
+<td>选取此节点的所有子节点</td>
+<td>bookstore</td>
+<td>选取bookstore下所有的子节点</td>
+</tr>
+<tr>
+<td>/</td>
+<td>如果是在最前面，代表从根节点选取。否则选择某节点下的某个节点</td>
+<td>/bookstore</td>
+<td>选取根元素下所有的bookstore节点</td>
+</tr>
+<tr>
+<td>//</td>
+<td>从全局节点中选择节点，随便在哪个位置</td>
+<td>//book</td>
+<td>从全局节点中找到所有的book节点</td>
+</tr>
+<tr>
+<td>@</td>
+<td>选取某个节点的属性</td>
+<td>//book[@price]</td>
+<td>选择所有拥有price属性的book节点</td>
+</tr>
+<tr>
+<td>.</td>
+<td>当前节点</td>
+<td>./a</td>
+<td>选取当前节点下的a标签</td>
+</tr>
+</tbody>
+</table>
+<h3 id="谓语">谓语：</h3>
+<p>谓语用来查找某个特定的节点或者包含某个指定的值的节点，被嵌在方括号中。<br>
+在下面的表格中，我们列出了带有谓语的一些路径表达式，以及表达式的结果：</p>
+<table>
+<thead>
+<tr>
+<th>路径表达式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/bookstore/book[1]</td>
+<td>选取bookstore下的第一个子元素</td>
+</tr>
+<tr>
+<td>/bookstore/book[last()]</td>
+<td>选取bookstore下的倒数第二个book元素。</td>
+</tr>
+<tr>
+<td>bookstore/book[position()❤️]</td>
+<td>选取bookstore下前面两个子元素。</td>
+</tr>
+<tr>
+<td>//book[@price]</td>
+<td>选取拥有price属性的book元素</td>
+</tr>
+<tr>
+<td>//book[@price=10]</td>
+<td>选取所有属性price等于10的book元素</td>
+</tr>
+</tbody>
+</table>
+<h3 id="通配符">通配符</h3>
+<p>*表示通配符。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">通配符</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">示例</th>
+<th style="text-align:left">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">*</td>
+<td style="text-align:left">匹配任意节点</td>
+<td style="text-align:left">/bookstore/*</td>
+<td style="text-align:left">选取bookstore下的所有子元素。</td>
+</tr>
+<tr>
+<td style="text-align:left">@*</td>
+<td style="text-align:left">匹配节点中的任何属性</td>
+<td style="text-align:left">//book[@*]</td>
+<td style="text-align:left">选取所有带有属性的book元素。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="选取多个路径">选取多个路径：</h3>
+<p>通过在路径表达式中使用“|”运算符，可以选取若干个路径。<br>
+示例如下：</p>
+<pre><code>//bookstore/book | //book/title
+# 选取所有book元素以及book元素下所有的title元素
+</code></pre>
+<h3 id="运算符">运算符：</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">运算符</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">实例</th>
+<th style="text-align:left">返回值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">|</td>
+<td style="text-align:left">计算两个节点集</td>
+<td style="text-align:left">//book | //cd</td>
+<td style="text-align:left">返回所有拥有 book 和 cd 元素的节点集</td>
+</tr>
+<tr>
+<td style="text-align:left">+</td>
+<td style="text-align:left">加法</td>
+<td style="text-align:left">6 + 4</td>
+<td style="text-align:left">10</td>
+</tr>
+<tr>
+<td style="text-align:left">-</td>
+<td style="text-align:left">减法</td>
+<td style="text-align:left">6 - 4</td>
+<td style="text-align:left">2</td>
+</tr>
+<tr>
+<td style="text-align:left">*</td>
+<td style="text-align:left">乘法</td>
+<td style="text-align:left">6 * 4</td>
+<td style="text-align:left">24</td>
+</tr>
+<tr>
+<td style="text-align:left">div</td>
+<td style="text-align:left">除法</td>
+<td style="text-align:left">8 div 4</td>
+<td style="text-align:left">2</td>
+</tr>
+<tr>
+<td style="text-align:left">=</td>
+<td style="text-align:left">等于</td>
+<td style="text-align:left">price=9.80</td>
+<td style="text-align:left">如果 price 是 9.80，则返回 true。如果 price 是 9.90，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">!=</td>
+<td style="text-align:left">不等于</td>
+<td style="text-align:left">price!=9.80</td>
+<td style="text-align:left">如果 price 是 9.90，则返回 true。如果 price 是 9.80，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;</td>
+<td style="text-align:left">小于</td>
+<td style="text-align:left">price&lt;9.80</td>
+<td style="text-align:left">如果 price 是 9.00，则返回 true。如果 price 是 9.90，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;=</td>
+<td style="text-align:left">小于或等于</td>
+<td style="text-align:left">price&lt;=9.80</td>
+<td style="text-align:left">如果 price 是 9.00，则返回 true。如果 price 是 9.90，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">&gt;</td>
+<td style="text-align:left">大于</td>
+<td style="text-align:left">price&gt;9.80</td>
+<td style="text-align:left">如果 price 是 9.90，则返回 true。如果 price 是 9.80，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">&gt;=</td>
+<td style="text-align:left">大于或等于</td>
+<td style="text-align:left">price&gt;=9.80</td>
+<td style="text-align:left">如果 price 是 9.90，则返回 true。如果 price 是 9.70，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">or</td>
+<td style="text-align:left">或</td>
+<td style="text-align:left">price=9.80 or price=9.70</td>
+<td style="text-align:left">如果 price 是 9.80，则返回 true。如果 price 是 9.50，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">and</td>
+<td style="text-align:left">与</td>
+<td style="text-align:left">price&gt;9.00 and price&lt;9.90</td>
+<td style="text-align:left">如果 price 是 9.80，则返回 true。如果 price 是 8.50，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">mod</td>
+<td style="text-align:left">计算除法的余数</td>
+<td style="text-align:left">5 mod 2</td>
+<td style="text-align:left">1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lxml库">lxml库</h2>
+<p>lxml 是 一个HTML/XML的解析器，主要的功能是如何解析和提取 HTML/XML 数据。</p>
+<p>lxml和正则一样，也是用 C 实现的，是一款高性能的 Python HTML/XML 解析器，我们可以利用之前学习的XPath语法，来快速的定位特定元素以及节点信息。</p>
+<p>lxml python 官方文档：http://lxml.de/index.html</p>
+<p>需要安装C语言库，可使用 pip 安装：pip install lxml</p>
+<h3 id="基本使用">基本使用：</h3>
+<p>我们可以利用他来解析HTML代码，并且在解析HTML代码的时候，如果HTML代码不规范，他会自动的进行补全。示例代码如下：</p>
+<pre><code class="language-python"># 使用 lxml 的 etree 库
+from lxml import etree 
+
+text = '''
+&lt;div&gt;
+    &lt;ul&gt;
+         &lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link1.html&quot;&gt;first item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-1&quot;&gt;&lt;a href=&quot;link2.html&quot;&gt;second item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-inactive&quot;&gt;&lt;a href=&quot;link3.html&quot;&gt;third item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-1&quot;&gt;&lt;a href=&quot;link4.html&quot;&gt;fourth item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link5.html&quot;&gt;fifth item&lt;/a&gt; # 注意，此处缺少一个 &lt;/li&gt; 闭合标签
+     &lt;/ul&gt;
+ &lt;/div&gt;
+'''
+
+#利用etree.HTML，将字符串解析为HTML文档
+html = etree.HTML(text) 
+
+# 按字符串序列化HTML文档
+result = etree.tostring(html) 
+
+print(result)
+</code></pre>
+<p>输入结果如下：</p>
+<pre><code class="language-html">&lt;html&gt;&lt;body&gt;
+&lt;div&gt;
+    &lt;ul&gt;
+         &lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link1.html&quot;&gt;first item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-1&quot;&gt;&lt;a href=&quot;link2.html&quot;&gt;second item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-inactive&quot;&gt;&lt;a href=&quot;link3.html&quot;&gt;third item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-1&quot;&gt;&lt;a href=&quot;link4.html&quot;&gt;fourth item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link5.html&quot;&gt;fifth item&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+ &lt;/div&gt;
+&lt;/body&gt;&lt;/html&gt;
+</code></pre>
+<p>可以看到。lxml会自动修改HTML代码。例子中不仅补全了li标签，还添加了body，html标签。</p>
+<h3 id="从文件中读取html代码">从文件中读取html代码：</h3>
+<p>除了直接使用字符串进行解析，lxml还支持从文件中读取内容。我们新建一个hello.html文件：</p>
+<pre><code class="language-html">&lt;!-- hello.html --&gt;
+&lt;div&gt;
+    &lt;ul&gt;
+         &lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link1.html&quot;&gt;first item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-1&quot;&gt;&lt;a href=&quot;link2.html&quot;&gt;second item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-inactive&quot;&gt;&lt;a href=&quot;link3.html&quot;&gt;&lt;span class=&quot;bold&quot;&gt;third item&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-1&quot;&gt;&lt;a href=&quot;link4.html&quot;&gt;fourth item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link5.html&quot;&gt;fifth item&lt;/a&gt;&lt;/li&gt;
+     &lt;/ul&gt;
+ &lt;/div&gt;
+</code></pre>
+<p>然后利用<code>etree.parse()</code>方法来读取文件。示例代码如下：</p>
+<pre><code class="language-python">from lxml import etree
+
+# 读取外部文件 hello.html
+html = etree.parse('hello.html')
+result = etree.tostring(html, pretty_print=True)
+
+print(result)
+</code></pre>
+<p>输入结果和之前是相同的。</p>
+<h3 id="在lxml中使用xpath语法">在lxml中使用XPath语法：</h3>
+<ol>
+<li>
+<p>获取所有li标签：</p>
+<pre><code class="language-python"> from lxml import etree
+
+ html = etree.parse('hello.html')
+ print type(html)  # 显示etree.parse() 返回类型
+
+ result = html.xpath('//li')
+
+ print(result)  # 打印&lt;li&gt;标签的元素集合
+</code></pre>
+</li>
+<li>
+<p>获取所有li元素下的所有class属性的值：</p>
+<pre><code class="language-python"> from lxml import etree
+
+ html = etree.parse('hello.html')
+ result = html.xpath('//li/@class')
+
+ print(result)
+</code></pre>
+</li>
+<li>
+<p>获取li标签下href为<code>www.baidu.com</code>的a标签：</p>
+<pre><code class="language-python"> from lxml import etree
+
+ html = etree.parse('hello.html')
+ result = html.xpath('//li/a[@href=&quot;www.baidu.com&quot;]')
+
+ print(result)
+</code></pre>
+</li>
+<li>
+<p>获取li标签下所有span标签：</p>
+<pre><code class="language-python"> from lxml import etree
+
+ html = etree.parse('hello.html')
+
+ #result = html.xpath('//li/span')
+ #注意这么写是不对的：
+ #因为 / 是用来获取子元素的，而 &lt;span&gt; 并不是 &lt;li&gt; 的子元素，所以，要用双斜杠
+
+ result = html.xpath('//li//span')
+
+ print(result)
+</code></pre>
+</li>
+<li>
+<p>获取li标签下的a标签里的所有class：</p>
+<pre><code class="language-python"> from lxml import etree
+
+ html = etree.parse('hello.html')
+ result = html.xpath('//li/a//@class')
+
+ print(result)
+</code></pre>
+</li>
+<li>
+<p>获取最后一个li的a的href属性对应的值：</p>
+<pre><code class="language-python"> from lxml import etree
+
+ html = etree.parse('hello.html')
+
+ result = html.xpath('//li[last()]/a/@href')
+ # 谓语 [last()] 可以找到最后一个元素
+
+ print(result)
+</code></pre>
+</li>
+<li>
+<p>获取倒数第二个li元素的内容：</p>
+<pre><code class="language-python"> from lxml import etree
+
+ html = etree.parse('hello.html')
+ result = html.xpath('//li[last()-1]/a')
+
+ # text 方法可以获取元素内容
+ print(result[0].text)
+</code></pre>
+</li>
+<li>
+<p>获取倒数第二个li元素的内容的第二种方式：</p>
+<pre><code class="language-python"> from lxml import etree
+
+ html = etree.parse('hello.html')
+ result = html.xpath('//li[last()-1]/a/text()')
+
+ print(result)
+</code></pre>
+</li>
+</ol>
+<h2 id="使用requests和xpath爬取电影天堂">使用requests和xpath爬取电影天堂</h2>
+<p>示例代码如下：</p>
+<pre><code class="language-python">import requests
+from lxml import etree
+
+BASE_DOMAIN = 'http://www.dytt8.net'
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+    'Referer': 'http://www.dytt8.net/html/gndy/dyzz/list_23_2.html'
+}
+
+def spider():
+    url = 'http://www.dytt8.net/html/gndy/dyzz/list_23_1.html'
+    resp = requests.get(url,headers=HEADERS)
+    # resp.content：经过编码后的字符串
+    # resp.text：没有经过编码，也就是unicode字符串
+    # text：相当于是网页中的源代码了
+    text = resp.content.decode('gbk')
+    # tree：经过lxml解析后的一个对象，以后使用这个对象的xpath方法，就可以
+    # 提取一些想要的数据了
+    tree = etree.HTML(text)
+    # xpath/beautifulsou4
+    all_a = tree.xpath(&quot;//div[@class='co_content8']//a&quot;)
+    for a in all_a:
+        title = a.xpath(&quot;text()&quot;)[0]
+        href = a.xpath(&quot;@href&quot;)[0]
+        if href.startswith('/'):
+            detail_url = BASE_DOMAIN + href
+            crawl_detail(detail_url)
+            break
+
+def crawl_detail(url):
+    resp = requests.get(url,headers=HEADERS)
+    text = resp.content.decode('gbk')
+    tree = etree.HTML(text)
+    create_time = tree.xpath(&quot;//div[@class='co_content8']/ul/text()&quot;)[0].strip()
+    imgs = tree.xpath(&quot;//div[@id='Zoom']//img/@src&quot;)
+    # 电影海报
+    cover = imgs[0]
+    # 电影截图
+    screenshoot = imgs[1]
+    # 获取span标签下所有的文本
+    infos = tree.xpath(&quot;//div[@id='Zoom']//text()&quot;)
+    for index,info in enumerate(infos):
+        if info.startswith(&quot;◎年　　代&quot;):
+            year = info.replace(&quot;◎年　　代&quot;,&quot;&quot;).strip()
+
+        if info.startswith(&quot;◎豆瓣评分&quot;):
+            douban_rating = info.replace(&quot;◎豆瓣评分&quot;,'').strip()
+            print(douban_rating)
+
+        if info.startswith(&quot;◎主　　演&quot;):
+            # 从当前位置，一直往下面遍历
+            actors = [info]
+            for x in range(index+1,len(infos)):
+                actor = infos[x]
+                if actor.startswith(&quot;◎&quot;):
+                    break
+                actors.append(actor.strip())
+            print(&quot;,&quot;.join(actors))
+
+
+if __name__ == '__main__':
+    spider()
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[3-requests库]]></title>
+        <id>https://hehelv.github.io//post/3-requests-ku</id>
+        <link href="https://hehelv.github.io//post/3-requests-ku">
+        </link>
+        <updated>2020-02-28T06:33:40.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="3-requests库">3-requests库</h1>
+<p>虽然Python的标准库中 urllib模块已经包含了平常我们使用的大多数功能，但是它的 API 使用起来让人感觉不太好，而 Requests宣传是 “HTTP for Humans”，说明使用更简洁方便。</p>
+<h2 id="安装和文档地址">安装和文档地址：</h2>
+<p>利用<code>pip</code>可以非常方便的安装：</p>
+<pre><code>pip install requests
+</code></pre>
+<p>中文文档：http://docs.python-requests.org/zh_CN/latest/index.html<br>
+github地址：https://github.com/requests/requests</p>
+<h2 id="发送get请求">发送GET请求：</h2>
+<ol>
+<li>
+<p>最简单的发送<code>get</code>请求就是通过<code>requests.get</code>来调用：</p>
+<pre><code class="language-python">response = requests.get(&quot;http://www.baidu.com/&quot;)
+</code></pre>
+</li>
+<li>
+<p>添加headers和查询参数：<br>
+如果想添加 headers，可以传入headers参数来增加请求头中的headers信息。如果要将参数放在url中传递，可以利用 params 参数。相关示例代码如下：</p>
+<pre><code class="language-python"> import requests
+
+ kw = {'wd':'中国'}
+
+ headers = {&quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36&quot;}
+
+ # params 接收一个字典或者字符串的查询参数，字典类型自动转换为url编码，不需要urlencode()
+ response = requests.get(&quot;http://www.baidu.com/s&quot;, params = kw, headers = headers)
+
+ # 查看响应内容，response.text 返回的是Unicode格式的数据
+ print(response.text)
+
+ # 查看响应内容，response.content返回的字节流数据
+ print(response.content)
+
+ # 查看完整url地址
+ print(response.url)
+
+ # 查看响应头部字符编码
+ print(response.encoding)
+
+ # 查看响应码
+ print(response.status_code)
+</code></pre>
+</li>
+</ol>
+<h2 id="发送post请求">发送POST请求：</h2>
+<ol>
+<li>
+<p>最基本的POST请求可以使用<code>post</code>方法：</p>
+<pre><code class="language-python">response = requests.post(&quot;http://www.baidu.com/&quot;,data=data)
+</code></pre>
+</li>
+<li>
+<p>传入data数据：<br>
+这时候就不要再使用<code>urlencode</code>进行编码了，直接传入一个字典进去就可以了。比如请求拉勾网的数据的代码：</p>
+<pre><code class="language-python"> import requests
+
+ url = &quot;https://www.lagou.com/jobs/positionAjax.json?city=%E6%B7%B1%E5%9C%B3&amp;needAddtionalResult=false&amp;isSchoolJob=0&quot;
+
+ headers = {
+     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
+     'Referer': 'https://www.lagou.com/jobs/list_python?labelWords=&amp;fromSearch=true&amp;suginput='
+ }
+
+ data = {
+     'first': 'true',
+     'pn': 1,
+     'kd': 'python'
+ }
+
+ resp = requests.post(url,headers=headers,data=data)
+ # 如果是json数据，直接可以调用json方法
+ print(resp.json())
+</code></pre>
+</li>
+</ol>
+<h2 id="使用代理">使用代理：</h2>
+<p>使用<code>requests</code>添加代理也非常简单，只要在请求的方法中（比如<code>get</code>或者<code>post</code>）传递<code>proxies</code>参数就可以了。示例代码如下：</p>
+<pre><code class="language-python">import requests
+
+url = &quot;http://httpbin.org/get&quot;
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
+}
+
+proxy = {
+    'http': '171.14.209.180:27829'
+}
+
+resp = requests.get(url,headers=headers,proxies=proxy)
+with open('xx.html','w',encoding='utf-8') as fp:
+    fp.write(resp.text)
+</code></pre>
+<h2 id="cookie">cookie：</h2>
+<p>如果在一个响应中包含了<code>cookie</code>，那么可以利用<code>cookies</code>属性拿到这个返回的<code>cookie</code>值：</p>
+<pre><code class="language-python">import requests
+
+url = &quot;http://www.renren.com/PLogin.do&quot;
+data = {&quot;email&quot;:&quot;970138074@qq.com&quot;,'password':&quot;pythonspider&quot;}
+resp = requests.get('http://www.baidu.com/')
+print(resp.cookies)
+print(resp.cookies.get_dict())
+</code></pre>
+<h2 id="session">session：</h2>
+<p>之前使用<code>urllib</code>库，是可以使用<code>opener</code>发送多个请求，多个请求之间是可以共享<code>cookie</code>的。那么如果使用<code>requests</code>，也要达到共享<code>cookie</code>的目的，那么可以使用<code>requests</code>库给我们提供的<code>session</code>对象。注意，这里的<code>session</code>不是web开发中的那个session，这个地方只是一个会话的对象而已。还是以登录人人网为例，使用<code>requests</code>来实现。示例代码如下：</p>
+<pre><code class="language-python">import requests
+
+url = &quot;http://www.renren.com/PLogin.do&quot;
+data = {&quot;email&quot;:&quot;970138074@qq.com&quot;,'password':&quot;pythonspider&quot;}
+headers = {
+    'User-Agent': &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36&quot;
+}
+
+# 登录
+session = requests.session()
+session.post(url,data=data,headers=headers)
+
+# 访问大鹏个人中心
+resp = session.get('http://www.renren.com/880151247/profile')
+
+print(resp.text)
+</code></pre>
+<h2 id="处理不信任的ssl证书">处理不信任的SSL证书：</h2>
+<p>对于那些已经被信任的SSL整数的网站，比如<code>https://www.baidu.com/</code>，那么使用<code>requests</code>直接就可以正常的返回响应。示例代码如下：</p>
+<pre><code class="language-python">resp = requests.get('http://www.12306.cn/mormhweb/',verify=False)
+print(resp.content.decode())
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[2-urllib库]]></title>
+        <id>https://hehelv.github.io//post/2-urllib-ku</id>
+        <link href="https://hehelv.github.io//post/2-urllib-ku">
+        </link>
+        <updated>2020-02-28T06:30:14.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="2-urllib库">2-urllib库</h1>
+<p><code>urllib</code>库是<code>Python</code>中一个最基本的网络请求库。可以模拟浏览器的行为，向指定的服务器发送一个请求，并可以保存服务器返回的数据。</p>
+<h3 id="urlopen函数">urlopen函数：</h3>
+<p>在<code>Python3</code>的<code>urllib</code>库中，所有和网络请求相关的方法，都被集到<code>urllib.request</code>模块下面了，以先来看下<code>urlopen</code>函数基本的使用：</p>
+<pre><code class="language-python">from urllib import request
+resp = request.urlopen('http://www.baidu.com')
+print(resp.read())
+</code></pre>
+<p>实际上，使用浏览器访问百度，右键查看源代码。你会发现，跟我们刚才打印出来的数据是一模一样的。也就是说，上面的三行代码就已经帮我们把百度的首页的全部代码爬下来了。一个基本的url请求对应的python代码真的非常简单。<br>
+以下对<code>urlopen</code>函数的进行详细讲解：</p>
+<ol>
+<li><code>url</code>：请求的url。</li>
+<li><code>data</code>：请求的<code>data</code>，如果设置了这个值，那么将变成<code>post</code>请求。</li>
+<li>返回值：返回值是一个<code>http.client.HTTPResponse</code>对象，这个对象是一个类文件句柄对象。有<code>read(size)</code>、<code>readline</code>、<code>readlines</code>以及<code>getcode</code>等方法。</li>
+</ol>
+<h3 id="urlretrieve函数">urlretrieve函数：</h3>
+<p>这个函数可以方便的将网页上的一个文件保存到本地。以下代码可以非常方便的将百度的首页下载到本地：</p>
+<pre><code class="language-python">from urllib import request
+request.urlretrieve('http://www.baidu.com/','baidu.html')
+</code></pre>
+<h3 id="urlencode函数">urlencode函数：</h3>
+<p>用浏览器发送请求的时候，如果url中包含了中文或者其他特殊字符，那么浏览器会自动的给我们进行编码。而如果使用代码发送请求，那么就必须手动的进行编码，这时候就应该使用<code>urlencode</code>函数来实现。<code>urlencode</code>可以把字典数据转换为<code>URL</code>编码的数据。示例代码如下：</p>
+<pre><code class="language-python">from urllib import parse
+data = {'name':'爬虫基础','greet':'hello world','age':100}
+qs = parse.urlencode(data)
+print(qs)
+</code></pre>
+<h3 id="parse_qs函数">parse_qs函数：</h3>
+<p>可以将经过编码后的url参数进行解码。示例代码如下：</p>
+<pre><code class="language-python">from urllib import parse
+qs = &quot;name=%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80&amp;greet=hello+world&amp;age=100&quot;
+print(parse.parse_qs(qs))
+</code></pre>
+<h3 id="urlparse和urlsplit">urlparse和urlsplit：</h3>
+<p>有时候拿到一个url，想要对这个url中的各个组成部分进行分割，那么这时候就可以使用<code>urlparse</code>或者是<code>urlsplit</code>来进行分割。示例代码如下：</p>
+<pre><code class="language-python">from urllib import request,parse
+
+url = 'http://www.baidu.com/s?username=python'
+
+result = parse.urlsplit(url)
+# result = parse.urlparse(url)
+
+print('scheme:',result.scheme)
+print('netloc:',result.netloc)
+print('path:',result.path)
+print('query:',result.query)
+</code></pre>
+<p><code>urlparse</code>和<code>urlsplit</code>基本上是一模一样的。唯一不一样的地方是，<code>urlparse</code>里面多了一个<code>params</code>属性，而<code>urlsplit</code>没有这个<code>params</code>属性。比如有一个<code>url</code>为：<code>url = 'http://www.baidu.com/s;hello?wd=python&amp;username=abc#1'</code>，<br>
+那么<code>urlparse</code>可以获取到<code>hello</code>，而<code>urlsplit</code>不可以获取到。<code>url</code>中的<code>params</code>也用得比较少。</p>
+<h3 id="requestrequest类">request.Request类：</h3>
+<p>如果想要在请求的时候增加一些请求头，那么就必须使用<code>request.Request</code>类来实现。比如要增加一个<code>User-Agent</code>，示例代码如下：</p>
+<pre><code class="language-python">from urllib import request
+
+headers = {
+'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'
+}
+req = request.Request(&quot;http://www.baidu.com/&quot;,headers=headers)
+resp = request.urlopen(req)
+print(resp.read())
+</code></pre>
+<h3 id="内涵段子爬虫实战作业">内涵段子爬虫实战作业：</h3>
+<ol>
+<li>url链接：http://neihanshequ.com/bar/1/</li>
+<li>要求：能爬取一页的数据就可以了。</li>
+</ol>
+<h3 id="proxyhandler处理器代理设置">ProxyHandler处理器（代理设置）</h3>
+<p>很多网站会检测某一段时间某个IP的访问次数(通过流量统计，系统日志等)，如果访问次数多的不像正常人，它会禁止这个IP的访问。<br>
+所以我们可以设置一些代理服务器，每隔一段时间换一个代理，就算IP被禁止，依然可以换个IP继续爬取。<br>
+urllib中通过ProxyHandler来设置使用代理服务器，下面代码说明如何使用自定义opener来使用代理：</p>
+<pre><code class="language-python">from urllib import request
+
+# 这个是没有使用代理的
+# resp = request.urlopen('http://httpbin.org/get')
+# print(resp.read().decode(&quot;utf-8&quot;))
+
+# 这个是使用了代理的
+handler = request.ProxyHandler({&quot;http&quot;:&quot;218.66.161.88:31769&quot;})
+
+opener = request.build_opener(handler)
+req = request.Request(&quot;http://httpbin.org/ip&quot;)
+resp = opener.open(req)
+print(resp.read())
+</code></pre>
+<p>常用的代理有：</p>
+<ul>
+<li>西刺免费代理IP：http://www.xicidaili.com/</li>
+<li>快代理：http://www.kuaidaili.com/</li>
+<li>代理云：http://www.dailiyun.com/</li>
+</ul>
+<h3 id="什么是cookie">什么是cookie：</h3>
+<p>在网站中，http请求是无状态的。也就是说即使第一次和服务器连接后并且登录成功后，第二次请求服务器依然不能知道当前请求是哪个用户。<code>cookie</code>的出现就是为了解决这个问题，第一次登录后服务器返回一些数据（cookie）给浏览器，然后浏览器保存在本地，当该用户发送第二次请求的时候，就会自动的把上次请求存储的<code>cookie</code>数据自动的携带给服务器，服务器通过浏览器携带的数据就能判断当前用户是哪个了。<code>cookie</code>存储的数据量有限，不同的浏览器有不同的存储大小，但一般不超过4KB。因此使用<code>cookie</code>只能存储一些小量的数据。</p>
+<h4 id="cookie的格式">cookie的格式：</h4>
+<pre><code>Set-Cookie: NAME=VALUE；Expires/Max-age=DATE；Path=PATH；Domain=DOMAIN_NAME；SECURE
+</code></pre>
+<p>参数意义：</p>
+<ul>
+<li>NAME：cookie的名字。</li>
+<li>VALUE：cookie的值。</li>
+<li>Expires：cookie的过期时间。</li>
+<li>Path：cookie作用的路径。</li>
+<li>Domain：cookie作用的域名。</li>
+<li>SECURE：是否只在https协议下起作用。</li>
+</ul>
+<h3 id="使用cookielib库和httpcookieprocessor模拟登录">使用cookielib库和HTTPCookieProcessor模拟登录：</h3>
+<p>Cookie 是指网站服务器为了辨别用户身份和进行Session跟踪，而储存在用户浏览器上的文本文件，Cookie可以保持登录信息到用户下次与服务器的会话。<br>
+这里以人人网为例。人人网中，要访问某个人的主页，必须先登录才能访问，登录说白了就是要有cookie信息。那么如果我们想要用代码的方式访问，就必须要有正确的cookie信息才能访问。解决方案有两种，第一种是使用浏览器访问，然后将cookie信息复制下来，放到headers中。示例代码如下：</p>
+<pre><code class="language-python">from urllib import request
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
+    'Cookie': 'anonymid=jacdwz2x-8bjldx; depovince=GW; _r01_=1; _ga=GA1.2.1455063316.1511436360; _gid=GA1.2.862627163.1511436360; wp=1; JSESSIONID=abczwY8ecd4xz8RJcyP-v; jebecookies=d4497791-9d41-4269-9e2b-3858d4989785|||||; ick_login=884e75d4-f361-4cff-94bb-81fe6c42b220; _de=EA5778F44555C091303554EBBEB4676C696BF75400CE19CC; p=61a3c7d0d4b2d1e991095353f83fa2141; first_login_flag=1; ln_uact=970138074@qq.com; ln_hurl=http://hdn.xnimg.cn/photos/hdn121/20170428/1700/main_nhiB_aebd0000854a1986.jpg; t=3dd84a3117737e819dd2c32f1cdb91d01; societyguester=3dd84a3117737e819dd2c32f1cdb91d01; id=443362311; xnsid=169efdc0; loginfrom=syshome; ch_id=10016; jebe_key=9c062f5a-4335-4a91-bf7a-970f8b86a64e%7Ca022c303305d1b2ab6b5089643e4b5de%7C1511449232839%7C1; wp_fold=0'
+}
+
+url = 'http://www.renren.com/880151247/profile'
+
+req = request.Request(url,headers=headers)
+resp = request.urlopen(req)
+with open('renren.html','w') as fp:
+    fp.write(resp.read().decode('utf-8'))
+</code></pre>
+<p>但是每次在访问需要cookie的页面都要从浏览器中复制cookie比较麻烦。在Python处理Cookie，一般是通过<code>http.cookiejar</code>模块和<code>urllib模块的HTTPCookieProcessor</code>处理器类一起使用。<code>http.cookiejar</code>模块主要作用是提供用于存储cookie的对象。而<code>HTTPCookieProcessor</code>处理器主要作用是处理这些cookie对象，并构建handler对象。</p>
+<h4 id="httpcookiejar模块">http.cookiejar模块：</h4>
+<p>该模块主要的类有CookieJar、FileCookieJar、MozillaCookieJar、LWPCookieJar。这四个类的作用分别如下：</p>
+<ol>
+<li>CookieJar：管理HTTP cookie值、存储HTTP请求生成的cookie、向传出的HTTP请求添加cookie的对象。整个cookie都存储在内存中，对CookieJar实例进行垃圾回收后cookie也将丢失。</li>
+<li>FileCookieJar (filename,delayload=None,policy=None)：从CookieJar派生而来，用来创建FileCookieJar实例，检索cookie信息并将cookie存储到文件中。filename是存储cookie的文件名。delayload为True时支持延迟访问访问文件，即只有在需要时才读取文件或在文件中存储数据。</li>
+<li>MozillaCookieJar (filename,delayload=None,policy=None)：从FileCookieJar派生而来，创建与Mozilla浏览器 cookies.txt兼容的FileCookieJar实例。</li>
+<li>LWPCookieJar (filename,delayload=None,policy=None)：从FileCookieJar派生而来，创建与libwww-perl标准的 Set-Cookie3 文件格式兼容的FileCookieJar实例。</li>
+</ol>
+<h4 id="登录人人网">登录人人网：</h4>
+<p>利用<code>http.cookiejar</code>和<code>request.HTTPCookieProcessor</code>登录人人网。相关示例代码如下：</p>
+<pre><code class="language-python">from urllib import request,parse
+from http.cookiejar import CookieJar
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'
+}
+
+def get_opener():
+    cookiejar = CookieJar()
+    handler = request.HTTPCookieProcessor(cookiejar)
+    opener = request.build_opener(handler)
+    return opener
+
+def login_renren(opener):
+    data = {&quot;email&quot;: &quot;970138074@qq.com&quot;, &quot;password&quot;: &quot;pythonspider&quot;}
+    data = parse.urlencode(data).encode('utf-8')
+    login_url = &quot;http://www.renren.com/PLogin.do&quot;
+    req = request.Request(login_url, headers=headers, data=data)
+    opener.open(req)
+
+def visit_profile(opener):
+    url = 'http://www.renren.com/880151247/profile'
+    req = request.Request(url,headers=headers)
+    resp = opener.open(req)
+    with open('renren.html','w') as fp:
+        fp.write(resp.read().decode(&quot;utf-8&quot;))
+
+if __name__ == '__main__':
+    opener = get_opener()
+    login_renren(opener)
+    visit_profile(opener)
+</code></pre>
+<h4 id="保存cookie到本地">保存cookie到本地：</h4>
+<p>保存<code>cookie</code>到本地，可以使用<code>cookiejar</code>的<code>save</code>方法，并且需要指定一个文件名：</p>
+<pre><code class="language-python">from urllib import request
+from http.cookiejar import MozillaCookieJar
+
+cookiejar = MozillaCookieJar(&quot;cookie.txt&quot;)
+handler = request.HTTPCookieProcessor(cookiejar)
+opener = request.build_opener(handler)
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'
+}
+req = request.Request('http://httpbin.org/cookies',headers=headers)
+
+resp = opener.open(req)
+print(resp.read())
+cookiejar.save(ignore_discard=True,ignore_expires=True)
+</code></pre>
+<h4 id="从本地加载cookie">从本地加载cookie：</h4>
+<p>从本地加载<code>cookie</code>，需要使用<code>cookiejar</code>的<code>load</code>方法，并且也需要指定方法：</p>
+<pre><code class="language-python">from urllib import request
+from http.cookiejar import MozillaCookieJar
+
+cookiejar = MozillaCookieJar(&quot;cookie.txt&quot;)
+cookiejar.load(ignore_expires=True,ignore_discard=True)
+handler = request.HTTPCookieProcessor(cookiejar)
+opener = request.build_opener(handler)
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'
+}
+req = request.Request('http://httpbin.org/cookies',headers=headers)
+
+resp = opener.open(req)
+print(resp.read())
+</code></pre>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="2-urllib库">2-urllib库</h1>
+<p><code>urllib</code>库是<code>Python</code>中一个最基本的网络请求库。可以模拟浏览器的行为，向指定的服务器发送一个请求，并可以保存服务器返回的数据。</p>
+<h3 id="urlopen函数">urlopen函数：</h3>
+<p>在<code>Python3</code>的<code>urllib</code>库中，所有和网络请求相关的方法，都被集到<code>urllib.request</code>模块下面了，以先来看下<code>urlopen</code>函数基本的使用：</p>
+<pre><code class="language-python">from urllib import request
+resp = request.urlopen('http://www.baidu.com')
+print(resp.read())
+</code></pre>
+<p>实际上，使用浏览器访问百度，右键查看源代码。你会发现，跟我们刚才打印出来的数据是一模一样的。也就是说，上面的三行代码就已经帮我们把百度的首页的全部代码爬下来了。一个基本的url请求对应的python代码真的非常简单。<br>
+以下对<code>urlopen</code>函数的进行详细讲解：</p>
+<ol>
+<li><code>url</code>：请求的url。</li>
+<li><code>data</code>：请求的<code>data</code>，如果设置了这个值，那么将变成<code>post</code>请求。</li>
+<li>返回值：返回值是一个<code>http.client.HTTPResponse</code>对象，这个对象是一个类文件句柄对象。有<code>read(size)</code>、<code>readline</code>、<code>readlines</code>以及<code>getcode</code>等方法。</li>
+</ol>
+<h3 id="urlretrieve函数">urlretrieve函数：</h3>
+<p>这个函数可以方便的将网页上的一个文件保存到本地。以下代码可以非常方便的将百度的首页下载到本地：</p>
+<pre><code class="language-python">from urllib import request
+request.urlretrieve('http://www.baidu.com/','baidu.html')
+</code></pre>
+<h3 id="urlencode函数">urlencode函数：</h3>
+<p>用浏览器发送请求的时候，如果url中包含了中文或者其他特殊字符，那么浏览器会自动的给我们进行编码。而如果使用代码发送请求，那么就必须手动的进行编码，这时候就应该使用<code>urlencode</code>函数来实现。<code>urlencode</code>可以把字典数据转换为<code>URL</code>编码的数据。示例代码如下：</p>
+<pre><code class="language-python">from urllib import parse
+data = {'name':'爬虫基础','greet':'hello world','age':100}
+qs = parse.urlencode(data)
+print(qs)
+</code></pre>
+<h3 id="parse_qs函数">parse_qs函数：</h3>
+<p>可以将经过编码后的url参数进行解码。示例代码如下：</p>
+<pre><code class="language-python">from urllib import parse
+qs = &quot;name=%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80&amp;greet=hello+world&amp;age=100&quot;
+print(parse.parse_qs(qs))
+</code></pre>
+<h3 id="urlparse和urlsplit">urlparse和urlsplit：</h3>
+<p>有时候拿到一个url，想要对这个url中的各个组成部分进行分割，那么这时候就可以使用<code>urlparse</code>或者是<code>urlsplit</code>来进行分割。示例代码如下：</p>
+<pre><code class="language-python">from urllib import request,parse
+
+url = 'http://www.baidu.com/s?username=python'
+
+result = parse.urlsplit(url)
+# result = parse.urlparse(url)
+
+print('scheme:',result.scheme)
+print('netloc:',result.netloc)
+print('path:',result.path)
+print('query:',result.query)
+</code></pre>
+<p><code>urlparse</code>和<code>urlsplit</code>基本上是一模一样的。唯一不一样的地方是，<code>urlparse</code>里面多了一个<code>params</code>属性，而<code>urlsplit</code>没有这个<code>params</code>属性。比如有一个<code>url</code>为：<code>url = 'http://www.baidu.com/s;hello?wd=python&amp;username=abc#1'</code>，<br>
+那么<code>urlparse</code>可以获取到<code>hello</code>，而<code>urlsplit</code>不可以获取到。<code>url</code>中的<code>params</code>也用得比较少。</p>
+<h3 id="requestrequest类">request.Request类：</h3>
+<p>如果想要在请求的时候增加一些请求头，那么就必须使用<code>request.Request</code>类来实现。比如要增加一个<code>User-Agent</code>，示例代码如下：</p>
+<pre><code class="language-python">from urllib import request
+
+headers = {
+'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'
+}
+req = request.Request(&quot;http://www.baidu.com/&quot;,headers=headers)
+resp = request.urlopen(req)
+print(resp.read())
+</code></pre>
+<h3 id="内涵段子爬虫实战作业">内涵段子爬虫实战作业：</h3>
+<ol>
+<li>url链接：http://neihanshequ.com/bar/1/</li>
+<li>要求：能爬取一页的数据就可以了。</li>
+</ol>
+<h3 id="proxyhandler处理器代理设置">ProxyHandler处理器（代理设置）</h3>
+<p>很多网站会检测某一段时间某个IP的访问次数(通过流量统计，系统日志等)，如果访问次数多的不像正常人，它会禁止这个IP的访问。<br>
+所以我们可以设置一些代理服务器，每隔一段时间换一个代理，就算IP被禁止，依然可以换个IP继续爬取。<br>
+urllib中通过ProxyHandler来设置使用代理服务器，下面代码说明如何使用自定义opener来使用代理：</p>
+<pre><code class="language-python">from urllib import request
+
+# 这个是没有使用代理的
+# resp = request.urlopen('http://httpbin.org/get')
+# print(resp.read().decode(&quot;utf-8&quot;))
+
+# 这个是使用了代理的
+handler = request.ProxyHandler({&quot;http&quot;:&quot;218.66.161.88:31769&quot;})
+
+opener = request.build_opener(handler)
+req = request.Request(&quot;http://httpbin.org/ip&quot;)
+resp = opener.open(req)
+print(resp.read())
+</code></pre>
+<p>常用的代理有：</p>
+<ul>
+<li>西刺免费代理IP：http://www.xicidaili.com/</li>
+<li>快代理：http://www.kuaidaili.com/</li>
+<li>代理云：http://www.dailiyun.com/</li>
+</ul>
+<h3 id="什么是cookie">什么是cookie：</h3>
+<p>在网站中，http请求是无状态的。也就是说即使第一次和服务器连接后并且登录成功后，第二次请求服务器依然不能知道当前请求是哪个用户。<code>cookie</code>的出现就是为了解决这个问题，第一次登录后服务器返回一些数据（cookie）给浏览器，然后浏览器保存在本地，当该用户发送第二次请求的时候，就会自动的把上次请求存储的<code>cookie</code>数据自动的携带给服务器，服务器通过浏览器携带的数据就能判断当前用户是哪个了。<code>cookie</code>存储的数据量有限，不同的浏览器有不同的存储大小，但一般不超过4KB。因此使用<code>cookie</code>只能存储一些小量的数据。</p>
+<h4 id="cookie的格式">cookie的格式：</h4>
+<pre><code>Set-Cookie: NAME=VALUE；Expires/Max-age=DATE；Path=PATH；Domain=DOMAIN_NAME；SECURE
+</code></pre>
+<p>参数意义：</p>
+<ul>
+<li>NAME：cookie的名字。</li>
+<li>VALUE：cookie的值。</li>
+<li>Expires：cookie的过期时间。</li>
+<li>Path：cookie作用的路径。</li>
+<li>Domain：cookie作用的域名。</li>
+<li>SECURE：是否只在https协议下起作用。</li>
+</ul>
+<h3 id="使用cookielib库和httpcookieprocessor模拟登录">使用cookielib库和HTTPCookieProcessor模拟登录：</h3>
+<p>Cookie 是指网站服务器为了辨别用户身份和进行Session跟踪，而储存在用户浏览器上的文本文件，Cookie可以保持登录信息到用户下次与服务器的会话。<br>
+这里以人人网为例。人人网中，要访问某个人的主页，必须先登录才能访问，登录说白了就是要有cookie信息。那么如果我们想要用代码的方式访问，就必须要有正确的cookie信息才能访问。解决方案有两种，第一种是使用浏览器访问，然后将cookie信息复制下来，放到headers中。示例代码如下：</p>
+<pre><code class="language-python">from urllib import request
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
+    'Cookie': 'anonymid=jacdwz2x-8bjldx; depovince=GW; _r01_=1; _ga=GA1.2.1455063316.1511436360; _gid=GA1.2.862627163.1511436360; wp=1; JSESSIONID=abczwY8ecd4xz8RJcyP-v; jebecookies=d4497791-9d41-4269-9e2b-3858d4989785|||||; ick_login=884e75d4-f361-4cff-94bb-81fe6c42b220; _de=EA5778F44555C091303554EBBEB4676C696BF75400CE19CC; p=61a3c7d0d4b2d1e991095353f83fa2141; first_login_flag=1; ln_uact=970138074@qq.com; ln_hurl=http://hdn.xnimg.cn/photos/hdn121/20170428/1700/main_nhiB_aebd0000854a1986.jpg; t=3dd84a3117737e819dd2c32f1cdb91d01; societyguester=3dd84a3117737e819dd2c32f1cdb91d01; id=443362311; xnsid=169efdc0; loginfrom=syshome; ch_id=10016; jebe_key=9c062f5a-4335-4a91-bf7a-970f8b86a64e%7Ca022c303305d1b2ab6b5089643e4b5de%7C1511449232839%7C1; wp_fold=0'
+}
+
+url = 'http://www.renren.com/880151247/profile'
+
+req = request.Request(url,headers=headers)
+resp = request.urlopen(req)
+with open('renren.html','w') as fp:
+    fp.write(resp.read().decode('utf-8'))
+</code></pre>
+<p>但是每次在访问需要cookie的页面都要从浏览器中复制cookie比较麻烦。在Python处理Cookie，一般是通过<code>http.cookiejar</code>模块和<code>urllib模块的HTTPCookieProcessor</code>处理器类一起使用。<code>http.cookiejar</code>模块主要作用是提供用于存储cookie的对象。而<code>HTTPCookieProcessor</code>处理器主要作用是处理这些cookie对象，并构建handler对象。</p>
+<h4 id="httpcookiejar模块">http.cookiejar模块：</h4>
+<p>该模块主要的类有CookieJar、FileCookieJar、MozillaCookieJar、LWPCookieJar。这四个类的作用分别如下：</p>
+<ol>
+<li>CookieJar：管理HTTP cookie值、存储HTTP请求生成的cookie、向传出的HTTP请求添加cookie的对象。整个cookie都存储在内存中，对CookieJar实例进行垃圾回收后cookie也将丢失。</li>
+<li>FileCookieJar (filename,delayload=None,policy=None)：从CookieJar派生而来，用来创建FileCookieJar实例，检索cookie信息并将cookie存储到文件中。filename是存储cookie的文件名。delayload为True时支持延迟访问访问文件，即只有在需要时才读取文件或在文件中存储数据。</li>
+<li>MozillaCookieJar (filename,delayload=None,policy=None)：从FileCookieJar派生而来，创建与Mozilla浏览器 cookies.txt兼容的FileCookieJar实例。</li>
+<li>LWPCookieJar (filename,delayload=None,policy=None)：从FileCookieJar派生而来，创建与libwww-perl标准的 Set-Cookie3 文件格式兼容的FileCookieJar实例。</li>
+</ol>
+<h4 id="登录人人网">登录人人网：</h4>
+<p>利用<code>http.cookiejar</code>和<code>request.HTTPCookieProcessor</code>登录人人网。相关示例代码如下：</p>
+<pre><code class="language-python">from urllib import request,parse
+from http.cookiejar import CookieJar
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'
+}
+
+def get_opener():
+    cookiejar = CookieJar()
+    handler = request.HTTPCookieProcessor(cookiejar)
+    opener = request.build_opener(handler)
+    return opener
+
+def login_renren(opener):
+    data = {&quot;email&quot;: &quot;970138074@qq.com&quot;, &quot;password&quot;: &quot;pythonspider&quot;}
+    data = parse.urlencode(data).encode('utf-8')
+    login_url = &quot;http://www.renren.com/PLogin.do&quot;
+    req = request.Request(login_url, headers=headers, data=data)
+    opener.open(req)
+
+def visit_profile(opener):
+    url = 'http://www.renren.com/880151247/profile'
+    req = request.Request(url,headers=headers)
+    resp = opener.open(req)
+    with open('renren.html','w') as fp:
+        fp.write(resp.read().decode(&quot;utf-8&quot;))
+
+if __name__ == '__main__':
+    opener = get_opener()
+    login_renren(opener)
+    visit_profile(opener)
+</code></pre>
+<h4 id="保存cookie到本地">保存cookie到本地：</h4>
+<p>保存<code>cookie</code>到本地，可以使用<code>cookiejar</code>的<code>save</code>方法，并且需要指定一个文件名：</p>
+<pre><code class="language-python">from urllib import request
+from http.cookiejar import MozillaCookieJar
+
+cookiejar = MozillaCookieJar(&quot;cookie.txt&quot;)
+handler = request.HTTPCookieProcessor(cookiejar)
+opener = request.build_opener(handler)
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'
+}
+req = request.Request('http://httpbin.org/cookies',headers=headers)
+
+resp = opener.open(req)
+print(resp.read())
+cookiejar.save(ignore_discard=True,ignore_expires=True)
+</code></pre>
+<h4 id="从本地加载cookie">从本地加载cookie：</h4>
+<p>从本地加载<code>cookie</code>，需要使用<code>cookiejar</code>的<code>load</code>方法，并且也需要指定方法：</p>
+<pre><code class="language-python">from urllib import request
+from http.cookiejar import MozillaCookieJar
+
+cookiejar = MozillaCookieJar(&quot;cookie.txt&quot;)
+cookiejar.load(ignore_expires=True,ignore_discard=True)
+handler = request.HTTPCookieProcessor(cookiejar)
+opener = request.build_opener(handler)
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'
+}
+req = request.Request('http://httpbin.org/cookies',headers=headers)
+
+resp = opener.open(req)
+print(resp.read())
+</code></pre>
+<!-- more -->
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[1-http协议与chrome抓包工具]]></title>
         <id>https://hehelv.github.io//post/1-http-xie-yi-yu-chrome-zhua-bao-gong-ju</id>
         <link href="https://hehelv.github.io//post/1-http-xie-yi-yu-chrome-zhua-bao-gong-ju">
         </link>
         <updated>2020-02-28T06:20:21.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="2-http协议和chrome抓包工具">2-http协议和Chrome抓包工具</h1>
+        <content type="html"><![CDATA[<h1 id="1-http协议和chrome抓包工具">1-http协议和Chrome抓包工具</h1>
 <h2 id="什么是http和https协议">什么是http和https协议：</h2>
 <p>HTTP协议：全称是<code>HyperText Transfer Protocol</code>，中文意思是超文本传输协议，是一种发布和接收HTML页面的方法。服务器端口号是<code>80</code>端口。 HTTPS协议：是HTTP协议的加密版本，在HTTP下加入了SSL层。服务器端口号是<code>443</code>端口。</p>
 <h2 id="在浏览器中发送一个http请求的过程">在浏览器中发送一个http请求的过程：</h2>
@@ -645,224 +2258,6 @@ int main()
 7
 min:4 max:8
 */
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[DFS（Depth first search）与BFS（Breadth First Search）]]></title>
-        <id>https://hehelv.github.io//post/dfsdepth-first-search</id>
-        <link href="https://hehelv.github.io//post/dfsdepth-first-search">
-        </link>
-        <updated>2020-01-09T09:12:10.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="深度优先搜索模型">深度优先搜索模型：</h1>
-<pre><code class="language-c">void dfs(int step)
-{
-    判断边界
-    尝试每一种可能 for(i=1;i&lt;=n;i++)
-    {
-        继续下一步 dfs(step+1);
-    }
-    返回
-}
-</code></pre>
-<p>对于深度优先搜索，首先要明白当前怎么做，然后直接dfs(step+1)，做下一步即可。</p>
-<h1 id="bfs">BFS：</h1>
-<p>通常用来解决最小路径，最少操作类问题，</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[快速排序（quicksort）]]></title>
-        <id>https://hehelv.github.io//post/kuai-su-pai-xu</id>
-        <link href="https://hehelv.github.io//post/kuai-su-pai-xu">
-        </link>
-        <updated>2020-01-04T07:35:31.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>👏这个笔记是看了《啊哈！算法》之后，自己的一些小总结。</strong></p>
-<h1 id="快速排序">快速排序：</h1>
-<ul>
-<li>还是通过一个例子来说明：</li>
-<li>有这样一个序列：3，2，1，5，4</li>
-<li>要求从小到大排序</li>
-<li>快速排序的想法：</li>
-<li>1.先找一个基准数，这里默认为第一个数3；</li>
-<li>2.然后将比3小的数移到3的左边，比3大的数移到3的右边；</li>
-<li>3.后面用递归将3左边和右边的数组在实现一次上述操作。</li>
-<li><img src="https://hehelv.github.io//post-images/1578128045451.gif" alt=""></li>
-</ul>
-<h1 id="代码如下">代码如下：</h1>
-<pre><code class="language-c">#include&lt;stdio.h&gt;
-
-int a[101],n;
-
-void quicksort(int left,int right)
-	{
-		int i,j,t,temp;
-		i = left;
-		j = right;
-		if(i &gt; j)
-			return;
-		temp = a[left];
-		
-		while(i!=j)
-		{
-			while(a[j]&gt;=temp &amp;&amp; i&lt;j)
-			{
-				j--;
-			}
-			while(a[i]&lt;=temp &amp;&amp; i&lt;j)
-			{
-				i++;
-			}
-			if(i!=j)
-			{
-				t = a[i];
-				a[i] = a[j];
-				a[j] = t;
-			}
-		}
-
-		
-		a[left] = a[i];
-		a[i] = temp;
-		
-		quicksort(left,i-1);
-		quicksort(i+1,right);
-	}
-
-int main()
-{
-	int i,j;
-	scanf(&quot;%d&quot;,&amp;n);
-	for(i=1;i&lt;=n;i++)
-	{
-		scanf(&quot;%d&quot;,&amp;a[i]);
-	}
-	quicksort(1,n);
-	for(i=1;i&lt;=n;i++)
-	{
-		printf(&quot;%d &quot;,a[i]);
-	}
-	return 0;
-}
-/*
-示例输出：
-5
-3 3 1 2 5
-1 2 3 3 5
-
-5
-3 2 1 5 4
-1 2 3 4 5
-*/
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[简陋的桶排序，冒泡排序。。。]]></title>
-        <id>https://hehelv.github.io//post/algorithm</id>
-        <link href="https://hehelv.github.io//post/algorithm">
-        </link>
-        <updated>2020-01-01T04:02:55.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>👏这个笔记是看了《啊哈！算法》之后，自己的一些小总结。</strong></p>
-<h1 id="1一个简陋的桶排序">1.一个简陋的桶排序：</h1>
-<p>在说桶排序算法时，我们来通过一个例子来大概了解一下桶排序是什么：</p>
-<ul>
-<li>对8，5，5，3，2这五个数进行从大到小的排序：</li>
-<li><strong>想法如下：</strong><br>
-1.构建一个数组a[10]，并将其<strong>置零</strong>。<br>
-2.对每个出现的数，在数组对应的位置上加一。（出现一次就加一，例子中5出现了两次，那么a[5] = 2）<br>
-3.然后将数组倒序输出，如果<strong>a[i] = 0</strong>，则不输出，若不为0则输出i，且输出一次将数组减一。</li>
-<li><strong>代码如下：</strong><pre><code class="language-c++">#include &lt;stdio.h&gt;
-int main()
-{
-int a[11],i,j,t;
-for(i=0;i&lt;=10;i++)
-    a[i]=0; //初始化为0
-for(i=1;i&lt;=5;i++) //循环读入5个数
-{
-    scanf(&quot;%d&quot;,&amp;t); //把每一个数读到变量t中
-    a[t]++; //进行计数
-}
-for(i=0;i&lt;=10;i++) //依次判断a[0]~a[10]
-    for(j=1;j&lt;=a[i];j++) //出现了几次就打印几次
-        printf(&quot;%d &quot;,i);
-return 0;
-}
-</code></pre>
-</li>
-<li>但这个方法明显有很大的缺陷：</li>
-<li>1.例如当要求排序的数只有3,5,999时，我们却需要创建一个a[1000]的数组，造成了极大的浪费；</li>
-<li>2.但要求比较的数不止是整数时，也不能使用这个算法；</li>
-<li>所以这里叫做<strong>简陋的桶排序</strong>，真正的桶排序会解决上述问题，这里先不介绍。</li>
-</ul>
-<h1 id="2冒泡排序">2.冒泡排序：</h1>
-<p>依旧从一个例子出发：</p>
-<ul>
-<li>
-<p>对12，35，99，18，76这五个数进行排序：</p>
-</li>
-<li>
-<p>冒泡的基本思想是：<strong>每比较相邻的两个元素，如果他们顺序错误就把他们交换过来。</strong></p>
-</li>
-<li>
-<p>在例子中，将第一位与第二位比较，12小，交换位置，35到第一位，12到第二位，将第二位继续与第三位相比，再次交换顺序，一直进行下去，直到12在第五位（即最后一位），这个数组会变成：35，99，18，76，12（此时最小的数已到达第五位了）</p>
-</li>
-<li>
-<p>再进行第二次冒泡，将第一位与第二位比较，35小，交换顺序，第二位与第三位比较，18小，不交换顺序，第三位与第四位比较，18小，交换顺序，此时数组为：99，35，76，18，12（此时第二小的数已经到达第四位）</p>
-</li>
-<li>
-<p>再对后面的数进行操作，数组最终会变成：99，76，35，18，12</p>
-</li>
-<li>
-<figure data-type="image" tabindex="1"><img src="https://hehelv.github.io//post-images/1578132651155.gif" alt=""></figure>
-</li>
-<li>
-<p><strong>我们来总结一下：</strong></p>
-</li>
-<li>
-<p>1.每进行一次冒泡，就有一个数归位，例如第一次冒泡只能将第五位归位，第二次将第四位归位，后面以此类推。</p>
-</li>
-<li>
-<p>2.对于n个数的排序，我们只需要将n-1个数进行归位。</p>
-</li>
-<li>
-<p>依照这个思想，对于任意n个数的排序，代码如下：</p>
-</li>
-</ul>
-<pre><code class="language-c++">#include&lt;stdio.h&gt;
-int main()
-{
-	int a[100],i,j,t,n;
-	scanf(&quot;%d&quot;,&amp;n);     //输入一个数n，表示接下来有n个数
-	for(i=1;i&lt;=n;i++)   //循环读入n个数到数组a中
-	{
-		scanf(&quot;%d&quot;,&amp;a[i]);
-	}
-    //冒泡排序的核心部分
-	for(i=1;i&lt;=n-1;i++)     //n个数排序，只用进行n-1趟
-	{
-		for(j=1;j&lt;=n-i;j++)
-		{
-			if(a[j]&lt;a[j+1])
-			{
-				t = a[j+1]; a[j+1] = a[j]; a[j] = t;    //比较大小并交换
-				}	
-		}
-	}
-	for(i=1;i&lt;=n;i++)
-		printf(&quot;%d &quot;,a[i]);
-	return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hello world]]></title>
-        <id>https://hehelv.github.io//post/hello-world</id>
-        <link href="https://hehelv.github.io//post/hello-world">
-        </link>
-        <updated>2020-01-01T03:39:09.000Z</updated>
-        <content type="html"><![CDATA[<p>😀<strong>First time write here!</strong></p>
-<pre><code>    建Blog的目的就是为了用一些简短的方式把自己学的知识记录下来，以及写些琐碎的想法，其他别无他想，其实能把这两点做好就已经十分满足了。                          ————2020.01.01
 </code></pre>
 ]]></content>
     </entry>

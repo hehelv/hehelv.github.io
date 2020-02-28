@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+<title>
+    💤ISpiker
+</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta name="author" content="💤ISpiker">
+<meta name="description" content="The proof is in the pudding.">
+<meta name="keywords" content="The proof is in the pudding.">
+<link rel="stylesheet" href="https://hehelv.github.io//media/css/main.css" />
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+<script src="https://hehelv.github.io//media/script/tocbot.min.js"></script>
+<script src="https://hehelv.github.io//media/script/script.js"></script>
+<!--<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/default.min.css">
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>-->
+<script src="https://cdn.bootcss.com/highlight.js/9.13.1/highlight.min.js"></script>
+<link href="https://cdn.bootcss.com/highlight.js/9.13.1/styles/atelier-estuary-dark.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo">
+                <a href="https://hehelv.github.io/">
+                    💤ISpiker
+                </a>
+            </div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">
+                        Home
+                    </a>
+                    
+                    <a class="menu-item" href="/archives">
+                        Archives
+                    </a>
+                    
+                    <a class="menu-item" href="/tags">
+                        Tags
+                    </a>
+                    
+                    <a class="menu-item" href="/post/about">
+                        About
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/algorithm">
+                        Algorithm
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/networking">
+                        Computer Networking
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/Spider Note">
+                        Spider Note
+                    </a>
+                    
+                        <input id="switch_default" type="checkbox" class="switch_default">
+                        <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+        <nav class="navbar-mobile" id="nav-mobile">
+            <div class="container">
+                <div class="navbar-header">
+                    <div>
+                        <a href="https://hehelv.github.io/">
+                            💤ISpiker
+                        </a>
+                        <a id="mobile-toggle-theme">&nbsp;Light</a>
+                    </div>
+                    <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+                </div>
+                <div class="menu" id="mobile-menu">
+                    
+                        <a class="menu-item" href="/">
+                            Home
+                        </a>
+                        
+                        <a class="menu-item" href="/archives">
+                            Archives
+                        </a>
+                        
+                        <a class="menu-item" href="/tags">
+                            Tags
+                        </a>
+                        
+                        <a class="menu-item" href="/post/about">
+                            About
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/algorithm">
+                            Algorithm
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/networking">
+                            Computer Networking
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/Spider Note">
+                            Spider Note
+                        </a>
+                        
+                </div>
+            </div>
+        </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if (toggleMenu.classList.contains("active")) {
+            toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        } else {
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+                    <article class="post-wrap">
+                        <header class="post-header">
+                            <h1 class="post-title">
+                                4-xpath语法与lxml库
+                            </h1>
+                            <div class="post-meta">
+                                Author:
+                                <a itemprop="author" rel="author" href="/">
+                                    💤ISpiker
+                                </a>
+                                <span class="post-time">
+                                Date: <a href="#">2020-02-28</a>
+                            </span>
+                                
+                                    <span class="post-category">
+                                Category:
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note">Python爬虫笔记</a>
+                                
+                            </span>
+                                    
+                            </div>
+                        </header>
+
+                        <div class="post-content">
+                            <h1 id="4-xpath语法与lxml库">4-xpath语法与lxml库</h1>
+<h2 id="什么是xpath">什么是XPath？</h2>
+<p>xpath（XML Path Language）是一门在XML和HTML文档中查找信息的语言，可用来在XML和HTML文档中对元素和属性进行遍历。</p>
+<h2 id="xpath开发工具">XPath开发工具</h2>
+<ol>
+<li>Chrome插件XPath Helper。</li>
+<li>Firefox插件Try XPath。</li>
+</ol>
+<h2 id="xpath语法">XPath语法</h2>
+<h3 id="选取节点">选取节点：</h3>
+<p>XPath 使用路径表达式来选取 XML 文档中的节点或者节点集。这些路径表达式和我们在常规的电脑文件系统中看到的表达式非常相似。</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>描述</th>
+<th>示例</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nodename</td>
+<td>选取此节点的所有子节点</td>
+<td>bookstore</td>
+<td>选取bookstore下所有的子节点</td>
+</tr>
+<tr>
+<td>/</td>
+<td>如果是在最前面，代表从根节点选取。否则选择某节点下的某个节点</td>
+<td>/bookstore</td>
+<td>选取根元素下所有的bookstore节点</td>
+</tr>
+<tr>
+<td>//</td>
+<td>从全局节点中选择节点，随便在哪个位置</td>
+<td>//book</td>
+<td>从全局节点中找到所有的book节点</td>
+</tr>
+<tr>
+<td>@</td>
+<td>选取某个节点的属性</td>
+<td>//book[@price]</td>
+<td>选择所有拥有price属性的book节点</td>
+</tr>
+<tr>
+<td>.</td>
+<td>当前节点</td>
+<td>./a</td>
+<td>选取当前节点下的a标签</td>
+</tr>
+</tbody>
+</table>
+<h3 id="谓语">谓语：</h3>
+<p>谓语用来查找某个特定的节点或者包含某个指定的值的节点，被嵌在方括号中。<br>
+在下面的表格中，我们列出了带有谓语的一些路径表达式，以及表达式的结果：</p>
+<table>
+<thead>
+<tr>
+<th>路径表达式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/bookstore/book[1]</td>
+<td>选取bookstore下的第一个子元素</td>
+</tr>
+<tr>
+<td>/bookstore/book[last()]</td>
+<td>选取bookstore下的倒数第二个book元素。</td>
+</tr>
+<tr>
+<td>bookstore/book[position()❤️]</td>
+<td>选取bookstore下前面两个子元素。</td>
+</tr>
+<tr>
+<td>//book[@price]</td>
+<td>选取拥有price属性的book元素</td>
+</tr>
+<tr>
+<td>//book[@price=10]</td>
+<td>选取所有属性price等于10的book元素</td>
+</tr>
+</tbody>
+</table>
+<h3 id="通配符">通配符</h3>
+<p>*表示通配符。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">通配符</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">示例</th>
+<th style="text-align:left">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">*</td>
+<td style="text-align:left">匹配任意节点</td>
+<td style="text-align:left">/bookstore/*</td>
+<td style="text-align:left">选取bookstore下的所有子元素。</td>
+</tr>
+<tr>
+<td style="text-align:left">@*</td>
+<td style="text-align:left">匹配节点中的任何属性</td>
+<td style="text-align:left">//book[@*]</td>
+<td style="text-align:left">选取所有带有属性的book元素。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="选取多个路径">选取多个路径：</h3>
+<p>通过在路径表达式中使用“|”运算符，可以选取若干个路径。<br>
+示例如下：</p>
+<pre><code>//bookstore/book | //book/title
+# 选取所有book元素以及book元素下所有的title元素
+</code></pre>
+<h3 id="运算符">运算符：</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">运算符</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">实例</th>
+<th style="text-align:left">返回值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">|</td>
+<td style="text-align:left">计算两个节点集</td>
+<td style="text-align:left">//book | //cd</td>
+<td style="text-align:left">返回所有拥有 book 和 cd 元素的节点集</td>
+</tr>
+<tr>
+<td style="text-align:left">+</td>
+<td style="text-align:left">加法</td>
+<td style="text-align:left">6 + 4</td>
+<td style="text-align:left">10</td>
+</tr>
+<tr>
+<td style="text-align:left">-</td>
+<td style="text-align:left">减法</td>
+<td style="text-align:left">6 - 4</td>
+<td style="text-align:left">2</td>
+</tr>
+<tr>
+<td style="text-align:left">*</td>
+<td style="text-align:left">乘法</td>
+<td style="text-align:left">6 * 4</td>
+<td style="text-align:left">24</td>
+</tr>
+<tr>
+<td style="text-align:left">div</td>
+<td style="text-align:left">除法</td>
+<td style="text-align:left">8 div 4</td>
+<td style="text-align:left">2</td>
+</tr>
+<tr>
+<td style="text-align:left">=</td>
+<td style="text-align:left">等于</td>
+<td style="text-align:left">price=9.80</td>
+<td style="text-align:left">如果 price 是 9.80，则返回 true。如果 price 是 9.90，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">!=</td>
+<td style="text-align:left">不等于</td>
+<td style="text-align:left">price!=9.80</td>
+<td style="text-align:left">如果 price 是 9.90，则返回 true。如果 price 是 9.80，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;</td>
+<td style="text-align:left">小于</td>
+<td style="text-align:left">price&lt;9.80</td>
+<td style="text-align:left">如果 price 是 9.00，则返回 true。如果 price 是 9.90，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;=</td>
+<td style="text-align:left">小于或等于</td>
+<td style="text-align:left">price&lt;=9.80</td>
+<td style="text-align:left">如果 price 是 9.00，则返回 true。如果 price 是 9.90，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">&gt;</td>
+<td style="text-align:left">大于</td>
+<td style="text-align:left">price&gt;9.80</td>
+<td style="text-align:left">如果 price 是 9.90，则返回 true。如果 price 是 9.80，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">&gt;=</td>
+<td style="text-align:left">大于或等于</td>
+<td style="text-align:left">price&gt;=9.80</td>
+<td style="text-align:left">如果 price 是 9.90，则返回 true。如果 price 是 9.70，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">or</td>
+<td style="text-align:left">或</td>
+<td style="text-align:left">price=9.80 or price=9.70</td>
+<td style="text-align:left">如果 price 是 9.80，则返回 true。如果 price 是 9.50，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">and</td>
+<td style="text-align:left">与</td>
+<td style="text-align:left">price&gt;9.00 and price&lt;9.90</td>
+<td style="text-align:left">如果 price 是 9.80，则返回 true。如果 price 是 8.50，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">mod</td>
+<td style="text-align:left">计算除法的余数</td>
+<td style="text-align:left">5 mod 2</td>
+<td style="text-align:left">1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lxml库">lxml库</h2>
+<p>lxml 是 一个HTML/XML的解析器，主要的功能是如何解析和提取 HTML/XML 数据。</p>
+<p>lxml和正则一样，也是用 C 实现的，是一款高性能的 Python HTML/XML 解析器，我们可以利用之前学习的XPath语法，来快速的定位特定元素以及节点信息。</p>
+<p>lxml python 官方文档：http://lxml.de/index.html</p>
+<p>需要安装C语言库，可使用 pip 安装：pip install lxml</p>
+<h3 id="基本使用">基本使用：</h3>
+<p>我们可以利用他来解析HTML代码，并且在解析HTML代码的时候，如果HTML代码不规范，他会自动的进行补全。示例代码如下：</p>
+<pre><code class="language-python"># 使用 lxml 的 etree 库
+from lxml import etree 
+
+text = '''
+&lt;div&gt;
+    &lt;ul&gt;
+         &lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link1.html&quot;&gt;first item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-1&quot;&gt;&lt;a href=&quot;link2.html&quot;&gt;second item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-inactive&quot;&gt;&lt;a href=&quot;link3.html&quot;&gt;third item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-1&quot;&gt;&lt;a href=&quot;link4.html&quot;&gt;fourth item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link5.html&quot;&gt;fifth item&lt;/a&gt; # 注意，此处缺少一个 &lt;/li&gt; 闭合标签
+     &lt;/ul&gt;
+ &lt;/div&gt;
+'''
+
+#利用etree.HTML，将字符串解析为HTML文档
+html = etree.HTML(text) 
+
+# 按字符串序列化HTML文档
+result = etree.tostring(html) 
+
+print(result)
+</code></pre>
+<p>输入结果如下：</p>
+<pre><code class="language-html">&lt;html&gt;&lt;body&gt;
+&lt;div&gt;
+    &lt;ul&gt;
+         &lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link1.html&quot;&gt;first item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-1&quot;&gt;&lt;a href=&quot;link2.html&quot;&gt;second item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-inactive&quot;&gt;&lt;a href=&quot;link3.html&quot;&gt;third item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-1&quot;&gt;&lt;a href=&quot;link4.html&quot;&gt;fourth item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link5.html&quot;&gt;fifth item&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+ &lt;/div&gt;
+&lt;/body&gt;&lt;/html&gt;
+</code></pre>
+<p>可以看到。lxml会自动修改HTML代码。例子中不仅补全了li标签，还添加了body，html标签。</p>
+<h3 id="从文件中读取html代码">从文件中读取html代码：</h3>
+<p>除了直接使用字符串进行解析，lxml还支持从文件中读取内容。我们新建一个hello.html文件：</p>
+<pre><code class="language-html">&lt;!-- hello.html --&gt;
+&lt;div&gt;
+    &lt;ul&gt;
+         &lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link1.html&quot;&gt;first item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-1&quot;&gt;&lt;a href=&quot;link2.html&quot;&gt;second item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-inactive&quot;&gt;&lt;a href=&quot;link3.html&quot;&gt;&lt;span class=&quot;bold&quot;&gt;third item&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-1&quot;&gt;&lt;a href=&quot;link4.html&quot;&gt;fourth item&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link5.html&quot;&gt;fifth item&lt;/a&gt;&lt;/li&gt;
+     &lt;/ul&gt;
+ &lt;/div&gt;
+</code></pre>
+<p>然后利用<code>etree.parse()</code>方法来读取文件。示例代码如下：</p>
+<pre><code class="language-python">from lxml import etree
+
+# 读取外部文件 hello.html
+html = etree.parse('hello.html')
+result = etree.tostring(html, pretty_print=True)
+
+print(result)
+</code></pre>
+<p>输入结果和之前是相同的。</p>
+<h3 id="在lxml中使用xpath语法">在lxml中使用XPath语法：</h3>
+<ol>
+<li>
+<p>获取所有li标签：</p>
+<pre><code class="language-python"> from lxml import etree
+
+ html = etree.parse('hello.html')
+ print type(html)  # 显示etree.parse() 返回类型
+
+ result = html.xpath('//li')
+
+ print(result)  # 打印&lt;li&gt;标签的元素集合
+</code></pre>
+</li>
+<li>
+<p>获取所有li元素下的所有class属性的值：</p>
+<pre><code class="language-python"> from lxml import etree
+
+ html = etree.parse('hello.html')
+ result = html.xpath('//li/@class')
+
+ print(result)
+</code></pre>
+</li>
+<li>
+<p>获取li标签下href为<code>www.baidu.com</code>的a标签：</p>
+<pre><code class="language-python"> from lxml import etree
+
+ html = etree.parse('hello.html')
+ result = html.xpath('//li/a[@href=&quot;www.baidu.com&quot;]')
+
+ print(result)
+</code></pre>
+</li>
+<li>
+<p>获取li标签下所有span标签：</p>
+<pre><code class="language-python"> from lxml import etree
+
+ html = etree.parse('hello.html')
+
+ #result = html.xpath('//li/span')
+ #注意这么写是不对的：
+ #因为 / 是用来获取子元素的，而 &lt;span&gt; 并不是 &lt;li&gt; 的子元素，所以，要用双斜杠
+
+ result = html.xpath('//li//span')
+
+ print(result)
+</code></pre>
+</li>
+<li>
+<p>获取li标签下的a标签里的所有class：</p>
+<pre><code class="language-python"> from lxml import etree
+
+ html = etree.parse('hello.html')
+ result = html.xpath('//li/a//@class')
+
+ print(result)
+</code></pre>
+</li>
+<li>
+<p>获取最后一个li的a的href属性对应的值：</p>
+<pre><code class="language-python"> from lxml import etree
+
+ html = etree.parse('hello.html')
+
+ result = html.xpath('//li[last()]/a/@href')
+ # 谓语 [last()] 可以找到最后一个元素
+
+ print(result)
+</code></pre>
+</li>
+<li>
+<p>获取倒数第二个li元素的内容：</p>
+<pre><code class="language-python"> from lxml import etree
+
+ html = etree.parse('hello.html')
+ result = html.xpath('//li[last()-1]/a')
+
+ # text 方法可以获取元素内容
+ print(result[0].text)
+</code></pre>
+</li>
+<li>
+<p>获取倒数第二个li元素的内容的第二种方式：</p>
+<pre><code class="language-python"> from lxml import etree
+
+ html = etree.parse('hello.html')
+ result = html.xpath('//li[last()-1]/a/text()')
+
+ print(result)
+</code></pre>
+</li>
+</ol>
+<h2 id="使用requests和xpath爬取电影天堂">使用requests和xpath爬取电影天堂</h2>
+<p>示例代码如下：</p>
+<pre><code class="language-python">import requests
+from lxml import etree
+
+BASE_DOMAIN = 'http://www.dytt8.net'
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+    'Referer': 'http://www.dytt8.net/html/gndy/dyzz/list_23_2.html'
+}
+
+def spider():
+    url = 'http://www.dytt8.net/html/gndy/dyzz/list_23_1.html'
+    resp = requests.get(url,headers=HEADERS)
+    # resp.content：经过编码后的字符串
+    # resp.text：没有经过编码，也就是unicode字符串
+    # text：相当于是网页中的源代码了
+    text = resp.content.decode('gbk')
+    # tree：经过lxml解析后的一个对象，以后使用这个对象的xpath方法，就可以
+    # 提取一些想要的数据了
+    tree = etree.HTML(text)
+    # xpath/beautifulsou4
+    all_a = tree.xpath(&quot;//div[@class='co_content8']//a&quot;)
+    for a in all_a:
+        title = a.xpath(&quot;text()&quot;)[0]
+        href = a.xpath(&quot;@href&quot;)[0]
+        if href.startswith('/'):
+            detail_url = BASE_DOMAIN + href
+            crawl_detail(detail_url)
+            break
+
+def crawl_detail(url):
+    resp = requests.get(url,headers=HEADERS)
+    text = resp.content.decode('gbk')
+    tree = etree.HTML(text)
+    create_time = tree.xpath(&quot;//div[@class='co_content8']/ul/text()&quot;)[0].strip()
+    imgs = tree.xpath(&quot;//div[@id='Zoom']//img/@src&quot;)
+    # 电影海报
+    cover = imgs[0]
+    # 电影截图
+    screenshoot = imgs[1]
+    # 获取span标签下所有的文本
+    infos = tree.xpath(&quot;//div[@id='Zoom']//text()&quot;)
+    for index,info in enumerate(infos):
+        if info.startswith(&quot;◎年　　代&quot;):
+            year = info.replace(&quot;◎年　　代&quot;,&quot;&quot;).strip()
+
+        if info.startswith(&quot;◎豆瓣评分&quot;):
+            douban_rating = info.replace(&quot;◎豆瓣评分&quot;,'').strip()
+            print(douban_rating)
+
+        if info.startswith(&quot;◎主　　演&quot;):
+            # 从当前位置，一直往下面遍历
+            actors = [info]
+            for x in range(index+1,len(infos)):
+                actor = infos[x]
+                if actor.startswith(&quot;◎&quot;):
+                    break
+                actors.append(actor.strip())
+            print(&quot;,&quot;.join(actors))
+
+
+if __name__ == '__main__':
+    spider()
+</code></pre>
+
+                        </div>
+                        <section class="post-copyright">
+
+                            <p class="copyright-item">
+                                <span>Author:</span>
+                                <span>💤ISpiker</span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>Permalink:</span>
+                                <span><a href="https://hehelv.github.io//post/4-xpath-yu-fa-yu-lxml-ku">https://hehelv.github.io//post/4-xpath-yu-fa-yu-lxml-ku</a></span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>License:</span>
+                                <span>MIT License</span>
+                            </p>
+
+                        </section>
+                        <section class="post-tags">
+                            <div>
+                                <span>Tag(s):</span>
+                                <span class="tag">
+                                
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note"># Python爬虫笔记</a>
+                                
+                                
+                            </span>
+                            </div>
+                            <div>
+                                <a href="javascript:window.history.back();">back</a>
+                                <span>·</span>
+                                <a href="#">home</a>
+                            </div>
+                        </section>
+                        <section class="post-nav">
+                            
+                                <a class="prev" rel="prev" href="https://hehelv.github.io//post/5-beautifulsoup4-ku">
+                                    5-BeautifulSoup4库
+                                </a>
+                                
+                                    
+                                        <a class="next" rel="next" href="https://hehelv.github.io//post/3-requests-ku">
+                                            3-requests库
+                                        </a>
+                                        
+                        </section>
+
+                    </article>
+                </div>
+                
+            </div>
+    </div>
+    </div>
+
+    </div>
+    <footer id="footer" class="footer">
+    <div class="copyright">
+        
+
+            <script>
+                var xhr = new XMLHttpRequest();
+                xhr.open('get', 'https://v1.hitokoto.cn');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        var data = JSON.parse(xhr.responseText);
+                        var hitokoto = document.getElementById('hitokoto');
+                        hitokoto.innerText = data.hitokoto;
+                    }
+                }
+                xhr.send();
+                (function() {
+                    var bp = document.createElement('script');
+                    var curProtocol = window.location.protocol.split(':')[0];
+                    if (curProtocol === 'https') {
+                        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                    } else {
+                        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                    }
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(bp, s);
+                })();
+            </script>
+            <b id="hitokoto"></b><br>
+            <svg viewBox="0 0 1024 1024" style="margin-left: 5px;margin-right: 5px;" version="1.0" width="8" height="8" class="my-face"><path d="M863.597631 513.574282l-271.33965-140.213484L729.783667 81.926656c3.583731-7.87141 7.167462-15.742819 7.167462-25.214109C736.887134 25.226908 708.345275 0.012799 672.635953 0.012799a63.611229 63.611229 0 0 0-39.293053 12.607055c-1.791866 1.59988-3.519736 3.19976-5.311602 3.19976L147.87531 418.925381a55.547834 55.547834 0 0 0-19.646527 47.356448c1.791866 17.278704 14.27093 33.021523 32.125591 42.492813l271.33965 141.749369L292.504463 945.221908c-12.479064 25.214109-1.791866 53.563983 23.166262 69.306802 10.751194 6.335525 23.230258 9.47129 35.709322 9.47129 16.062795 0 32.125591-4.735645 44.604655-15.742819l480.091993-403.297753a55.547834 55.547834 0 0 0 19.646526-47.228458 61.243407 61.243407 0 0 0-32.12559-44.156688z" fill="#93b5cf"></path></svg>
+            <script>
+                var date = new Date();
+                document.write(" " + date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + " 星期" + "日一二三四五六".charAt(date.getDay()));
+            </script> Copyright&copy;
+            💤ISpiker | Powered by <a href="https://coding.net" target="_blank">Coding.net</a>
+
+    </div>
+</footer>
+<script>
+    hljs.initHighlighting();
+</script>
+        </div>
+</body>
+
+</html>

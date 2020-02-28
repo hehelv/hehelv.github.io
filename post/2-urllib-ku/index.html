@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+<title>
+    💤ISpiker
+</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta name="author" content="💤ISpiker">
+<meta name="description" content="The proof is in the pudding.">
+<meta name="keywords" content="The proof is in the pudding.">
+<link rel="stylesheet" href="https://hehelv.github.io//media/css/main.css" />
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+<script src="https://hehelv.github.io//media/script/tocbot.min.js"></script>
+<script src="https://hehelv.github.io//media/script/script.js"></script>
+<!--<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/default.min.css">
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>-->
+<script src="https://cdn.bootcss.com/highlight.js/9.13.1/highlight.min.js"></script>
+<link href="https://cdn.bootcss.com/highlight.js/9.13.1/styles/atelier-estuary-dark.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo">
+                <a href="https://hehelv.github.io/">
+                    💤ISpiker
+                </a>
+            </div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">
+                        Home
+                    </a>
+                    
+                    <a class="menu-item" href="/archives">
+                        Archives
+                    </a>
+                    
+                    <a class="menu-item" href="/tags">
+                        Tags
+                    </a>
+                    
+                    <a class="menu-item" href="/post/about">
+                        About
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/algorithm">
+                        Algorithm
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/networking">
+                        Computer Networking
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/Spider Note">
+                        Spider Note
+                    </a>
+                    
+                        <input id="switch_default" type="checkbox" class="switch_default">
+                        <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+        <nav class="navbar-mobile" id="nav-mobile">
+            <div class="container">
+                <div class="navbar-header">
+                    <div>
+                        <a href="https://hehelv.github.io/">
+                            💤ISpiker
+                        </a>
+                        <a id="mobile-toggle-theme">&nbsp;Light</a>
+                    </div>
+                    <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+                </div>
+                <div class="menu" id="mobile-menu">
+                    
+                        <a class="menu-item" href="/">
+                            Home
+                        </a>
+                        
+                        <a class="menu-item" href="/archives">
+                            Archives
+                        </a>
+                        
+                        <a class="menu-item" href="/tags">
+                            Tags
+                        </a>
+                        
+                        <a class="menu-item" href="/post/about">
+                            About
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/algorithm">
+                            Algorithm
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/networking">
+                            Computer Networking
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/Spider Note">
+                            Spider Note
+                        </a>
+                        
+                </div>
+            </div>
+        </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if (toggleMenu.classList.contains("active")) {
+            toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        } else {
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+                    <article class="post-wrap">
+                        <header class="post-header">
+                            <h1 class="post-title">
+                                2-urllib库
+                            </h1>
+                            <div class="post-meta">
+                                Author:
+                                <a itemprop="author" rel="author" href="/">
+                                    💤ISpiker
+                                </a>
+                                <span class="post-time">
+                                Date: <a href="#">2020-02-28</a>
+                            </span>
+                                
+                                    <span class="post-category">
+                                Category:
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note">Python爬虫笔记</a>
+                                
+                            </span>
+                                    
+                            </div>
+                        </header>
+
+                        <div class="post-content">
+                            <h1 id="2-urllib库">2-urllib库</h1>
+<p><code>urllib</code>库是<code>Python</code>中一个最基本的网络请求库。可以模拟浏览器的行为，向指定的服务器发送一个请求，并可以保存服务器返回的数据。</p>
+<h3 id="urlopen函数">urlopen函数：</h3>
+<p>在<code>Python3</code>的<code>urllib</code>库中，所有和网络请求相关的方法，都被集到<code>urllib.request</code>模块下面了，以先来看下<code>urlopen</code>函数基本的使用：</p>
+<pre><code class="language-python">from urllib import request
+resp = request.urlopen('http://www.baidu.com')
+print(resp.read())
+</code></pre>
+<p>实际上，使用浏览器访问百度，右键查看源代码。你会发现，跟我们刚才打印出来的数据是一模一样的。也就是说，上面的三行代码就已经帮我们把百度的首页的全部代码爬下来了。一个基本的url请求对应的python代码真的非常简单。<br>
+以下对<code>urlopen</code>函数的进行详细讲解：</p>
+<ol>
+<li><code>url</code>：请求的url。</li>
+<li><code>data</code>：请求的<code>data</code>，如果设置了这个值，那么将变成<code>post</code>请求。</li>
+<li>返回值：返回值是一个<code>http.client.HTTPResponse</code>对象，这个对象是一个类文件句柄对象。有<code>read(size)</code>、<code>readline</code>、<code>readlines</code>以及<code>getcode</code>等方法。</li>
+</ol>
+<h3 id="urlretrieve函数">urlretrieve函数：</h3>
+<p>这个函数可以方便的将网页上的一个文件保存到本地。以下代码可以非常方便的将百度的首页下载到本地：</p>
+<pre><code class="language-python">from urllib import request
+request.urlretrieve('http://www.baidu.com/','baidu.html')
+</code></pre>
+<h3 id="urlencode函数">urlencode函数：</h3>
+<p>用浏览器发送请求的时候，如果url中包含了中文或者其他特殊字符，那么浏览器会自动的给我们进行编码。而如果使用代码发送请求，那么就必须手动的进行编码，这时候就应该使用<code>urlencode</code>函数来实现。<code>urlencode</code>可以把字典数据转换为<code>URL</code>编码的数据。示例代码如下：</p>
+<pre><code class="language-python">from urllib import parse
+data = {'name':'爬虫基础','greet':'hello world','age':100}
+qs = parse.urlencode(data)
+print(qs)
+</code></pre>
+<h3 id="parse_qs函数">parse_qs函数：</h3>
+<p>可以将经过编码后的url参数进行解码。示例代码如下：</p>
+<pre><code class="language-python">from urllib import parse
+qs = &quot;name=%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80&amp;greet=hello+world&amp;age=100&quot;
+print(parse.parse_qs(qs))
+</code></pre>
+<h3 id="urlparse和urlsplit">urlparse和urlsplit：</h3>
+<p>有时候拿到一个url，想要对这个url中的各个组成部分进行分割，那么这时候就可以使用<code>urlparse</code>或者是<code>urlsplit</code>来进行分割。示例代码如下：</p>
+<pre><code class="language-python">from urllib import request,parse
+
+url = 'http://www.baidu.com/s?username=python'
+
+result = parse.urlsplit(url)
+# result = parse.urlparse(url)
+
+print('scheme:',result.scheme)
+print('netloc:',result.netloc)
+print('path:',result.path)
+print('query:',result.query)
+</code></pre>
+<p><code>urlparse</code>和<code>urlsplit</code>基本上是一模一样的。唯一不一样的地方是，<code>urlparse</code>里面多了一个<code>params</code>属性，而<code>urlsplit</code>没有这个<code>params</code>属性。比如有一个<code>url</code>为：<code>url = 'http://www.baidu.com/s;hello?wd=python&amp;username=abc#1'</code>，<br>
+那么<code>urlparse</code>可以获取到<code>hello</code>，而<code>urlsplit</code>不可以获取到。<code>url</code>中的<code>params</code>也用得比较少。</p>
+<h3 id="requestrequest类">request.Request类：</h3>
+<p>如果想要在请求的时候增加一些请求头，那么就必须使用<code>request.Request</code>类来实现。比如要增加一个<code>User-Agent</code>，示例代码如下：</p>
+<pre><code class="language-python">from urllib import request
+
+headers = {
+'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'
+}
+req = request.Request(&quot;http://www.baidu.com/&quot;,headers=headers)
+resp = request.urlopen(req)
+print(resp.read())
+</code></pre>
+<h3 id="内涵段子爬虫实战作业">内涵段子爬虫实战作业：</h3>
+<ol>
+<li>url链接：http://neihanshequ.com/bar/1/</li>
+<li>要求：能爬取一页的数据就可以了。</li>
+</ol>
+<h3 id="proxyhandler处理器代理设置">ProxyHandler处理器（代理设置）</h3>
+<p>很多网站会检测某一段时间某个IP的访问次数(通过流量统计，系统日志等)，如果访问次数多的不像正常人，它会禁止这个IP的访问。<br>
+所以我们可以设置一些代理服务器，每隔一段时间换一个代理，就算IP被禁止，依然可以换个IP继续爬取。<br>
+urllib中通过ProxyHandler来设置使用代理服务器，下面代码说明如何使用自定义opener来使用代理：</p>
+<pre><code class="language-python">from urllib import request
+
+# 这个是没有使用代理的
+# resp = request.urlopen('http://httpbin.org/get')
+# print(resp.read().decode(&quot;utf-8&quot;))
+
+# 这个是使用了代理的
+handler = request.ProxyHandler({&quot;http&quot;:&quot;218.66.161.88:31769&quot;})
+
+opener = request.build_opener(handler)
+req = request.Request(&quot;http://httpbin.org/ip&quot;)
+resp = opener.open(req)
+print(resp.read())
+</code></pre>
+<p>常用的代理有：</p>
+<ul>
+<li>西刺免费代理IP：http://www.xicidaili.com/</li>
+<li>快代理：http://www.kuaidaili.com/</li>
+<li>代理云：http://www.dailiyun.com/</li>
+</ul>
+<h3 id="什么是cookie">什么是cookie：</h3>
+<p>在网站中，http请求是无状态的。也就是说即使第一次和服务器连接后并且登录成功后，第二次请求服务器依然不能知道当前请求是哪个用户。<code>cookie</code>的出现就是为了解决这个问题，第一次登录后服务器返回一些数据（cookie）给浏览器，然后浏览器保存在本地，当该用户发送第二次请求的时候，就会自动的把上次请求存储的<code>cookie</code>数据自动的携带给服务器，服务器通过浏览器携带的数据就能判断当前用户是哪个了。<code>cookie</code>存储的数据量有限，不同的浏览器有不同的存储大小，但一般不超过4KB。因此使用<code>cookie</code>只能存储一些小量的数据。</p>
+<h4 id="cookie的格式">cookie的格式：</h4>
+<pre><code>Set-Cookie: NAME=VALUE；Expires/Max-age=DATE；Path=PATH；Domain=DOMAIN_NAME；SECURE
+</code></pre>
+<p>参数意义：</p>
+<ul>
+<li>NAME：cookie的名字。</li>
+<li>VALUE：cookie的值。</li>
+<li>Expires：cookie的过期时间。</li>
+<li>Path：cookie作用的路径。</li>
+<li>Domain：cookie作用的域名。</li>
+<li>SECURE：是否只在https协议下起作用。</li>
+</ul>
+<h3 id="使用cookielib库和httpcookieprocessor模拟登录">使用cookielib库和HTTPCookieProcessor模拟登录：</h3>
+<p>Cookie 是指网站服务器为了辨别用户身份和进行Session跟踪，而储存在用户浏览器上的文本文件，Cookie可以保持登录信息到用户下次与服务器的会话。<br>
+这里以人人网为例。人人网中，要访问某个人的主页，必须先登录才能访问，登录说白了就是要有cookie信息。那么如果我们想要用代码的方式访问，就必须要有正确的cookie信息才能访问。解决方案有两种，第一种是使用浏览器访问，然后将cookie信息复制下来，放到headers中。示例代码如下：</p>
+<pre><code class="language-python">from urllib import request
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
+    'Cookie': 'anonymid=jacdwz2x-8bjldx; depovince=GW; _r01_=1; _ga=GA1.2.1455063316.1511436360; _gid=GA1.2.862627163.1511436360; wp=1; JSESSIONID=abczwY8ecd4xz8RJcyP-v; jebecookies=d4497791-9d41-4269-9e2b-3858d4989785|||||; ick_login=884e75d4-f361-4cff-94bb-81fe6c42b220; _de=EA5778F44555C091303554EBBEB4676C696BF75400CE19CC; p=61a3c7d0d4b2d1e991095353f83fa2141; first_login_flag=1; ln_uact=970138074@qq.com; ln_hurl=http://hdn.xnimg.cn/photos/hdn121/20170428/1700/main_nhiB_aebd0000854a1986.jpg; t=3dd84a3117737e819dd2c32f1cdb91d01; societyguester=3dd84a3117737e819dd2c32f1cdb91d01; id=443362311; xnsid=169efdc0; loginfrom=syshome; ch_id=10016; jebe_key=9c062f5a-4335-4a91-bf7a-970f8b86a64e%7Ca022c303305d1b2ab6b5089643e4b5de%7C1511449232839%7C1; wp_fold=0'
+}
+
+url = 'http://www.renren.com/880151247/profile'
+
+req = request.Request(url,headers=headers)
+resp = request.urlopen(req)
+with open('renren.html','w') as fp:
+    fp.write(resp.read().decode('utf-8'))
+</code></pre>
+<p>但是每次在访问需要cookie的页面都要从浏览器中复制cookie比较麻烦。在Python处理Cookie，一般是通过<code>http.cookiejar</code>模块和<code>urllib模块的HTTPCookieProcessor</code>处理器类一起使用。<code>http.cookiejar</code>模块主要作用是提供用于存储cookie的对象。而<code>HTTPCookieProcessor</code>处理器主要作用是处理这些cookie对象，并构建handler对象。</p>
+<h4 id="httpcookiejar模块">http.cookiejar模块：</h4>
+<p>该模块主要的类有CookieJar、FileCookieJar、MozillaCookieJar、LWPCookieJar。这四个类的作用分别如下：</p>
+<ol>
+<li>CookieJar：管理HTTP cookie值、存储HTTP请求生成的cookie、向传出的HTTP请求添加cookie的对象。整个cookie都存储在内存中，对CookieJar实例进行垃圾回收后cookie也将丢失。</li>
+<li>FileCookieJar (filename,delayload=None,policy=None)：从CookieJar派生而来，用来创建FileCookieJar实例，检索cookie信息并将cookie存储到文件中。filename是存储cookie的文件名。delayload为True时支持延迟访问访问文件，即只有在需要时才读取文件或在文件中存储数据。</li>
+<li>MozillaCookieJar (filename,delayload=None,policy=None)：从FileCookieJar派生而来，创建与Mozilla浏览器 cookies.txt兼容的FileCookieJar实例。</li>
+<li>LWPCookieJar (filename,delayload=None,policy=None)：从FileCookieJar派生而来，创建与libwww-perl标准的 Set-Cookie3 文件格式兼容的FileCookieJar实例。</li>
+</ol>
+<h4 id="登录人人网">登录人人网：</h4>
+<p>利用<code>http.cookiejar</code>和<code>request.HTTPCookieProcessor</code>登录人人网。相关示例代码如下：</p>
+<pre><code class="language-python">from urllib import request,parse
+from http.cookiejar import CookieJar
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'
+}
+
+def get_opener():
+    cookiejar = CookieJar()
+    handler = request.HTTPCookieProcessor(cookiejar)
+    opener = request.build_opener(handler)
+    return opener
+
+def login_renren(opener):
+    data = {&quot;email&quot;: &quot;970138074@qq.com&quot;, &quot;password&quot;: &quot;pythonspider&quot;}
+    data = parse.urlencode(data).encode('utf-8')
+    login_url = &quot;http://www.renren.com/PLogin.do&quot;
+    req = request.Request(login_url, headers=headers, data=data)
+    opener.open(req)
+
+def visit_profile(opener):
+    url = 'http://www.renren.com/880151247/profile'
+    req = request.Request(url,headers=headers)
+    resp = opener.open(req)
+    with open('renren.html','w') as fp:
+        fp.write(resp.read().decode(&quot;utf-8&quot;))
+
+if __name__ == '__main__':
+    opener = get_opener()
+    login_renren(opener)
+    visit_profile(opener)
+</code></pre>
+<h4 id="保存cookie到本地">保存cookie到本地：</h4>
+<p>保存<code>cookie</code>到本地，可以使用<code>cookiejar</code>的<code>save</code>方法，并且需要指定一个文件名：</p>
+<pre><code class="language-python">from urllib import request
+from http.cookiejar import MozillaCookieJar
+
+cookiejar = MozillaCookieJar(&quot;cookie.txt&quot;)
+handler = request.HTTPCookieProcessor(cookiejar)
+opener = request.build_opener(handler)
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'
+}
+req = request.Request('http://httpbin.org/cookies',headers=headers)
+
+resp = opener.open(req)
+print(resp.read())
+cookiejar.save(ignore_discard=True,ignore_expires=True)
+</code></pre>
+<h4 id="从本地加载cookie">从本地加载cookie：</h4>
+<p>从本地加载<code>cookie</code>，需要使用<code>cookiejar</code>的<code>load</code>方法，并且也需要指定方法：</p>
+<pre><code class="language-python">from urllib import request
+from http.cookiejar import MozillaCookieJar
+
+cookiejar = MozillaCookieJar(&quot;cookie.txt&quot;)
+cookiejar.load(ignore_expires=True,ignore_discard=True)
+handler = request.HTTPCookieProcessor(cookiejar)
+opener = request.build_opener(handler)
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'
+}
+req = request.Request('http://httpbin.org/cookies',headers=headers)
+
+resp = opener.open(req)
+print(resp.read())
+</code></pre>
+<!-- more -->
+
+                        </div>
+                        <section class="post-copyright">
+
+                            <p class="copyright-item">
+                                <span>Author:</span>
+                                <span>💤ISpiker</span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>Permalink:</span>
+                                <span><a href="https://hehelv.github.io//post/2-urllib-ku">https://hehelv.github.io//post/2-urllib-ku</a></span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>License:</span>
+                                <span>MIT License</span>
+                            </p>
+
+                        </section>
+                        <section class="post-tags">
+                            <div>
+                                <span>Tag(s):</span>
+                                <span class="tag">
+                                
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note"># Python爬虫笔记</a>
+                                
+                                
+                            </span>
+                            </div>
+                            <div>
+                                <a href="javascript:window.history.back();">back</a>
+                                <span>·</span>
+                                <a href="#">home</a>
+                            </div>
+                        </section>
+                        <section class="post-nav">
+                            
+                                <a class="prev" rel="prev" href="https://hehelv.github.io//post/3-requests-ku">
+                                    3-requests库
+                                </a>
+                                
+                                    
+                                        <a class="next" rel="next" href="https://hehelv.github.io//post/1-http-xie-yi-yu-chrome-zhua-bao-gong-ju">
+                                            1-http协议与chrome抓包工具
+                                        </a>
+                                        
+                        </section>
+
+                    </article>
+                </div>
+                
+            </div>
+    </div>
+    </div>
+
+    </div>
+    <footer id="footer" class="footer">
+    <div class="copyright">
+        
+
+            <script>
+                var xhr = new XMLHttpRequest();
+                xhr.open('get', 'https://v1.hitokoto.cn');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        var data = JSON.parse(xhr.responseText);
+                        var hitokoto = document.getElementById('hitokoto');
+                        hitokoto.innerText = data.hitokoto;
+                    }
+                }
+                xhr.send();
+                (function() {
+                    var bp = document.createElement('script');
+                    var curProtocol = window.location.protocol.split(':')[0];
+                    if (curProtocol === 'https') {
+                        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                    } else {
+                        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                    }
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(bp, s);
+                })();
+            </script>
+            <b id="hitokoto"></b><br>
+            <svg viewBox="0 0 1024 1024" style="margin-left: 5px;margin-right: 5px;" version="1.0" width="8" height="8" class="my-face"><path d="M863.597631 513.574282l-271.33965-140.213484L729.783667 81.926656c3.583731-7.87141 7.167462-15.742819 7.167462-25.214109C736.887134 25.226908 708.345275 0.012799 672.635953 0.012799a63.611229 63.611229 0 0 0-39.293053 12.607055c-1.791866 1.59988-3.519736 3.19976-5.311602 3.19976L147.87531 418.925381a55.547834 55.547834 0 0 0-19.646527 47.356448c1.791866 17.278704 14.27093 33.021523 32.125591 42.492813l271.33965 141.749369L292.504463 945.221908c-12.479064 25.214109-1.791866 53.563983 23.166262 69.306802 10.751194 6.335525 23.230258 9.47129 35.709322 9.47129 16.062795 0 32.125591-4.735645 44.604655-15.742819l480.091993-403.297753a55.547834 55.547834 0 0 0 19.646526-47.228458 61.243407 61.243407 0 0 0-32.12559-44.156688z" fill="#93b5cf"></path></svg>
+            <script>
+                var date = new Date();
+                document.write(" " + date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + " 星期" + "日一二三四五六".charAt(date.getDay()));
+            </script> Copyright&copy;
+            💤ISpiker | Powered by <a href="https://coding.net" target="_blank">Coding.net</a>
+
+    </div>
+</footer>
+<script>
+    hljs.initHighlighting();
+</script>
+        </div>
+</body>
+
+</html>

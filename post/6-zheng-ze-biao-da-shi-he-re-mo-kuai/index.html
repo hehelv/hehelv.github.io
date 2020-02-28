@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+<title>
+    💤ISpiker
+</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta name="author" content="💤ISpiker">
+<meta name="description" content="The proof is in the pudding.">
+<meta name="keywords" content="The proof is in the pudding.">
+<link rel="stylesheet" href="https://hehelv.github.io//media/css/main.css" />
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+<script src="https://hehelv.github.io//media/script/tocbot.min.js"></script>
+<script src="https://hehelv.github.io//media/script/script.js"></script>
+<!--<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/default.min.css">
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>-->
+<script src="https://cdn.bootcss.com/highlight.js/9.13.1/highlight.min.js"></script>
+<link href="https://cdn.bootcss.com/highlight.js/9.13.1/styles/atelier-estuary-dark.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo">
+                <a href="https://hehelv.github.io/">
+                    💤ISpiker
+                </a>
+            </div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">
+                        Home
+                    </a>
+                    
+                    <a class="menu-item" href="/archives">
+                        Archives
+                    </a>
+                    
+                    <a class="menu-item" href="/tags">
+                        Tags
+                    </a>
+                    
+                    <a class="menu-item" href="/post/about">
+                        About
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/algorithm">
+                        Algorithm
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/networking">
+                        Computer Networking
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/Spider Note">
+                        Spider Note
+                    </a>
+                    
+                        <input id="switch_default" type="checkbox" class="switch_default">
+                        <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+        <nav class="navbar-mobile" id="nav-mobile">
+            <div class="container">
+                <div class="navbar-header">
+                    <div>
+                        <a href="https://hehelv.github.io/">
+                            💤ISpiker
+                        </a>
+                        <a id="mobile-toggle-theme">&nbsp;Light</a>
+                    </div>
+                    <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+                </div>
+                <div class="menu" id="mobile-menu">
+                    
+                        <a class="menu-item" href="/">
+                            Home
+                        </a>
+                        
+                        <a class="menu-item" href="/archives">
+                            Archives
+                        </a>
+                        
+                        <a class="menu-item" href="/tags">
+                            Tags
+                        </a>
+                        
+                        <a class="menu-item" href="/post/about">
+                            About
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/algorithm">
+                            Algorithm
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/networking">
+                            Computer Networking
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/Spider Note">
+                            Spider Note
+                        </a>
+                        
+                </div>
+            </div>
+        </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if (toggleMenu.classList.contains("active")) {
+            toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        } else {
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+                    <article class="post-wrap">
+                        <header class="post-header">
+                            <h1 class="post-title">
+                                6-正则表达式和re模块
+                            </h1>
+                            <div class="post-meta">
+                                Author:
+                                <a itemprop="author" rel="author" href="/">
+                                    💤ISpiker
+                                </a>
+                                <span class="post-time">
+                                Date: <a href="#">2020-02-28</a>
+                            </span>
+                                
+                            </div>
+                        </header>
+
+                        <div class="post-content">
+                            <h1 id="6-正则表达式和re模块">6-正则表达式和re模块</h1>
+<h2 id="什么是正则表达式">什么是正则表达式：</h2>
+<p>通俗理解：按照一定的规则，从某个字符串中匹配出想要的数据。这个规则就是正则表达式。<br>
+标准答案：https://baike.baidu.com/item/正则表达式/1700215?fr=aladdin</p>
+<h2 id="一个段子">一个段子：</h2>
+<p>世界是分为两种人，一种是懂正则表达式的，一种是不懂正则表达式的。</p>
+<h2 id="正则表达式常用匹配规则">正则表达式常用匹配规则：</h2>
+<h3 id="匹配某个字符串">匹配某个字符串：</h3>
+<pre><code class="language-python">text = 'hello'
+ret = re.match('he',text)
+print(ret.group())
+&gt;&gt; he
+</code></pre>
+<p>以上便可以在<code>hello</code>中，匹配出<code>he</code>。</p>
+<h3 id="点匹配任意的字符">点（.）匹配任意的字符：</h3>
+<pre><code class="language-python">text = &quot;ab&quot;
+ret = re.match('.',text)
+print(ret.group())
+&gt;&gt; a
+</code></pre>
+<p>但是点（.）不能匹配不到换行符。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;ab&quot;
+ret = re.match('.',text)
+print(ret.group())
+&gt;&gt; AttributeError: 'NoneType' object has no attribute 'group'
+</code></pre>
+<h3 id="d匹配任意的数字">\d匹配任意的数字：</h3>
+<pre><code class="language-python">text = &quot;123&quot;
+ret = re.match('\d',text)
+print(ret.group())
+&gt;&gt; 1
+</code></pre>
+<h3 id="d匹配任意的非数字">\D匹配任意的非数字：</h3>
+<pre><code class="language-python">text = &quot;a&quot;
+ret = re.match('\D',text)
+print(ret.group())
+&gt;&gt; a
+</code></pre>
+<p>而如果text是等于一个数字，那么就匹配不成功了。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;1&quot;
+ret = re.match('\D',text)
+print(ret.group())
+&gt;&gt; AttributeError: 'NoneType' object has no attribute 'group'
+</code></pre>
+<h3 id="s匹配的是空白字符包括ntr和空格">\s匹配的是空白字符（包括：\n，\t，\r和空格）：</h3>
+<pre><code class="language-python">text = &quot;\t&quot;
+ret = re.match('\s',text)
+print(ret.group())
+&gt;&gt; 空白
+</code></pre>
+<h3 id="w匹配的是a-z和a-z以及数字和下划线">\w匹配的是<code>a-z</code>和<code>A-Z</code>以及数字和下划线：</h3>
+<pre><code class="language-python">text = &quot;_&quot;
+ret = re.match('\w',text)
+print(ret.group())
+&gt;&gt; _
+</code></pre>
+<p>而如果要匹配一个其他的字符，那么就匹配不到。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;+&quot;
+ret = re.match('\w',text)
+print(ret.group())
+&gt;&gt; AttributeError: 'NoneType' object has no attribute
+</code></pre>
+<h3 id="w匹配的是和w相反的">\W匹配的是和\w相反的：</h3>
+<pre><code class="language-python">text = &quot;+&quot;
+ret = re.match('\W',text)
+print(ret.group())
+&gt;&gt; +
+</code></pre>
+<p>而如果你的text是一个下划线或者英文字符，那么就匹配不到了。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;_&quot;
+ret = re.match('\W',text)
+print(ret.group())
+&gt;&gt; AttributeError: 'NoneType' object has no attribute
+</code></pre>
+<h3 id="组合的方式只要满足中括号中的某一项都算匹配成功">[]组合的方式，只要满足中括号中的某一项都算匹配成功：</h3>
+<pre><code class="language-python">text = &quot;0731-88888888&quot;
+ret = re.match('[\d\-]+',text)
+print(ret.group())
+&gt;&gt; 0731-88888888
+</code></pre>
+<p>之前讲到的几种匹配规则，其实可以使用中括号的形式来进行替代：</p>
+<ul>
+<li>\d：[0-9]</li>
+<li>\D：<a href="#fn_0-9">0-9</a></li>
+<li>\w：[0-9a-zA-Z_]</li>
+<li>\W：[^0-9a-zA-Z_]</li>
+</ul>
+<h3 id="匹配多个字符">匹配多个字符：</h3>
+<ol>
+<li>
+<p><code>*</code>：可以匹配0或者任意多个字符。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;0731&quot;
+ ret = re.match('\d*',text)
+ print(ret.group())
+ &gt;&gt; 0731
+</code></pre>
+<p>以上因为匹配的要求是<code>\d</code>，那么就要求是数字，后面跟了一个星号，就可以匹配到0731这四个字符。</p>
+</li>
+<li>
+<p><code>+</code>：可以匹配1个或者多个字符。最少一个。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;abc&quot;
+ ret = re.match('\w+',text)
+ print(ret.group())
+ &gt;&gt; abc
+</code></pre>
+<p>因为匹配的是<code>\w</code>，那么就要求是英文字符，后面跟了一个加号，意味着最少要有一个满足<code>\w</code>的字符才能够匹配到。如果text是一个空白字符或者是一个不满足\w的字符，那么就会报错。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;&quot;
+ ret = re.match('\w+',text)
+ print(ret.group())
+ &gt;&gt; AttributeError: 'NoneType' object has no attribute
+</code></pre>
+</li>
+<li>
+<p><code>?</code>：匹配的字符可以出现一次或者不出现（0或者1）。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;123&quot;
+ ret = re.match('\d?',text)
+ print(ret.group())
+ &gt;&gt; 1
+</code></pre>
+</li>
+<li>
+<p><code>{m}</code>：匹配m个字符。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;123&quot;
+ ret = re.match('\d{2}',text)
+ print(ret.group())
+ &gt;&gt; 12
+</code></pre>
+</li>
+<li>
+<p><code>{m,n}</code>：匹配m-n个字符。在这中间的字符都可以匹配到。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;123&quot;
+ ret = re.match('\d{1,2}',text)
+ prit(ret.group())
+ &gt;&gt; 12
+</code></pre>
+<p>如果text只有一个字符，那么也可以匹配出来。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;1&quot;
+ ret = re.match('\d{1,2}',text)
+ prit(ret.group())
+ &gt;&gt; 1
+</code></pre>
+</li>
+</ol>
+<h3 id="小案例">小案例：</h3>
+<ol>
+<li>
+<p>验证手机号码：手机号码的规则是以<code>1</code>开头，第二位可以是<code>34587</code>，后面那9位就可以随意了。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;18570631587&quot;
+ ret = re.match('1[34587]\d{9}',text)
+ print(ret.group())
+ &gt;&gt; 18570631587
+</code></pre>
+<p>而如果是个不满足条件的手机号码。那么就匹配不到了。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;1857063158&quot;
+ ret = re.match('1[34587]\d{9}',text)
+ print(ret.group())
+ &gt;&gt; AttributeError: 'NoneType' object has no attribute
+</code></pre>
+</li>
+<li>
+<p>验证邮箱：邮箱的规则是邮箱名称是用<code>数字、数字、下划线</code>组成的，然后是<code>@</code>符号，后面就是域名了。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;hynever@163.com&quot;
+ ret = re.match('\w+@\w+\.[a-zA-Z\.]+',text)
+ print(ret.group())
+</code></pre>
+</li>
+<li>
+<p>验证URL：URL的规则是前面是<code>http</code>或者<code>https</code>或者是<code>ftp</code>然后再加上一个冒号，再加上一个斜杠，再后面就是可以出现任意非空白字符了。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;http://www.baidu.com/&quot;
+ ret = re.match('(http|https|ftp)://[^\s]+',text)
+ print(ret.group())
+</code></pre>
+</li>
+<li>
+<p>验证身份证：身份证的规则是，总共有18位，前面17位都是数字，后面一位可以是数字，也可以是小写的x，也可以是大写的X。示例代码如下：</p>
+<pre><code class="language-python"> text = &quot;3113111890812323X&quot;
+ ret = re.match('\d{17}[\dxX]',text)
+ print(ret.group())
+</code></pre>
+</li>
+</ol>
+<h3 id="脱字号表示以开始">^（脱字号）：表示以...开始：</h3>
+<pre><code class="language-python">text = &quot;hello&quot;
+ret = re.match('^h',text)
+print(ret.group())
+</code></pre>
+<p>如果是在中括号中，那么代表的是取反操作.</p>
+<h3 id="表示以结束">$：表示以...结束：</h3>
+<pre><code class="language-python"># 匹配163.com的邮箱
+text = &quot;xxx@163.com&quot;
+ret = re.search('\w+@163\.com$',text)
+print(ret.group())
+&gt;&gt; xxx@163.com
+</code></pre>
+<h3 id="匹配多个表达式或者字符串">|：匹配多个表达式或者字符串：</h3>
+<pre><code class="language-python">text = &quot;hello|world&quot;
+ret = re.search('hello',text)
+print(ret.group())
+&gt;&gt; hello
+</code></pre>
+<h3 id="贪婪模式和非贪婪模式">贪婪模式和非贪婪模式：</h3>
+<p>贪婪模式：正则表达式会匹配尽量多的字符。默认是贪婪模式。<br>
+非贪婪模式：正则表达式会尽量少的匹配字符。<br>
+示例代码如下：</p>
+<pre><code class="language-python">text = &quot;0123456&quot;
+ret = re.match('\d+',text)
+print(ret.group())
+# 因为默认采用贪婪模式，所以会输出0123456
+&gt;&gt; 0123456
+</code></pre>
+<p>可以改成非贪婪模式，那么就只会匹配到0。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;0123456&quot;
+ret = re.match('\d+?',text)
+print(ret.group())
+</code></pre>
+<h3 id="案例匹配0-100之间的数字">案例：匹配<code>0-100</code>之间的数字：</h3>
+<pre><code class="language-python">text = '99'
+ret = re.match('[1-9]?\d$|100$',text)
+print(ret.group())
+&gt;&gt; 99
+</code></pre>
+<p>而如果<code>text=101</code>，那么就会抛出一个异常。示例代码如下：</p>
+<pre><code class="language-python">text = '101'
+ret = re.match('[1-9]?\d$|100$',text)
+print(ret.group())
+&gt;&gt; AttributeError: 'NoneType' object has no attribute 'group'
+</code></pre>
+<h3 id="转义字符和原生字符串">转义字符和原生字符串：</h3>
+<p>在正则表达式中，有些字符是有特殊意义的字符。因此如果想要匹配这些字符，那么就必须使用反斜杠进行转义。比如<code>$</code>代表的是以...结尾，如果想要匹配<code>$</code>，那么就必须使用<code>\$</code>。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;apple price is \$99,orange paice is $88&quot;
+ret = re.search('\$(\d+)',text)
+print(ret.group())
+&gt;&gt; $99
+</code></pre>
+<p>原生字符串：<br>
+在正则表达式中，<code>\</code>是专门用来做转义的。在Python中<code>\</code>也是用来做转义的。因此如果想要在普通的字符串中匹配出<code>\</code>，那么要给出四个<code>\</code>。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;apple \c&quot;
+ret = re.search('\\\\c',text)
+print(ret.group())
+</code></pre>
+<p>因此要使用原生字符串就可以解决这个问题：</p>
+<pre><code class="language-python">text = &quot;apple \c&quot;
+ret = re.search(r'\\c',text)
+print(ret.group())
+</code></pre>
+<hr>
+<h2 id="re模块中常用函数">re模块中常用函数：</h2>
+<h3 id="match">match：</h3>
+<p>从开始的位置进行匹配。如果开始的位置没有匹配到。就直接失败了。示例代码如下：</p>
+<pre><code class="language-python">text = 'hello'
+ret = re.match('h',text)
+print(ret.group())
+&gt;&gt; h
+</code></pre>
+<p>如果第一个字母不是<code>h</code>，那么就会失败。示例代码如下：</p>
+<pre><code class="language-python">text = 'ahello'
+ret = re.match('h',text)
+print(ret.group())
+&gt;&gt; AttributeError: 'NoneType' object has no attribute 'group'
+</code></pre>
+<p>如果想要匹配换行的数据，那么就要传入一个<code>flag=re.DOTALL</code>，就可以匹配换行符了。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;abc\nabc&quot;
+ret = re.match('abc.*abc',text,re.DOTALL)
+print(ret.group())
+</code></pre>
+<h3 id="search">search：</h3>
+<p>在字符串中找满足条件的字符。如果找到，就返回。说白了，就是只会找到第一个满足条件的。</p>
+<pre><code class="language-python">text = 'apple price $99 orange price $88'
+ret = re.search('\d+',text)
+print(ret.group())
+&gt;&gt; 99
+</code></pre>
+<h3 id="分组">分组：</h3>
+<p>在正则表达式中，可以对过滤到的字符串进行分组。分组使用圆括号的方式。</p>
+<ol>
+<li><code>group</code>：和<code>group(0)</code>是等价的，返回的是整个满足条件的字符串。</li>
+<li><code>groups</code>：返回的是里面的子组。索引从1开始。</li>
+<li><code>group(1)</code>：返回的是第一个子组，可以传入多个。<br>
+示例代码如下：</li>
+</ol>
+<pre><code class="language-python">text = &quot;apple price is $99,orange price is $10&quot;
+ret = re.search(r&quot;.*(\$\d+).*(\$\d+)&quot;,text)
+print(ret.group())
+print(ret.group(0))
+print(ret.group(1))
+print(ret.group(2))
+print(ret.groups())
+</code></pre>
+<h3 id="findall">findall：</h3>
+<p>找出所有满足条件的，返回的是一个列表。</p>
+<pre><code class="language-python">text = 'apple price $99 orange price $88'
+ret = re.findall('\d+',text)
+print(ret)
+&gt;&gt; ['99', '88']
+</code></pre>
+<h3 id="sub">sub：</h3>
+<p>用来替换字符串。将匹配到的字符串替换为其他字符串。</p>
+<pre><code class="language-python">text = 'apple price $99 orange price $88'
+ret = re.sub('\d+','0',text)
+print(ret)
+&gt;&gt; apple price $0 orange price $0
+</code></pre>
+<p><code>sub</code>函数的案例，获取拉勾网中的数据：</p>
+<pre><code class="language-python">html = &quot;&quot;&quot;
+&lt;div&gt;
+&lt;p&gt;基本要求：&lt;/p&gt;
+&lt;p&gt;1、精通HTML5、CSS3、 JavaScript等Web前端开发技术，对html5页面适配充分了解，熟悉不同浏览器间的差异，熟练写出兼容各种浏览器的代码；&lt;/p&gt;
+&lt;p&gt;2、熟悉运用常见JS开发框架，如JQuery、vue、angular，能快速高效实现各种交互效果；&lt;/p&gt;
+&lt;p&gt;3、熟悉编写能够自动适应HTML5界面，能让网页格式自动适应各款各大小的手机；&lt;/p&gt;
+&lt;p&gt;4、利用HTML5相关技术开发移动平台、PC终端的前端页面，实现HTML5模板化；&lt;/p&gt;
+&lt;p&gt;5、熟悉手机端和PC端web实现的差异，有移动平台web前端开发经验，了解移动互联网产品和行业，有在Android,iOS等平台下HTML5+CSS+JavaScript（或移动JS框架）开发经验者优先考虑；6、良好的沟通能力和团队协作精神，对移动互联网行业有浓厚兴趣，有较强的研究能力和学习能力；&lt;/p&gt;
+&lt;p&gt;7、能够承担公司前端培训工作，对公司各业务线的前端（HTML5\CSS3）工作进行支撑和指导。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;岗位职责：&lt;/p&gt;
+&lt;p&gt;1、利用html5及相关技术开发移动平台、微信、APP等前端页面，各类交互的实现；&lt;/p&gt;
+&lt;p&gt;2、持续的优化前端体验和页面响应速度，并保证兼容性和执行效率；&lt;/p&gt;
+&lt;p&gt;3、根据产品需求，分析并给出最优的页面前端结构解决方案；&lt;/p&gt;
+&lt;p&gt;4、协助后台及客户端开发人员完成功能开发和调试；&lt;/p&gt;
+&lt;p&gt;5、移动端主流浏览器的适配、移动端界面自适应研发。&lt;/p&gt;
+&lt;/div&gt;
+&quot;&quot;&quot;
+
+ret = re.sub('&lt;/?[a-zA-Z0-9]+&gt;',&quot;&quot;,html)
+print(ret)
+</code></pre>
+<h3 id="split">split：</h3>
+<p>使用正则表达式来分割字符串。</p>
+<pre><code class="language-python">text = &quot;hello world ni hao&quot;
+ret = re.split('\W',text)
+print(ret)
+&gt;&gt; [&quot;hello&quot;,&quot;world&quot;,&quot;ni&quot;,&quot;hao&quot;]
+</code></pre>
+<h3 id="compile">compile：</h3>
+<p>对于一些经常要用到的正则表达式，可以使用<code>compile</code>进行编译，后期再使用的时候可以直接拿过来用，执行效率会更快。而且<code>compile</code>还可以指定<code>flag=re.VERBOSE</code>，在写正则表达式的时候可以做好注释。示例代码如下：</p>
+<pre><code class="language-python">text = &quot;the number is 20.50&quot;
+r = re.compile(r&quot;&quot;&quot;
+                \d+ # 小数点前面的数字
+                \.? # 小数点
+                \d* # 小数点后面的数字
+                &quot;&quot;&quot;,re.VERBOSE)
+ret = re.search(r,text)
+print(ret.group())
+</code></pre>
+
+                        </div>
+                        <section class="post-copyright">
+
+                            <p class="copyright-item">
+                                <span>Author:</span>
+                                <span>💤ISpiker</span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>Permalink:</span>
+                                <span><a href="https://hehelv.github.io//post/6-zheng-ze-biao-da-shi-he-re-mo-kuai">https://hehelv.github.io//post/6-zheng-ze-biao-da-shi-he-re-mo-kuai</a></span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>License:</span>
+                                <span>MIT License</span>
+                            </p>
+
+                        </section>
+                        <section class="post-tags">
+                            <div>
+                                <span>Tag(s):</span>
+                                <span class="tag">
+                                
+                            </span>
+                            </div>
+                            <div>
+                                <a href="javascript:window.history.back();">back</a>
+                                <span>·</span>
+                                <a href="#">home</a>
+                            </div>
+                        </section>
+                        <section class="post-nav">
+                            
+                                    
+                                        <a class="next" rel="next" href="https://hehelv.github.io//post/5-beautifulsoup4-ku">
+                                            5-BeautifulSoup4库
+                                        </a>
+                                        
+                        </section>
+
+                    </article>
+                </div>
+                
+            </div>
+    </div>
+    </div>
+
+    </div>
+    <footer id="footer" class="footer">
+    <div class="copyright">
+        
+
+            <script>
+                var xhr = new XMLHttpRequest();
+                xhr.open('get', 'https://v1.hitokoto.cn');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        var data = JSON.parse(xhr.responseText);
+                        var hitokoto = document.getElementById('hitokoto');
+                        hitokoto.innerText = data.hitokoto;
+                    }
+                }
+                xhr.send();
+                (function() {
+                    var bp = document.createElement('script');
+                    var curProtocol = window.location.protocol.split(':')[0];
+                    if (curProtocol === 'https') {
+                        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                    } else {
+                        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                    }
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(bp, s);
+                })();
+            </script>
+            <b id="hitokoto"></b><br>
+            <svg viewBox="0 0 1024 1024" style="margin-left: 5px;margin-right: 5px;" version="1.0" width="8" height="8" class="my-face"><path d="M863.597631 513.574282l-271.33965-140.213484L729.783667 81.926656c3.583731-7.87141 7.167462-15.742819 7.167462-25.214109C736.887134 25.226908 708.345275 0.012799 672.635953 0.012799a63.611229 63.611229 0 0 0-39.293053 12.607055c-1.791866 1.59988-3.519736 3.19976-5.311602 3.19976L147.87531 418.925381a55.547834 55.547834 0 0 0-19.646527 47.356448c1.791866 17.278704 14.27093 33.021523 32.125591 42.492813l271.33965 141.749369L292.504463 945.221908c-12.479064 25.214109-1.791866 53.563983 23.166262 69.306802 10.751194 6.335525 23.230258 9.47129 35.709322 9.47129 16.062795 0 32.125591-4.735645 44.604655-15.742819l480.091993-403.297753a55.547834 55.547834 0 0 0 19.646526-47.228458 61.243407 61.243407 0 0 0-32.12559-44.156688z" fill="#93b5cf"></path></svg>
+            <script>
+                var date = new Date();
+                document.write(" " + date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + " 星期" + "日一二三四五六".charAt(date.getDay()));
+            </script> Copyright&copy;
+            💤ISpiker | Powered by <a href="https://coding.net" target="_blank">Coding.net</a>
+
+    </div>
+</footer>
+<script>
+    hljs.initHighlighting();
+</script>
+        </div>
+</body>
+
+</html>
