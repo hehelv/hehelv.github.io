@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+<title>
+    💤ISpiker
+</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta name="author" content="💤ISpiker">
+<meta name="description" content="The proof is in the pudding.">
+<meta name="keywords" content="The proof is in the pudding.">
+<link rel="stylesheet" href="https://hehelv.github.io//media/css/main.css" />
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+<script src="https://hehelv.github.io//media/script/tocbot.min.js"></script>
+<script src="https://hehelv.github.io//media/script/script.js"></script>
+<!--<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/default.min.css">
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>-->
+<script src="https://cdn.bootcss.com/highlight.js/9.13.1/highlight.min.js"></script>
+<link href="https://cdn.bootcss.com/highlight.js/9.13.1/styles/atelier-estuary-dark.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo">
+                <a href="https://hehelv.github.io/">
+                    💤ISpiker
+                </a>
+            </div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">
+                        Home
+                    </a>
+                    
+                    <a class="menu-item" href="/archives">
+                        Archives
+                    </a>
+                    
+                    <a class="menu-item" href="/tags">
+                        Tags
+                    </a>
+                    
+                    <a class="menu-item" href="/post/about">
+                        About
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/algorithm">
+                        Algorithm
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/networking">
+                        Computer Networking
+                    </a>
+                    
+                        <input id="switch_default" type="checkbox" class="switch_default">
+                        <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+        <nav class="navbar-mobile" id="nav-mobile">
+            <div class="container">
+                <div class="navbar-header">
+                    <div>
+                        <a href="https://hehelv.github.io/">
+                            💤ISpiker
+                        </a>
+                        <a id="mobile-toggle-theme">&nbsp;Light</a>
+                    </div>
+                    <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+                </div>
+                <div class="menu" id="mobile-menu">
+                    
+                        <a class="menu-item" href="/">
+                            Home
+                        </a>
+                        
+                        <a class="menu-item" href="/archives">
+                            Archives
+                        </a>
+                        
+                        <a class="menu-item" href="/tags">
+                            Tags
+                        </a>
+                        
+                        <a class="menu-item" href="/post/about">
+                            About
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/algorithm">
+                            Algorithm
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/networking">
+                            Computer Networking
+                        </a>
+                        
+                </div>
+            </div>
+        </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if (toggleMenu.classList.contains("active")) {
+            toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        } else {
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+                    <article class="post-wrap">
+                        <header class="post-header">
+                            <h1 class="post-title">
+                                1-http协议与chrome抓包工具
+                            </h1>
+                            <div class="post-meta">
+                                Author:
+                                <a itemprop="author" rel="author" href="/">
+                                    💤ISpiker
+                                </a>
+                                <span class="post-time">
+                                Date: <a href="#">2020-02-28</a>
+                            </span>
+                                
+                                    <span class="post-category">
+                                Category:
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note">Python爬虫笔记</a>
+                                
+                            </span>
+                                    
+                            </div>
+                        </header>
+
+                        <div class="post-content">
+                            <h1 id="2-http协议和chrome抓包工具">2-http协议和Chrome抓包工具</h1>
+<h2 id="什么是http和https协议">什么是http和https协议：</h2>
+<p>HTTP协议：全称是<code>HyperText Transfer Protocol</code>，中文意思是超文本传输协议，是一种发布和接收HTML页面的方法。服务器端口号是<code>80</code>端口。 HTTPS协议：是HTTP协议的加密版本，在HTTP下加入了SSL层。服务器端口号是<code>443</code>端口。</p>
+<h2 id="在浏览器中发送一个http请求的过程">在浏览器中发送一个http请求的过程：</h2>
+<ol>
+<li>当用户在浏览器的地址栏中输入一个URL并按回车键之后，浏览器会向HTTP服务器发送HTTP请求。HTTP请求主要分为“Get”和“Post”两种方法。</li>
+<li>当我们在浏览器输入URL http://www.baidu.com 的时候，浏览器发送一个Request请求去获取 http://www.baidu.com 的html文件，服务器把Response文件对象发送回给浏览器。</li>
+<li>浏览器分析Response中的 HTML，发现其中引用了很多其他文件，比如Images文件，CSS文件，JS文件。 浏览器会自动再次发送Request去获取图片，CSS文件，或者JS文件。</li>
+<li>当所有的文件都下载成功后，网页会根据HTML语法结构，完整的显示出来了。</li>
+</ol>
+<h2 id="url详解">url详解：</h2>
+<p><code>URL</code>是<code>Uniform Resource Locator</code>的简写，统一资源定位符。 一个<code>URL</code>由以下几部分组成：</p>
+<pre><code>    scheme://host:port/path/?query-string=xxx#anchor
+</code></pre>
+<ul>
+<li><strong>scheme</strong>：代表的是访问的协议，一般为<code>http</code>或者<code>https</code>以及<code>ftp</code>等。</li>
+<li><strong>host</strong>：主机名，域名，比如<code>www.baidu.com</code>。</li>
+<li><strong>port</strong>：端口号。当你访问一个网站的时候，浏览器默认使用80端口。</li>
+<li><strong>path</strong>：查找路径。比如：<code>www.jianshu.com/trending/now</code>，后面的<code>trending/now</code>就是<code>path</code>。</li>
+<li><strong>query-string</strong>：查询字符串，比如：<code>www.baidu.com/s?wd=python</code>，后面的<code>wd=python</code>就是查询字符串。</li>
+<li><strong>anchor</strong>：锚点，后台一般不用管，前端用来做页面定位的。</li>
+</ul>
+<p>在浏览器中请求一个<code>url</code>，浏览器会对这个url进行一个编码。除英文字母，数字和部分符号外，其他的全部使用百分号+十六进制码值进行编码。</p>
+<h2 id="常用的请求方法">常用的请求方法：</h2>
+<p>在<code>Http</code>协议中，定义了八种请求方法。这里介绍两种常用的请求方法，分别是<code>get</code>请求和<code>post</code>请求。</p>
+<ol>
+<li><code>get</code>请求：一般情况下，只从服务器获取数据下来，并不会对服务器资源产生任何影响的时候会使用<code>get</code>请求。</li>
+<li><code>post</code>请求：向服务器发送数据（登录）、上传文件等，会对服务器资源产生影响的时候会使用<code>post</code>请求。 以上是在网站开发中常用的两种方法。并且一般情况下都会遵循使用的原则。但是有的网站和服务器为了做反爬虫机制，也经常会不按常理出牌，有可能一个应该使用<code>get</code>方法的请求就一定要改成<code>post</code>请求，这个要视情况而定。</li>
+</ol>
+<h2 id="请求头常见参数">请求头常见参数：</h2>
+<p>在<code>http</code>协议中，向服务器发送一个请求，数据分为三部分，第一个是把数据放在url中，第二个是把数据放在<code>body</code>中（在<code>post</code>请求中），第三个就是把数据放在<code>head</code>中。这里介绍在网络爬虫中经常会用到的一些请求头参数：</p>
+<ol>
+<li><code>User-Agent</code>：浏览器名称。这个在网络爬虫中经常会被使用到。请求一个网页的时候，服务器通过这个参数就可以知道这个请求是由哪种浏览器发送的。如果我们是通过爬虫发送请求，那么我们的<code>User-Agent</code>就是<code>Python</code>，这对于那些有反爬虫机制的网站来说，可以轻易的判断你这个请求是爬虫。因此我们要经常设置这个值为一些浏览器的值，来伪装我们的爬虫。</li>
+<li><code>Referer</code>：表明当前这个请求是从哪个<code>url</code>过来的。这个一般也可以用来做反爬虫技术。如果不是从指定页面过来的，那么就不做相关的响应。</li>
+<li><code>Cookie</code>：<code>http</code>协议是无状态的。也就是同一个人发送了两次请求，服务器没有能力知道这两个请求是否来自同一个人。因此这时候就用<code>cookie</code>来做标识。一般如果想要做登录后才能访问的网站，那么就需要发送<code>cookie</code>信息了。</li>
+</ol>
+<h2 id="常见响应状态码">常见响应状态码：</h2>
+<ol>
+<li><code>200</code>：请求正常，服务器正常的返回数据。</li>
+<li><code>301</code>：永久重定向。比如在访问<code>www.jingdong.com</code>的时候会重定向到<code>www.jd.com</code>。</li>
+<li><code>302</code>：临时重定向。比如在访问一个需要登录的页面的时候，而此时没有登录，那么就会重定向到登录页面。</li>
+<li><code>400</code>：请求的<code>url</code>在服务器上找不到。换句话说就是请求<code>url</code>错误。</li>
+<li><code>403</code>：服务器拒绝访问，权限不够。</li>
+<li><code>500</code>：服务器内部错误。可能是服务器出现<code>bug</code>了。</li>
+</ol>
+<h2 id="chrome抓包工具">Chrome抓包工具：</h2>
+<p><code>Chrome</code>浏览器是一个非常亲近开发者的浏览器。可以方便的查看网络请求以及发送的参数。对着网页<code>右键-&gt;检查</code>。然后就可以打开开发者选项。</p>
+
+                        </div>
+                        <section class="post-copyright">
+
+                            <p class="copyright-item">
+                                <span>Author:</span>
+                                <span>💤ISpiker</span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>Permalink:</span>
+                                <span><a href="https://hehelv.github.io//post/1-http-xie-yi-yu-chrome-zhua-bao-gong-ju">https://hehelv.github.io//post/1-http-xie-yi-yu-chrome-zhua-bao-gong-ju</a></span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>License:</span>
+                                <span>MIT License</span>
+                            </p>
+
+                        </section>
+                        <section class="post-tags">
+                            <div>
+                                <span>Tag(s):</span>
+                                <span class="tag">
+                                
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note"># Python爬虫笔记</a>
+                                
+                                
+                            </span>
+                            </div>
+                            <div>
+                                <a href="javascript:window.history.back();">back</a>
+                                <span>·</span>
+                                <a href="#">home</a>
+                            </div>
+                        </section>
+                        <section class="post-nav">
+                            
+                                    
+                                        <a class="next" rel="next" href="https://hehelv.github.io//post/tcpip-xiang-jie">
+                                            TCPIP详解
+                                        </a>
+                                        
+                        </section>
+
+                    </article>
+                </div>
+                
+            </div>
+    </div>
+    </div>
+
+    </div>
+    <footer id="footer" class="footer">
+    <div class="copyright">
+        
+
+            <script>
+                var xhr = new XMLHttpRequest();
+                xhr.open('get', 'https://v1.hitokoto.cn');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        var data = JSON.parse(xhr.responseText);
+                        var hitokoto = document.getElementById('hitokoto');
+                        hitokoto.innerText = data.hitokoto;
+                    }
+                }
+                xhr.send();
+                (function() {
+                    var bp = document.createElement('script');
+                    var curProtocol = window.location.protocol.split(':')[0];
+                    if (curProtocol === 'https') {
+                        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                    } else {
+                        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                    }
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(bp, s);
+                })();
+            </script>
+            <b id="hitokoto"></b><br>
+            <svg viewBox="0 0 1024 1024" style="margin-left: 5px;margin-right: 5px;" version="1.0" width="8" height="8" class="my-face"><path d="M863.597631 513.574282l-271.33965-140.213484L729.783667 81.926656c3.583731-7.87141 7.167462-15.742819 7.167462-25.214109C736.887134 25.226908 708.345275 0.012799 672.635953 0.012799a63.611229 63.611229 0 0 0-39.293053 12.607055c-1.791866 1.59988-3.519736 3.19976-5.311602 3.19976L147.87531 418.925381a55.547834 55.547834 0 0 0-19.646527 47.356448c1.791866 17.278704 14.27093 33.021523 32.125591 42.492813l271.33965 141.749369L292.504463 945.221908c-12.479064 25.214109-1.791866 53.563983 23.166262 69.306802 10.751194 6.335525 23.230258 9.47129 35.709322 9.47129 16.062795 0 32.125591-4.735645 44.604655-15.742819l480.091993-403.297753a55.547834 55.547834 0 0 0 19.646526-47.228458 61.243407 61.243407 0 0 0-32.12559-44.156688z" fill="#93b5cf"></path></svg>
+            <script>
+                var date = new Date();
+                document.write(" " + date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + " 星期" + "日一二三四五六".charAt(date.getDay()));
+            </script> Copyright&copy;
+            💤ISpiker | Powered by <a href="https://coding.net" target="_blank">Coding.net</a>
+
+    </div>
+</footer>
+<script>
+    hljs.initHighlighting();
+</script>
+        </div>
+</body>
+
+</html>

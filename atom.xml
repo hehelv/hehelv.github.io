@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hehelv.github.io/</id>
     <title>💤ISpiker</title>
-    <updated>2020-01-18T13:56:21.655Z</updated>
+    <updated>2020-02-28T06:26:44.247Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hehelv.github.io/"/>
     <link rel="self" href="https://hehelv.github.io//atom.xml"/>
@@ -10,6 +10,332 @@
     <logo>https://hehelv.github.io//images/avatar.png</logo>
     <icon>https://hehelv.github.io//favicon.ico</icon>
     <rights>All rights reserved 2020, 💤ISpiker</rights>
+    <entry>
+        <title type="html"><![CDATA[1-http协议与chrome抓包工具]]></title>
+        <id>https://hehelv.github.io//post/1-http-xie-yi-yu-chrome-zhua-bao-gong-ju</id>
+        <link href="https://hehelv.github.io//post/1-http-xie-yi-yu-chrome-zhua-bao-gong-ju">
+        </link>
+        <updated>2020-02-28T06:20:21.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="2-http协议和chrome抓包工具">2-http协议和Chrome抓包工具</h1>
+<h2 id="什么是http和https协议">什么是http和https协议：</h2>
+<p>HTTP协议：全称是<code>HyperText Transfer Protocol</code>，中文意思是超文本传输协议，是一种发布和接收HTML页面的方法。服务器端口号是<code>80</code>端口。 HTTPS协议：是HTTP协议的加密版本，在HTTP下加入了SSL层。服务器端口号是<code>443</code>端口。</p>
+<h2 id="在浏览器中发送一个http请求的过程">在浏览器中发送一个http请求的过程：</h2>
+<ol>
+<li>当用户在浏览器的地址栏中输入一个URL并按回车键之后，浏览器会向HTTP服务器发送HTTP请求。HTTP请求主要分为“Get”和“Post”两种方法。</li>
+<li>当我们在浏览器输入URL http://www.baidu.com 的时候，浏览器发送一个Request请求去获取 http://www.baidu.com 的html文件，服务器把Response文件对象发送回给浏览器。</li>
+<li>浏览器分析Response中的 HTML，发现其中引用了很多其他文件，比如Images文件，CSS文件，JS文件。 浏览器会自动再次发送Request去获取图片，CSS文件，或者JS文件。</li>
+<li>当所有的文件都下载成功后，网页会根据HTML语法结构，完整的显示出来了。</li>
+</ol>
+<h2 id="url详解">url详解：</h2>
+<p><code>URL</code>是<code>Uniform Resource Locator</code>的简写，统一资源定位符。 一个<code>URL</code>由以下几部分组成：</p>
+<pre><code>    scheme://host:port/path/?query-string=xxx#anchor
+</code></pre>
+<ul>
+<li><strong>scheme</strong>：代表的是访问的协议，一般为<code>http</code>或者<code>https</code>以及<code>ftp</code>等。</li>
+<li><strong>host</strong>：主机名，域名，比如<code>www.baidu.com</code>。</li>
+<li><strong>port</strong>：端口号。当你访问一个网站的时候，浏览器默认使用80端口。</li>
+<li><strong>path</strong>：查找路径。比如：<code>www.jianshu.com/trending/now</code>，后面的<code>trending/now</code>就是<code>path</code>。</li>
+<li><strong>query-string</strong>：查询字符串，比如：<code>www.baidu.com/s?wd=python</code>，后面的<code>wd=python</code>就是查询字符串。</li>
+<li><strong>anchor</strong>：锚点，后台一般不用管，前端用来做页面定位的。</li>
+</ul>
+<p>在浏览器中请求一个<code>url</code>，浏览器会对这个url进行一个编码。除英文字母，数字和部分符号外，其他的全部使用百分号+十六进制码值进行编码。</p>
+<h2 id="常用的请求方法">常用的请求方法：</h2>
+<p>在<code>Http</code>协议中，定义了八种请求方法。这里介绍两种常用的请求方法，分别是<code>get</code>请求和<code>post</code>请求。</p>
+<ol>
+<li><code>get</code>请求：一般情况下，只从服务器获取数据下来，并不会对服务器资源产生任何影响的时候会使用<code>get</code>请求。</li>
+<li><code>post</code>请求：向服务器发送数据（登录）、上传文件等，会对服务器资源产生影响的时候会使用<code>post</code>请求。 以上是在网站开发中常用的两种方法。并且一般情况下都会遵循使用的原则。但是有的网站和服务器为了做反爬虫机制，也经常会不按常理出牌，有可能一个应该使用<code>get</code>方法的请求就一定要改成<code>post</code>请求，这个要视情况而定。</li>
+</ol>
+<h2 id="请求头常见参数">请求头常见参数：</h2>
+<p>在<code>http</code>协议中，向服务器发送一个请求，数据分为三部分，第一个是把数据放在url中，第二个是把数据放在<code>body</code>中（在<code>post</code>请求中），第三个就是把数据放在<code>head</code>中。这里介绍在网络爬虫中经常会用到的一些请求头参数：</p>
+<ol>
+<li><code>User-Agent</code>：浏览器名称。这个在网络爬虫中经常会被使用到。请求一个网页的时候，服务器通过这个参数就可以知道这个请求是由哪种浏览器发送的。如果我们是通过爬虫发送请求，那么我们的<code>User-Agent</code>就是<code>Python</code>，这对于那些有反爬虫机制的网站来说，可以轻易的判断你这个请求是爬虫。因此我们要经常设置这个值为一些浏览器的值，来伪装我们的爬虫。</li>
+<li><code>Referer</code>：表明当前这个请求是从哪个<code>url</code>过来的。这个一般也可以用来做反爬虫技术。如果不是从指定页面过来的，那么就不做相关的响应。</li>
+<li><code>Cookie</code>：<code>http</code>协议是无状态的。也就是同一个人发送了两次请求，服务器没有能力知道这两个请求是否来自同一个人。因此这时候就用<code>cookie</code>来做标识。一般如果想要做登录后才能访问的网站，那么就需要发送<code>cookie</code>信息了。</li>
+</ol>
+<h2 id="常见响应状态码">常见响应状态码：</h2>
+<ol>
+<li><code>200</code>：请求正常，服务器正常的返回数据。</li>
+<li><code>301</code>：永久重定向。比如在访问<code>www.jingdong.com</code>的时候会重定向到<code>www.jd.com</code>。</li>
+<li><code>302</code>：临时重定向。比如在访问一个需要登录的页面的时候，而此时没有登录，那么就会重定向到登录页面。</li>
+<li><code>400</code>：请求的<code>url</code>在服务器上找不到。换句话说就是请求<code>url</code>错误。</li>
+<li><code>403</code>：服务器拒绝访问，权限不够。</li>
+<li><code>500</code>：服务器内部错误。可能是服务器出现<code>bug</code>了。</li>
+</ol>
+<h2 id="chrome抓包工具">Chrome抓包工具：</h2>
+<p><code>Chrome</code>浏览器是一个非常亲近开发者的浏览器。可以方便的查看网络请求以及发送的参数。对着网页<code>右键-&gt;检查</code>。然后就可以打开开发者选项。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[TCPIP详解]]></title>
+        <id>https://hehelv.github.io//post/tcpip-xiang-jie</id>
+        <link href="https://hehelv.github.io//post/tcpip-xiang-jie">
+        </link>
+        <updated>2020-02-20T06:49:46.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="2-beautifulsoup4库">2-BeautifulSoup4库</h1>
+<p>和 lxml 一样，Beautiful Soup 也是一个HTML/XML的解析器，主要的功能也是如何解析和提取 HTML/XML 数据。<br>
+lxml 只会局部遍历，而Beautiful Soup 是基于HTML DOM（Document Object Model）的，会载入整个文档，解析整个DOM树，因此时间和内存开销都会大很多，所以性能要低于lxml。<br>
+BeautifulSoup 用来解析 HTML 比较简单，API非常人性化，支持CSS选择器、Python标准库中的HTML解析器，也支持 lxml 的 XML解析器。<br>
+Beautiful Soup 3 目前已经停止开发，推荐现在的项目使用Beautiful Soup 4。</p>
+<h2 id="安装和文档">安装和文档：</h2>
+<ol>
+<li>安装：<code>pip install bs4</code>。</li>
+<li>中文文档：https://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html</li>
+</ol>
+<h2 id="几大解析工具对比">几大解析工具对比：</h2>
+<table>
+<thead>
+<tr>
+<th>解析工具</th>
+<th>解析速度</th>
+<th>使用难度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BeautifulSoup</td>
+<td>最慢</td>
+<td>最简单</td>
+</tr>
+<tr>
+<td>lxml</td>
+<td>快</td>
+<td>简单</td>
+</tr>
+<tr>
+<td>正则</td>
+<td>最快</td>
+<td>最难</td>
+</tr>
+</tbody>
+</table>
+<h2 id="简单使用">简单使用：</h2>
+<pre><code class="language-python">from bs4 import BeautifulSoup
+
+html = &quot;&quot;&quot;
+&lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse's story&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;p class=&quot;title&quot; name=&quot;dromouse&quot;&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;
+&lt;p class=&quot;story&quot;&gt;Once upon a time there were three little sisters; and their names were
+&lt;a href=&quot;http://example.com/elsie&quot; class=&quot;sister&quot; id=&quot;link1&quot;&gt;&lt;!-- Elsie --&gt;&lt;/a&gt;,
+&lt;a href=&quot;http://example.com/lacie&quot; class=&quot;sister&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt; and
+&lt;a href=&quot;http://example.com/tillie&quot; class=&quot;sister&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;;
+and they lived at the bottom of a well.&lt;/p&gt;
+&lt;p class=&quot;story&quot;&gt;...&lt;/p&gt;
+&quot;&quot;&quot;
+
+#创建 Beautiful Soup 对象
+# 使用lxml来进行解析
+soup = BeautifulSoup(html,&quot;lxml&quot;)
+
+print(soup.prettify())
+</code></pre>
+<h2 id="四个常用的对象">四个常用的对象：</h2>
+<p>Beautiful Soup将复杂HTML文档转换成一个复杂的树形结构,每个节点都是Python对象,所有对象可以归纳为4种:</p>
+<ol>
+<li>Tag</li>
+<li>NavigatableString</li>
+<li>BeautifulSoup</li>
+<li>Comment</li>
+</ol>
+<h3 id="1-tag">1. Tag：</h3>
+<p>Tag 通俗点讲就是 HTML 中的一个个标签。示例代码如下：</p>
+<pre><code class="language-python">(from bs4 import BeautifulSoup)
+
+html = &quot;&quot;&quot;
+&lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse's story&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;p class=&quot;title&quot; name=&quot;dromouse&quot;&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;
+&lt;p class=&quot;story&quot;&gt;Once upon a time there were three little sisters; and their names were
+&lt;a href=&quot;http://example.com/elsie&quot; class=&quot;sister&quot; id=&quot;link1&quot;&gt;&lt;!-- Elsie --&gt;&lt;/a&gt;,
+&lt;a href=&quot;http://example.com/lacie&quot; class=&quot;sister&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt; and
+&lt;a href=&quot;http://example.com/tillie&quot; class=&quot;sister&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;;
+and they lived at the bottom of a well.&lt;/p&gt;
+&lt;p class=&quot;story&quot;&gt;...&lt;/p&gt;
+&quot;&quot;&quot;
+
+#创建 Beautiful Soup 对象
+soup = BeautifulSoup(html,'lxml')
+
+
+print (soup.title)
+# &lt;title&gt;The Dormouse's story&lt;/title&gt;
+
+print (soup.head)
+# &lt;head&gt;&lt;title&gt;The Dormouse's story&lt;/title&gt;&lt;/head&gt;
+
+print (soup.a)
+# &lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;&lt;!-- Elsie --&gt;&lt;/a&gt;
+
+print( soup.p)
+# &lt;p class=&quot;title&quot; name=&quot;dromouse&quot;&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;
+
+print (type(soup.p))
+# &lt;class 'bs4.element.Tag'&gt;
+</code></pre>
+<p>我们可以利用 soup 加标签名轻松地获取这些标签的内容，这些对象的类型是bs4.element.Tag。但是注意，它查找的是在所有内容中的第一个符合要求的标签。如果要查询所有的标签，后面会进行介绍。<br>
+对于Tag，它有两个重要的属性，分别是name和attrs。示例代码如下：</p>
+<pre><code class="language-python">print soup.name
+# [document] #soup 对象本身比较特殊，它的 name 即为 [document]
+
+print soup.head.name
+# head #对于其他内部标签，输出的值便为标签本身的名称
+
+print soup.p.attrs
+# {'class': ['title'], 'name': 'dromouse'}
+# 在这里，我们把 p 标签的所有属性打印输出了出来，得到的类型是一个字典。
+
+print soup.p['class'] # soup.p.get('class')
+# ['title'] #还可以利用get方法，传入属性的名称，二者是等价的
+
+soup.p['class'] = &quot;newClass&quot;
+print soup.p # 可以对这些属性和内容等等进行修改
+# &lt;p class=&quot;newClass&quot; name=&quot;dromouse&quot;&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;
+</code></pre>
+<h3 id="2-navigablestring">2. NavigableString：</h3>
+<p>如果拿到标签后，还想获取标签中的内容。那么可以通过<code>tag.string</code>获取标签中的文字。示例代码如下：</p>
+<pre><code class="language-python">print (soup.p.string)
+# The Dormouse's story
+
+print (type(soup.p.string))
+# &lt;class 'bs4.element.NavigableString'&gt;thon
+</code></pre>
+<h3 id="3-beautifulsoup">3. BeautifulSoup：</h3>
+<p>BeautifulSoup 对象表示的是一个文档的全部内容.大部分时候,可以把它当作 Tag 对象,它支持 遍历文档树 和 搜索文档树 中描述的大部分的方法.<br>
+因为 BeautifulSoup 对象并不是真正的HTML或XML的tag,所以它没有name和attribute属性.但有时查看它的 .name 属性是很方便的,所以 BeautifulSoup 对象包含了一个值为 “[document]” 的特殊属性 .name</p>
+<pre><code class="language-python">soup.name
+# '[document]'
+</code></pre>
+<h3 id="4-comment">4. Comment：</h3>
+<p>Tag , NavigableString , BeautifulSoup 几乎覆盖了html和xml中的所有内容,但是还有一些特殊对象.容易让人担心的内容是文档的注释部分:</p>
+<pre><code class="language-python">markup = &quot;&lt;b&gt;&lt;!--Hey, buddy. Want to buy a used parser?--&gt;&lt;/b&gt;&quot;
+soup = BeautifulSoup(markup)
+comment = soup.b.string
+type(comment)
+# &lt;class 'bs4.element.Comment'&gt;
+</code></pre>
+<p>Comment 对象是一个特殊类型的 NavigableString 对象:</p>
+<pre><code class="language-python">comment
+# 'Hey, buddy. Want to buy a used parser'
+</code></pre>
+<h2 id="遍历文档树">遍历文档树：</h2>
+<h3 id="1-contents和children">1. contents和children：</h3>
+<pre><code class="language-python">html_doc = &quot;&quot;&quot;
+&lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse's story&lt;/title&gt;&lt;/head&gt;
+
+&lt;p class=&quot;title&quot;&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;
+
+&lt;p class=&quot;story&quot;&gt;Once upon a time there were three little sisters; and their names were
+&lt;a href=&quot;http://example.com/elsie&quot; class=&quot;sister&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;,
+&lt;a href=&quot;http://example.com/lacie&quot; class=&quot;sister&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt; and
+&lt;a href=&quot;http://example.com/tillie&quot; class=&quot;sister&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;;
+and they lived at the bottom of a well.&lt;/p&gt;
+
+&lt;p class=&quot;story&quot;&gt;...&lt;/p&gt;
+&quot;&quot;&quot;
+
+from bs4 import BeautifulSoup
+soup = BeautifulSoup(html_doc,'lxml')
+
+head_tag = soup.head
+# 返回所有子节点的列表
+print(head_tag.contents)
+
+# 返回所有子节点的迭代器
+for child in head_tag.children:
+    print(child)
+</code></pre>
+<h3 id="2-strings-和-stripped_strings">2. strings 和 stripped_strings</h3>
+<p>如果tag中包含多个字符串 [2] ,可以使用 .strings 来循环获取：</p>
+<pre><code class="language-python">for string in soup.strings:
+    print(repr(string))
+    # u&quot;The Dormouse's story&quot;
+    # u'\n\n'
+    # u&quot;The Dormouse's story&quot;
+    # u'\n\n'
+    # u'Once upon a time there were three little sisters; and their names were\n'
+    # u'Elsie'
+    # u',\n'
+    # u'Lacie'
+    # u' and\n'
+    # u'Tillie'
+    # u';\nand they lived at the bottom of a well.'
+    # u'\n\n'
+    # u'...'
+    # u'\n'
+</code></pre>
+<p>输出的字符串中可能包含了很多空格或空行,使用 .stripped_strings 可以去除多余空白内容：</p>
+<pre><code class="language-python">for string in soup.stripped_strings:
+    print(repr(string))
+    # u&quot;The Dormouse's story&quot;
+    # u&quot;The Dormouse's story&quot;
+    # u'Once upon a time there were three little sisters; and their names were'
+    # u'Elsie'
+    # u','
+    # u'Lacie'
+    # u'and'
+    # u'Tillie'
+    # u';\nand they lived at the bottom of a well.'
+    # u'...'
+</code></pre>
+<h3 id="获取标签属性">获取标签属性</h3>
+<p>1.通过下标获取</p>
+<pre><code class="language-python">href = a['href']
+</code></pre>
+<p>2.通过attrs属性获取</p>
+<pre><code class="language-python">href=a.attrs['href']
+</code></pre>
+<h3 id="小结">小结</h3>
+<ol>
+<li>string: 获取某个标签下的非标签字符串。返回来的是个字符串。</li>
+<li>strings: 获取某个标签下的子孙非标签字符串。返回来的是个生成器。</li>
+<li>stripped_strings:获取某个标签下的子孙非标签字符串，会去掉空白字符。返回来的<br>
+是个生成器。</li>
+<li>get_ _text:获取某个标签下的子孙非标签字符串。不是以列表的形式返回，是以普通字<br>
+符串返回。</li>
+</ol>
+<h2 id="搜索文档树">搜索文档树：</h2>
+<h3 id="1-find和find_all方法">1. find和find_all方法：</h3>
+<p>搜索文档树，一般用得比较多的就是两个方法，一个是<code>find</code>，一个是<code>find_all</code>。<code>find</code>方法是找到第一个满足条件的标签后就立即返回，只返回一个元素。<code>find_all</code>方法是把所有满足条件的标签都选到，然后返回回去。使用这两个方法，最常用的用法是出入<code>name</code>以及<code>attr</code>参数找出符合要求的标签。</p>
+<pre><code class="language-python">soup.find_all(&quot;a&quot;,attrs={&quot;id&quot;:&quot;link2&quot;})
+</code></pre>
+<p>或者是直接传入属性的的名字作为关键字参数：</p>
+<pre><code class="language-python">soup.find_all(&quot;a&quot;,id='link2')
+</code></pre>
+<h3 id="2-select方法">2. select方法：</h3>
+<p>使用以上方法可以方便的找出元素。但有时候使用<code>css</code>选择器的方式可以更加的方便。使用<code>css</code>选择器的语法，应该使用<code>select</code>方法。以下列出几种常用的<code>css</code>选择器方法：</p>
+<h4 id="1通过标签名查找">（1）通过标签名查找：</h4>
+<pre><code class="language-python">print(soup.select('a'))
+</code></pre>
+<h4 id="2通过类名查找">（2）通过类名查找：</h4>
+<p>通过类名，则应该在类的前面加一个<code>.</code>。比如要查找<code>class=sister</code>的标签。示例代码如下：</p>
+<pre><code class="language-python">print(soup.select('.sister'))
+</code></pre>
+<h4 id="3通过id查找">（3）通过id查找：</h4>
+<p>通过id查找，应该在id的名字前面加一个＃号。示例代码如下：</p>
+<pre><code class="language-python">print(soup.select(&quot;#link1&quot;))
+</code></pre>
+<h4 id="4组合查找">（4）组合查找：</h4>
+<p>组合查找即和写 class 文件时，标签名与类名、id名进行的组合原理是一样的，例如查找 p 标签中，id 等于 link1的内容，二者需要用空格分开：</p>
+<pre><code class="language-python">print(soup.select(&quot;p #link1&quot;))
+</code></pre>
+<p>直接子标签查找，则使用 &gt; 分隔：</p>
+<pre><code class="language-python">print(soup.select(&quot;head &gt; title&quot;))
+</code></pre>
+<h4 id="5通过属性查找">（5）通过属性查找：</h4>
+<p>查找时还可以加入属性元素，属性需要用中括号括起来，注意属性和标签属于同一节点，所以中间不能加空格，否则会无法匹配到。示例代码如下：</p>
+<pre><code class="language-python">print(soup.select('a[href=&quot;http://example.com/elsie&quot;]'))
+</code></pre>
+<h4 id="6获取内容">（6）获取内容</h4>
+<p>以上的 select 方法返回的结果都是列表形式，可以遍历形式输出，然后用 get_text() 方法来获取它的内容。</p>
+<pre><code class="language-python">soup = BeautifulSoup(html, 'lxml')
+print type(soup.select('title'))
+print soup.select('title')[0].get_text()
+
+for title in soup.select('title'):
+    print title.get_text()
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[八皇后]]></title>
         <id>https://hehelv.github.io//post/ba-huang-hou</id>
@@ -339,8 +665,9 @@ min:4 max:8
     返回
 }
 </code></pre>
-<p>对于深度优先搜索，首先要明白当前怎么做，然后直接dfs(step+1)，做下一步即可。<br>
-例子：</p>
+<p>对于深度优先搜索，首先要明白当前怎么做，然后直接dfs(step+1)，做下一步即可。</p>
+<h1 id="bfs">BFS：</h1>
+<p>通常用来解决最小路径，最少操作类问题，</p>
 ]]></content>
     </entry>
     <entry>
