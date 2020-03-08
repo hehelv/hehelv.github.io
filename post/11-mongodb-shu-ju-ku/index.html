@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+<title>
+    💤ISpiker
+</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta name="author" content="💤ISpiker">
+<meta name="description" content="The proof is in the pudding.">
+<meta name="keywords" content="The proof is in the pudding.">
+<link rel="stylesheet" href="https://hehelv.github.io//media/css/main.css" />
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+<script src="https://hehelv.github.io//media/script/tocbot.min.js"></script>
+<script src="https://hehelv.github.io//media/script/script.js"></script>
+<!--<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/default.min.css">
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>-->
+<script src="https://cdn.bootcss.com/highlight.js/9.13.1/highlight.min.js"></script>
+<link href="https://cdn.bootcss.com/highlight.js/9.13.1/styles/atelier-estuary-dark.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo">
+                <a href="https://hehelv.github.io/">
+                    💤ISpiker
+                </a>
+            </div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">
+                        Home
+                    </a>
+                    
+                    <a class="menu-item" href="/archives">
+                        Archives
+                    </a>
+                    
+                    <a class="menu-item" href="/tags">
+                        Tags
+                    </a>
+                    
+                    <a class="menu-item" href="/post/about">
+                        About
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/algorithm">
+                        Algorithm
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/networking">
+                        Computer Networking
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/Spider Note">
+                        Spider Note
+                    </a>
+                    
+                        <input id="switch_default" type="checkbox" class="switch_default">
+                        <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+        <nav class="navbar-mobile" id="nav-mobile">
+            <div class="container">
+                <div class="navbar-header">
+                    <div>
+                        <a href="https://hehelv.github.io/">
+                            💤ISpiker
+                        </a>
+                        <a id="mobile-toggle-theme">&nbsp;Light</a>
+                    </div>
+                    <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+                </div>
+                <div class="menu" id="mobile-menu">
+                    
+                        <a class="menu-item" href="/">
+                            Home
+                        </a>
+                        
+                        <a class="menu-item" href="/archives">
+                            Archives
+                        </a>
+                        
+                        <a class="menu-item" href="/tags">
+                            Tags
+                        </a>
+                        
+                        <a class="menu-item" href="/post/about">
+                            About
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/algorithm">
+                            Algorithm
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/networking">
+                            Computer Networking
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/Spider Note">
+                            Spider Note
+                        </a>
+                        
+                </div>
+            </div>
+        </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if (toggleMenu.classList.contains("active")) {
+            toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        } else {
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+                    <article class="post-wrap">
+                        <header class="post-header">
+                            <h1 class="post-title">
+                                11-MongoDB数据库
+                            </h1>
+                            <div class="post-meta">
+                                Author:
+                                <a itemprop="author" rel="author" href="/">
+                                    💤ISpiker
+                                </a>
+                                <span class="post-time">
+                                Date: <a href="#">2020-03-02</a>
+                            </span>
+                                
+                                    <span class="post-category">
+                                Category:
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note">Python爬虫笔记</a>
+                                
+                            </span>
+                                    
+                            </div>
+                        </header>
+
+                        <div class="post-content">
+                            <h1 id="11-mongodb数据库">11-MongoDB数据库</h1>
+<h2 id="介绍">介绍</h2>
+<p>官方文档：http://www.mongoing.com/docs/</p>
+<h3 id="文档">文档</h3>
+<p>MongoDB是一个面向文档的数据库<br>
+举例：{“foo”:3, “greeting”:“Hello,world!”}<br>
+区分大小写，且key唯一，不可重复，文档可嵌套</p>
+<h3 id="集合">集合</h3>
+<p>集合就是一组文档<br>
+文档类似于关系型数据库里的行<br>
+集合类似于关系型数据库里的表<br>
+集合中的文档无需固定额结构（与关系型数据库的区别）</p>
+<h3 id="集合的命名">集合的命名</h3>
+<ol>
+<li>不能有空字符串（&quot; &quot;）</li>
+<li>不能包含\0字符（空字符）</li>
+<li>不能使用system.的前缀（系统保留）</li>
+<li>建议不包含保留字 &quot;$&quot;</li>
+<li>用 .  分割不懂命名空间的子集合（如：blog.users， blog.posts）</li>
+</ol>
+<h3 id="数据库">数据库</h3>
+<ol>
+<li>多个文档组成集合，多个集合组成数据库</li>
+<li>一个实例可以承载多个数据库</li>
+<li>每个数据库都有独立的权限</li>
+<li>保留的数据名称（admin,local,config）</li>
+</ol>
+<h2 id="mongodb安装启动">MongoDB安装启动</h2>
+<p>下载mis包，安装在根目录下MongoDB文件夹里就OK，例如：D：\MongDB......。切记一开始安装不要选择附带安装compass图形工具，这个下载很慢可能直接卡死。</p>
+<p>启动：<br>
+配置数据路径<br>
+在目录D:\MongoDB\Server\4.0的bin文件使用'Shift'+'右键'选择在此处打开cmd，然后再cmd中输入：monogod --dbpath D:\MongoDB\Server\4.0\data<br>
+回车，来到NETWORK  [thread1] waiting for connections on port 27017<br>
+此时，在bin里打开另一个cmd，输入mongo，回车，就OK啦<br>
+可以使用 show databases 试一试</p>
+<h3 id="使用命令行操作数据库crud">使用命令行操作数据库（CRUD）</h3>
+<p>新增数据（Create）</p>
+<pre><code class="language-bash"># 进入数据库，如果没有该数据库，会自动创建
+use students； 
+# 新增数据
+stu = {
+  name:'Jhon',
+  age:21}
+# 插入数据到数据库
+db.students.insert(stu)
+</code></pre>
+<p>查询数据（Read）</p>
+<pre><code class="language-css"># 查询students中的所有数据
+db.students.find()
+# 查询students中的一条数据
+db.students.findOne()
+</code></pre>
+<p>修改数据（Update）</p>
+<pre><code class="language-bash"># 需要先查询这条数据
+s = db.students.findOne()
+# 修改数据=替换数据，替换后的数据没有年龄
+db.students.update({name: 'Jhon'}, {name: 'JhonC'})
+</code></pre>
+<p>删除数据（Delete）</p>
+<pre><code class="language-css"># 删除该属性的数据
+db.students.remove({name: 'JhonC'})
+# 删除students中的所有数据
+db.students.remove(())
+</code></pre>
+<p>练习：</p>
+<pre><code class="language-csharp"># 新建并进入数据库
+use students
+# 查看当前数据库
+db.log
+#插入多条数据
+db.students.insertMany(
+    [
+        { name:&quot;bob&quot;, age:16, sex: &quot;male&quot;, grade:95},
+        { name:&quot;ahn&quot;, age:18, sex: &quot;female&quot;, grade:45},
+        { name:&quot;xi&quot;, age:15, sex: &quot;male&quot;, grade:75},
+        { name:&quot;bob1&quot;, age:16, sex: &quot;male&quot;, grade:95},
+        { name:&quot;ahn1&quot;, age:18, sex: &quot;male&quot;, grade:45},
+        { name:&quot;xi1&quot;, age:15, sex: &quot;female&quot;, grade:55},
+        { name:&quot;bob2&quot;, age:16, sex: &quot;female&quot;, grade:95},
+        { name:&quot;ahn2&quot;, age:18, sex: &quot;male&quot;, grade:60},
+        { name:&quot;xi2&quot;, age:15, sex: &quot;male&quot;, grade:75},
+        { name:&quot;bob3&quot;, age:16, sex: &quot;male&quot;, grade:95},
+        { name:&quot;ahn3&quot;, age:18, sex: &quot;female&quot;, grade:45},
+        { name:&quot;xi3&quot;, age:15, sex: &quot;male&quot;, grade:85},
+        { name:&quot;bob4&quot;, age:16, sex: &quot;female&quot;, grade:95},
+        { name:&quot;ahn4&quot;, age:18, sex: &quot;male&quot;, grade:45},
+        { name:&quot;xi4&quot;, age:15, sex: &quot;male&quot;, grade:75}
+    ]
+)
+# 查看所有数据
+db.students.find()
+# 查看数据数量
+db.students.count()
+# cls 清屏
+# 查询所有男生数据
+db.students.find({sex: 'male'})
+# 查询所有及格学生信息
+db.students.find({grade:{'$gte':60}})
+# 查询所有18岁男生和16岁女生的数据
+db.students.find({'$or':[{sex:'male', age:18}, {sex: 'female', age:16}]})
+# 按照学生的年龄进行排序（1代表升序，-1代表降序）
+db.students.find().sort({age: 1})
+# 给所有学生都加一个地址=china的字段属性（修改器操作）
+db.students.update({}, {'$set':{adress:'china'}}, {multi:true})
+# 给所有女学生都加一岁（修改器操作）
+db.students.update({sex:'female'}, {'$inc':{age:1}}, {multi: true})
+</code></pre>
+<h2 id="使用python连接mongodb">使用Python连接MongoDB</h2>
+<p>手动启动MongoDB<br>
+在MongoDB的bin目录打开cmd 输入 monogod --dbpath D:\MongoDB\Server\4.0\data</p>
+<pre><code class="language-python"># 建立客户端连接的三种方法
+from pymongo import MongoClient
+client = MongoClient()
+# client2 = MongoClient('localhost', 27017)
+# client3 = MongoClient('mongodb://localhost:27017')
+# 显示数据库
+dbs = client.list_database_names()
+print(dbs)
+# 进入某个数据库
+db = client.blog
+</code></pre>
+<h3 id="curd完整示例代码">curd完整示例代码</h3>
+<pre><code class="language-python">from pymongo import MongoClient
+from bson.objectid import ObjectId
+
+
+class TestMongo(object):
+
+    def __init__(self):
+        self.client = MongoClient()
+        self.db = self.client['students']
+
+    def add_one(self):
+        '''新增数据'''
+        post ={
+            'name': 'ben',
+            'age': 18,
+            'sex': &quot;male&quot;,
+            'grade': 80,
+            'adress': &quot;china&quot;
+        }
+        return self.db.students.insert_one(post)
+    def add_many(self):
+        '''新增多条数据'''
+        infos = [
+            {'name': 'ben', 'age': 18, 'sex': &quot;male&quot;, 'grade': 80, 'adress': &quot;china&quot;},
+            {'name': 'sum', 'age': 19, 'sex': &quot;male&quot;, 'grade': 75, 'adress': &quot;china&quot;},
+            {'name': 'lily', 'age': 16, 'sex': &quot;female&quot;, 'grade': 90, 'adress': &quot;china&quot;},
+            {'name': 'teddy', 'age': 19, 'sex': &quot;male&quot;, 'grade': 65, 'adress': &quot;china&quot;},
+            {'name': 'fluence', 'age': 18, 'sex': &quot;female&quot;, 'grade': 80, 'adress': &quot;china&quot;}
+            ]
+        return self.db.students.insert_many(infos)
+
+    def get_one(self):
+        '''查询一条数据'''
+        return self.db.students.find_one()
+
+    def get_more(self):
+        '''查询多条数据'''
+        return self.db.students.find({'age': 18})
+
+    def get_one_from_oid(self, oid):
+        '''查询指定ID的数据'''
+        obj = ObjectId(oid)
+        return self.db.students.find_one({'_id': obj})
+
+    def update_one(self):
+        '''修改一条数据'''
+        return self.db.students.update_one({'age': 20}, {'$inc': {'x': 10}})
+
+    def update_many(self):
+        '''修改多条数据'''
+        return self.db.students.update_many({}, {'$inc': {'age': 5}})
+
+    def dalete_one(self):
+        '''删除一条数据'''
+        return self.db.students.delete_one({'name': 'ben'})
+
+    def delete_many(self):
+        '''删除多条数据'''
+        return self.db.students.delete_many({'age': 24})
+
+def main():
+    obj = TestMongo()
+    # rest = obj.add_one()
+    # print(rest)
+
+    # rest = obj.add_many()
+    # print(rest)
+
+    # rest = obj.get_one()
+    # print(rest)
+
+    # rest = obj.get_more()
+    # for i in rest:
+    #     print(i['_id'])
+
+    # rest = obj.get_one_from_oid('5c68b5cb5a49891b40b8a18e')
+    # print(rest)
+
+    # rest = obj.update_one()
+    # print(rest)
+
+    # rest = obj.update_many()
+    # print(rest)
+
+    # rest = obj.delete_one()
+    # print(rest.delete_count)
+
+    # rest = obj.delete_many()
+    # print(rest.delete_count)
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+                        </div>
+                        <section class="post-copyright">
+
+                            <p class="copyright-item">
+                                <span>Author:</span>
+                                <span>💤ISpiker</span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>Permalink:</span>
+                                <span><a href="https://hehelv.github.io//post/11-mongodb-shu-ju-ku">https://hehelv.github.io//post/11-mongodb-shu-ju-ku</a></span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>License:</span>
+                                <span>MIT License</span>
+                            </p>
+
+                        </section>
+                        <section class="post-tags">
+                            <div>
+                                <span>Tag(s):</span>
+                                <span class="tag">
+                                
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note"># Python爬虫笔记</a>
+                                
+                                
+                            </span>
+                            </div>
+                            <div>
+                                <a href="javascript:window.history.back();">back</a>
+                                <span>·</span>
+                                <a href="#">home</a>
+                            </div>
+                        </section>
+                        <section class="post-nav">
+                            
+                                <a class="prev" rel="prev" href="https://hehelv.github.io//post/1-duo-xian-cheng-pa-chong">
+                                    12-多线程爬虫
+                                </a>
+                                
+                                    
+                                        <a class="next" rel="next" href="https://hehelv.github.io//post/10-mysql-shu-ju-ku">
+                                            10-MySQL数据库
+                                        </a>
+                                        
+                        </section>
+
+                    </article>
+                </div>
+                
+            </div>
+    </div>
+    </div>
+
+    </div>
+    <footer id="footer" class="footer">
+    <div class="copyright">
+        
+
+            <script>
+                var xhr = new XMLHttpRequest();
+                xhr.open('get', 'https://v1.hitokoto.cn');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        var data = JSON.parse(xhr.responseText);
+                        var hitokoto = document.getElementById('hitokoto');
+                        hitokoto.innerText = data.hitokoto;
+                    }
+                }
+                xhr.send();
+                (function() {
+                    var bp = document.createElement('script');
+                    var curProtocol = window.location.protocol.split(':')[0];
+                    if (curProtocol === 'https') {
+                        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                    } else {
+                        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                    }
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(bp, s);
+                })();
+            </script>
+            <b id="hitokoto"></b><br>
+            <svg viewBox="0 0 1024 1024" style="margin-left: 5px;margin-right: 5px;" version="1.0" width="8" height="8" class="my-face"><path d="M863.597631 513.574282l-271.33965-140.213484L729.783667 81.926656c3.583731-7.87141 7.167462-15.742819 7.167462-25.214109C736.887134 25.226908 708.345275 0.012799 672.635953 0.012799a63.611229 63.611229 0 0 0-39.293053 12.607055c-1.791866 1.59988-3.519736 3.19976-5.311602 3.19976L147.87531 418.925381a55.547834 55.547834 0 0 0-19.646527 47.356448c1.791866 17.278704 14.27093 33.021523 32.125591 42.492813l271.33965 141.749369L292.504463 945.221908c-12.479064 25.214109-1.791866 53.563983 23.166262 69.306802 10.751194 6.335525 23.230258 9.47129 35.709322 9.47129 16.062795 0 32.125591-4.735645 44.604655-15.742819l480.091993-403.297753a55.547834 55.547834 0 0 0 19.646526-47.228458 61.243407 61.243407 0 0 0-32.12559-44.156688z" fill="#93b5cf"></path></svg>
+            <script>
+                var date = new Date();
+                document.write(" " + date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + " 星期" + "日一二三四五六".charAt(date.getDay()));
+            </script> Copyright&copy;
+            💤ISpiker | Powered by <a href="https://coding.net" target="_blank">Coding.net</a>
+
+    </div>
+</footer>
+<script>
+    hljs.initHighlighting();
+</script>
+        </div>
+</body>
+
+</html>

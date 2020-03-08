@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+<title>
+    💤ISpiker
+</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta name="author" content="💤ISpiker">
+<meta name="description" content="The proof is in the pudding.">
+<meta name="keywords" content="The proof is in the pudding.">
+<link rel="stylesheet" href="https://hehelv.github.io//media/css/main.css" />
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+<script src="https://hehelv.github.io//media/script/tocbot.min.js"></script>
+<script src="https://hehelv.github.io//media/script/script.js"></script>
+<!--<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/default.min.css">
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>-->
+<script src="https://cdn.bootcss.com/highlight.js/9.13.1/highlight.min.js"></script>
+<link href="https://cdn.bootcss.com/highlight.js/9.13.1/styles/atelier-estuary-dark.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo">
+                <a href="https://hehelv.github.io/">
+                    💤ISpiker
+                </a>
+            </div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">
+                        Home
+                    </a>
+                    
+                    <a class="menu-item" href="/archives">
+                        Archives
+                    </a>
+                    
+                    <a class="menu-item" href="/tags">
+                        Tags
+                    </a>
+                    
+                    <a class="menu-item" href="/post/about">
+                        About
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/algorithm">
+                        Algorithm
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/networking">
+                        Computer Networking
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/Spider Note">
+                        Spider Note
+                    </a>
+                    
+                        <input id="switch_default" type="checkbox" class="switch_default">
+                        <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+        <nav class="navbar-mobile" id="nav-mobile">
+            <div class="container">
+                <div class="navbar-header">
+                    <div>
+                        <a href="https://hehelv.github.io/">
+                            💤ISpiker
+                        </a>
+                        <a id="mobile-toggle-theme">&nbsp;Light</a>
+                    </div>
+                    <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+                </div>
+                <div class="menu" id="mobile-menu">
+                    
+                        <a class="menu-item" href="/">
+                            Home
+                        </a>
+                        
+                        <a class="menu-item" href="/archives">
+                            Archives
+                        </a>
+                        
+                        <a class="menu-item" href="/tags">
+                            Tags
+                        </a>
+                        
+                        <a class="menu-item" href="/post/about">
+                            About
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/algorithm">
+                            Algorithm
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/networking">
+                            Computer Networking
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/Spider Note">
+                            Spider Note
+                        </a>
+                        
+                </div>
+            </div>
+        </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if (toggleMenu.classList.contains("active")) {
+            toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        } else {
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+                    <article class="post-wrap">
+                        <header class="post-header">
+                            <h1 class="post-title">
+                                9-excel文件处理
+                            </h1>
+                            <div class="post-meta">
+                                Author:
+                                <a itemprop="author" rel="author" href="/">
+                                    💤ISpiker
+                                </a>
+                                <span class="post-time">
+                                Date: <a href="#">2020-03-02</a>
+                            </span>
+                                
+                                    <span class="post-category">
+                                Category:
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note">Python爬虫笔记</a>
+                                
+                            </span>
+                                    
+                            </div>
+                        </header>
+
+                        <div class="post-content">
+                            <h1 id="9-excel文件处理">9-excel文件处理</h1>
+<h2 id="安装环境">安装环境</h2>
+<ol>
+<li>
+<p>pandas依赖处理Excel的xlrd模块，所以我们需要提前安装这个，安装命令是：pip install xlrd</p>
+</li>
+<li>
+<p>安装pandas模块还需要一定的编码环境，所以我们自己在安装的时候，确保你的电脑有这些环境：Net.4 、VC-Compiler以及winsdk_web，如果大家没有这些软件~可以咨询我们的辅导员索要相关安装工具。</p>
+</li>
+<li>
+<p>步骤1和2 准备好了之后，我们就可以开始安装pandas了，安装命令是：pip install pandas</p>
+</li>
+</ol>
+<h2 id="pandas操作excel表单">pandas操作Excel表单</h2>
+<p>数据准备，有一个Excel文件：lemon.xlsx有两个表单，表单名分别为：Python 以及student，</p>
+<p>Python的表单数据如下所示：</p>
+<figure data-type="image" tabindex="1"><img src="../images/pandas-01.png" alt=""></figure>
+<p>student的表单数据如下所示：</p>
+<figure data-type="image" tabindex="2"><img src="../images/pandas-02.png" alt=""></figure>
+<p>1：在利用pandas模块进行操作前，可以先引入这个模块，如下：</p>
+<pre><code>import  pandas  as pd
+</code></pre>
+<p>2:读取Excel文件的两种方式：</p>
+<pre><code class="language-sheel">#方法一：默认读取第一个表单df=pd.read_excel('lemon.xlsx')#这个会直接默认读取到这个Excel的第一个表单
+data=df.head()#默认读取前5行的数据
+print(&quot;获取到所有的值:\n{0}&quot;.format(data))#格式化输出
+</code></pre>
+<p>得到的结果是一个二维矩阵，如下所示：</p>
+<figure data-type="image" tabindex="3"><img src="../images/pandas-03.png" alt=""></figure>
+<pre><code class="language-sheel">#方法二：通过指定表单名的方式来读取
+df=pd.read_excel('lemon.xlsx',sheet_name='student')#可以通过sheet_name来指定读取的表单
+data=df.head()#默认读取前5行的数据
+print(&quot;获取到所有的值:\n{0}&quot;.format(data))#格式化输出
+</code></pre>
+<p>得到的结果如下所示，也是一个二维矩阵：<br>
+<img src="../images/pandas-04.png" alt=""></p>
+<pre><code class="language-shell">#方法三：通过表单索引来指定要访问的表单，0表示第一个表单
+#也可以采用表单名和索引的双重方式来定位表单
+#也可以同时定位多个表单，方式都罗列如下所示
+df=pd.read_excel('lemon.xlsx',sheet_name=['python','student'])#可以通过表单名同时指定多个
+# df=pd.read_excel('lemon.xlsx',sheet_name=0)#可以通过表单索引来指定读取的表单
+# df=pd.read_excel('lemon.xlsx',sheet_name=['python',1])#可以混合的方式来指定
+# df=pd.read_excel('lemon.xlsx',sheet_name=[1,2])#可以通过索引 同时指定多个
+data=df.values#获取所有的数据，注意这里不能用head()方法哦~
+print(&quot;获取到所有的值:\n{0}&quot;.format(data))#格式化输出
+</code></pre>
+<h2 id="pandas操作excel的行列">pandas操作Excel的行列</h2>
+<p><strong>1：读取指定的单行，数据会存在列表里面</strong></p>
+<pre><code>#1：读取指定行df=pd.read_excel('lemon.xlsx')#这个会直接默认读取到这个Excel的第一个表单
+data=df.ix[0].values#0表示第一行 这里读取数据并不包含表头，要注意哦！
+print(&quot;读取指定行的数据：\n{0}&quot;.format(data))
+</code></pre>
+<p>得到的结果如下所示:</p>
+<figure data-type="image" tabindex="4"><img src="../images/pandas-05.png" alt=""></figure>
+<p><strong>2：读取指定的多行，数据会存在嵌套的列表里面：</strong></p>
+<pre><code>df=pd.read_excel('lemon.xlsx')
+data=df.ix[[1,2]].values#读取指定多行的话，就要在ix[]里面嵌套列表指定行数
+print(&quot;读取指定行的数据：\n{0}&quot;.format(data))
+</code></pre>
+<p><strong>3：读取指定的行列：</strong></p>
+<pre><code>df=pd.read_excel('lemon.xlsx')
+data=df.ix[1,2]#读取第一行第二列的值，这里不需要嵌套列表
+print(&quot;读取指定行的数据：\n{0}&quot;.format(data))
+</code></pre>
+<p><strong>4：读取指定的多行多列值：</strong></p>
+<pre><code>df=pd.read_excel('lemon.xlsx')
+data=df.ix[[1,2],['title','data']].values#读取第一行第二行的title以及data列的值，这里需要嵌套列表
+print(&quot;读取指定行的数据：\n{0}&quot;.format(data))
+</code></pre>
+<p><strong>5：获取所有行的指定列</strong></p>
+<pre><code>df=pd.read_excel('lemon.xlsx')
+data=df.ix[:,['title','data']].values#读所有行的title以及data列的值，这里需要嵌套列表
+print(&quot;读取指定行的数据：\n{0}&quot;.format(data))
+</code></pre>
+<p><strong>6：获取行号并打印输出</strong></p>
+<pre><code>df=pd.read_excel('lemon.xlsx')
+print(&quot;输出行号列表&quot;,df.index.values)
+
+输出结果是：
+输出行号列表 [0 1 2 3]
+</code></pre>
+<p><strong>7：获取列名并打印输出</strong></p>
+<pre><code>df=pd.read_excel('lemon.xlsx')
+print(&quot;输出列标题&quot;,df.columns.values)
+
+运行结果如下所示：
+输出列标题 ['case_id' 'title' 'data']
+</code></pre>
+<p><strong>8：获取指定行数的值：</strong></p>
+<pre><code>df=pd.read_excel('lemon.xlsx')
+print(&quot;输出值&quot;,df.sample(3).values)#这个方法类似于head()方法以及df.values方法
+
+输出值
+ [[2 '输入错误的密码' '{&quot;mobilephone&quot;:&quot;18688773467&quot;,&quot;pwd&quot;:&quot;12345678&quot;}']
+ [3 '正常充值' '{&quot;mobilephone&quot;:&quot;18688773467&quot;,&quot;amount&quot;:&quot;1000&quot;}']
+ [1 '正常登录' '{&quot;mobilephone&quot;:&quot;18688773467&quot;,&quot;pwd&quot;:&quot;123456&quot;}']]
+</code></pre>
+<p><strong>9：获取指定列的值：</strong></p>
+<pre><code>df=pd.read_excel('lemon.xlsx')
+print(&quot;输出值\n&quot;,df['data'].values)
+</code></pre>
+<h2 id="pandas处理excel数据成为字典">pandas处理Excel数据成为字典</h2>
+<p>有如下的数据，处理成列表嵌套字典，且字典的key为表头名。</p>
+<h2 id=""><img src="../images/pandas-06.png" alt=""></h2>
+<p>实现的代码如下所示：</p>
+<pre><code>df=pd.read_excel('lemon.xlsx')
+test_data=[]
+for i in df.index.values:#获取行号的索引，并对其进行遍历：
+    #根据i来获取每一行指定的数据 并利用to_dict转成字典
+    row_data=df.ix[i,['case_id','module','title','http_method','url','data','expected']].to_dict()
+    test_data.append(row_data)
+print(&quot;最终获取到的数据是：{0}&quot;.format(test_data))
+</code></pre>
+<p>最后得到的结果是：</p>
+<pre><code>最终获取到的数据是：
+[{'title': '正常登录', 'case_id': 1, 'data': '{&quot;mobilephone&quot;:&quot;18688773467&quot;,&quot;pwd&quot;:&quot;123456&quot;}'}, 
+{'title': '输入错误的密码', 'case_id': 2, 'data': '{&quot;mobilephone&quot;:&quot;18688773467&quot;,&quot;pwd&quot;:&quot;12345678&quot;}'}, 
+{'title': '正常充值', 'case_id': 3, 'data': '{&quot;mobilephone&quot;:&quot;18688773467&quot;,&quot;amount&quot;:&quot;1000&quot;}'}, 
+{'title': '充值输入负数', 'case_id': 4, 'data': '{&quot;mobilephone&quot;:&quot;18688773467&quot;,&quot;amount&quot;:&quot;-100&quot;}'}]
+</code></pre>
+
+                        </div>
+                        <section class="post-copyright">
+
+                            <p class="copyright-item">
+                                <span>Author:</span>
+                                <span>💤ISpiker</span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>Permalink:</span>
+                                <span><a href="https://hehelv.github.io//post/9-excel-wen-jian-chu-li">https://hehelv.github.io//post/9-excel-wen-jian-chu-li</a></span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>License:</span>
+                                <span>MIT License</span>
+                            </p>
+
+                        </section>
+                        <section class="post-tags">
+                            <div>
+                                <span>Tag(s):</span>
+                                <span class="tag">
+                                
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note"># Python爬虫笔记</a>
+                                
+                                
+                            </span>
+                            </div>
+                            <div>
+                                <a href="javascript:window.history.back();">back</a>
+                                <span>·</span>
+                                <a href="#">home</a>
+                            </div>
+                        </section>
+                        <section class="post-nav">
+                            
+                                <a class="prev" rel="prev" href="https://hehelv.github.io//post/10-mysql-shu-ju-ku">
+                                    10-MySQL数据库
+                                </a>
+                                
+                                    
+                                        <a class="next" rel="next" href="https://hehelv.github.io//post/8-csv-wen-jian-chu-li">
+                                            8-csv文件处理
+                                        </a>
+                                        
+                        </section>
+
+                    </article>
+                </div>
+                
+            </div>
+    </div>
+    </div>
+
+    </div>
+    <footer id="footer" class="footer">
+    <div class="copyright">
+        
+
+            <script>
+                var xhr = new XMLHttpRequest();
+                xhr.open('get', 'https://v1.hitokoto.cn');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        var data = JSON.parse(xhr.responseText);
+                        var hitokoto = document.getElementById('hitokoto');
+                        hitokoto.innerText = data.hitokoto;
+                    }
+                }
+                xhr.send();
+                (function() {
+                    var bp = document.createElement('script');
+                    var curProtocol = window.location.protocol.split(':')[0];
+                    if (curProtocol === 'https') {
+                        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                    } else {
+                        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                    }
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(bp, s);
+                })();
+            </script>
+            <b id="hitokoto"></b><br>
+            <svg viewBox="0 0 1024 1024" style="margin-left: 5px;margin-right: 5px;" version="1.0" width="8" height="8" class="my-face"><path d="M863.597631 513.574282l-271.33965-140.213484L729.783667 81.926656c3.583731-7.87141 7.167462-15.742819 7.167462-25.214109C736.887134 25.226908 708.345275 0.012799 672.635953 0.012799a63.611229 63.611229 0 0 0-39.293053 12.607055c-1.791866 1.59988-3.519736 3.19976-5.311602 3.19976L147.87531 418.925381a55.547834 55.547834 0 0 0-19.646527 47.356448c1.791866 17.278704 14.27093 33.021523 32.125591 42.492813l271.33965 141.749369L292.504463 945.221908c-12.479064 25.214109-1.791866 53.563983 23.166262 69.306802 10.751194 6.335525 23.230258 9.47129 35.709322 9.47129 16.062795 0 32.125591-4.735645 44.604655-15.742819l480.091993-403.297753a55.547834 55.547834 0 0 0 19.646526-47.228458 61.243407 61.243407 0 0 0-32.12559-44.156688z" fill="#93b5cf"></path></svg>
+            <script>
+                var date = new Date();
+                document.write(" " + date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + " 星期" + "日一二三四五六".charAt(date.getDay()));
+            </script> Copyright&copy;
+            💤ISpiker | Powered by <a href="https://coding.net" target="_blank">Coding.net</a>
+
+    </div>
+</footer>
+<script>
+    hljs.initHighlighting();
+</script>
+        </div>
+</body>
+
+</html>

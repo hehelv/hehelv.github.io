@@ -379,6 +379,10 @@ for child in head_tag.children:
 <h2 id="搜索文档树">搜索文档树：</h2>
 <h3 id="1-find和find_all方法">1. find和find_all方法：</h3>
 <p>搜索文档树，一般用得比较多的就是两个方法，一个是<code>find</code>，一个是<code>find_all</code>。<code>find</code>方法是找到第一个满足条件的标签后就立即返回，只返回一个元素。<code>find_all</code>方法是把所有满足条件的标签都选到，然后返回回去。使用这两个方法，最常用的用法是出入<code>name</code>以及<code>attr</code>参数找出符合要求的标签。</p>
+<p>需要注意的是find()方法如果用于指定类名的搜索语法通常是这样的：</p>
+<pre><code>find('div',class_='')
+</code></pre>
+<p>即class后面要加一个_下划线才可搜索的到。</p>
 <pre><code class="language-python">soup.find_all(&quot;a&quot;,attrs={&quot;id&quot;:&quot;link2&quot;})
 </code></pre>
 <p>或者是直接传入属性的的名字作为关键字参数：</p>

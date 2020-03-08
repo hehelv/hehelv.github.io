@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+<title>
+    💤ISpiker
+</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta name="author" content="💤ISpiker">
+<meta name="description" content="The proof is in the pudding.">
+<meta name="keywords" content="The proof is in the pudding.">
+<link rel="stylesheet" href="https://hehelv.github.io//media/css/main.css" />
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+<script src="https://hehelv.github.io//media/script/tocbot.min.js"></script>
+<script src="https://hehelv.github.io//media/script/script.js"></script>
+<!--<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/default.min.css">
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>-->
+<script src="https://cdn.bootcss.com/highlight.js/9.13.1/highlight.min.js"></script>
+<link href="https://cdn.bootcss.com/highlight.js/9.13.1/styles/atelier-estuary-dark.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo">
+                <a href="https://hehelv.github.io/">
+                    💤ISpiker
+                </a>
+            </div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">
+                        Home
+                    </a>
+                    
+                    <a class="menu-item" href="/archives">
+                        Archives
+                    </a>
+                    
+                    <a class="menu-item" href="/tags">
+                        Tags
+                    </a>
+                    
+                    <a class="menu-item" href="/post/about">
+                        About
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/algorithm">
+                        Algorithm
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/networking">
+                        Computer Networking
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/Spider Note">
+                        Spider Note
+                    </a>
+                    
+                        <input id="switch_default" type="checkbox" class="switch_default">
+                        <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+        <nav class="navbar-mobile" id="nav-mobile">
+            <div class="container">
+                <div class="navbar-header">
+                    <div>
+                        <a href="https://hehelv.github.io/">
+                            💤ISpiker
+                        </a>
+                        <a id="mobile-toggle-theme">&nbsp;Light</a>
+                    </div>
+                    <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+                </div>
+                <div class="menu" id="mobile-menu">
+                    
+                        <a class="menu-item" href="/">
+                            Home
+                        </a>
+                        
+                        <a class="menu-item" href="/archives">
+                            Archives
+                        </a>
+                        
+                        <a class="menu-item" href="/tags">
+                            Tags
+                        </a>
+                        
+                        <a class="menu-item" href="/post/about">
+                            About
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/algorithm">
+                            Algorithm
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/networking">
+                            Computer Networking
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/Spider Note">
+                            Spider Note
+                        </a>
+                        
+                </div>
+            </div>
+        </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if (toggleMenu.classList.contains("active")) {
+            toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        } else {
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+                    <article class="post-wrap">
+                        <header class="post-header">
+                            <h1 class="post-title">
+                                12-多线程爬虫
+                            </h1>
+                            <div class="post-meta">
+                                Author:
+                                <a itemprop="author" rel="author" href="/">
+                                    💤ISpiker
+                                </a>
+                                <span class="post-time">
+                                Date: <a href="#">2020-03-03</a>
+                            </span>
+                                
+                                    <span class="post-category">
+                                Category:
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note">Python爬虫笔记</a>
+                                
+                            </span>
+                                    
+                            </div>
+                        </header>
+
+                        <div class="post-content">
+                            <h1 id="12-多线程爬虫">12-多线程爬虫</h1>
+<p>有些时候，比如下载图片，因为下载图片是一个耗时的操作。如果采用之前那种同步的方式下载。那效率肯会特别慢。这时候我们就可以考虑使用多线程的方式来下载图片。</p>
+<h2 id="多线程介绍">多线程介绍：</h2>
+<p>多线程是为了同步完成多项任务，通过提高资源使用效率来提高系统的效率。线程是在同一时间需要完成多项任务的时候实现的。<br>
+最简单的比喻多线程就像火车的每一节车厢，而进程则是火车。车厢离开火车是无法跑动的，同理火车也可以有多节车厢。多线程的出现就是为了提高效率。同时它的出现也带来了一些问题。更多介绍请参考：https://baike.baidu.com/item/多线程/1190404?fr=aladdin</p>
+<h2 id="threading模块介绍">threading模块介绍：</h2>
+<p><code>threading</code>模块是<code>python</code>中专门提供用来做多线程编程的模块。<code>threading</code>模块中最常用的类是<code>Thread</code>。以下看一个简单的多线程程序：</p>
+<pre><code class="language-python">import threading
+import time
+
+def coding():
+    for x in range(3):
+        print('%s正在写代码' % x)
+        time.sleep(1)
+
+def drawing():
+    for x in range(3):
+        print('%s正在画图' % x)
+        time.sleep(1)
+
+
+def single_thread():
+    coding()
+    drawing()
+
+def multi_thread():
+    t1 = threading.Thread(target=coding)
+    t2 = threading.Thread(target=drawing)
+
+    t1.start()
+    t2.start()
+
+if __name__ == '__main__':
+    multi_thread()
+</code></pre>
+<h3 id="查看线程数">查看线程数：</h3>
+<p>使用<code>threading.enumerate()</code>函数便可以看到当前线程的数量。</p>
+<h3 id="查看当前线程的名字">查看当前线程的名字：</h3>
+<p>使用<code>threading.current_thread()</code>可以看到当前线程的信息。</p>
+<h3 id="继承自threadingthread类">继承自<code>threading.Thread</code>类：</h3>
+<p>为了让线程代码更好的封装。可以使用<code>threading</code>模块下的<code>Thread</code>类，继承自这个类，然后实现<code>run</code>方法，线程就会自动运行<code>run</code>方法中的代码。示例代码如下：</p>
+<pre><code class="language-python">import threading
+import time
+
+class CodingThread(threading.Thread):
+    def run(self):
+        for x in range(3):
+            print('%s正在写代码' % threading.current_thread())
+            time.sleep(1)
+
+class DrawingThread(threading.Thread):
+    def run(self):
+        for x in range(3):
+            print('%s正在画图' % threading.current_thread())
+            time.sleep(1)
+
+def multi_thread():
+    t1 = CodingThread()
+    t2 = DrawingThread()
+
+    t1.start()
+    t2.start()
+
+if __name__ == '__main__':
+    multi_thread()
+</code></pre>
+<h3 id="多线程共享全局变量的问题">多线程共享全局变量的问题：</h3>
+<p>多线程都是在同一个进程中运行的。因此在进程中的全局变量所有线程都是可共享的。这就造成了一个问题，因为线程执行的顺序是无序的。有可能会造成数据错误。比如以下代码：</p>
+<pre><code class="language-python">import threading
+
+tickets = 0
+
+def get_ticket():
+    global tickets
+    for x in range(1000000):
+        tickets += 1
+    print('tickets:%d'%tickets)
+
+def main():
+    for x in range(2):
+        t = threading.Thread(target=get_ticket)
+        t.start()
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<p>以上结果正常来讲应该是6，但是因为多线程运行的不确定性。因此最后的结果可能是随机的。</p>
+<h3 id="锁机制">锁机制：</h3>
+<p>为了解决以上使用共享全局变量的问题。<code>threading</code>提供了一个<code>Lock</code>类，这个类可以在某个线程访问某个变量的时候加锁，其他线程此时就不能进来，直到当前线程处理完后，把锁释放了，其他线程才能进来处理。示例代码如下：</p>
+<pre><code class="language-python">import threading
+
+VALUE = 0
+
+gLock = threading.Lock()
+
+def add_value():
+    global VALUE
+    gLock.acquire()
+    for x in range(1000000):
+        VALUE += 1
+    gLock.release()
+    print('value：%d'%VALUE)
+
+def main():
+    for x in range(2):
+        t = threading.Thread(target=add_value)
+        t.start()
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<h2 id="lock版本生产者和消费者模式">Lock版本生产者和消费者模式：</h2>
+<p>生产者和消费者模式是多线程开发中经常见到的一种模式。生产者的线程专门用来生产一些数据，然后存放到一个中间的变量中。消费者再从这个中间的变量中取出数据进行消费。但是因为要使用中间变量，中间变量经常是一些全局变量，因此需要使用锁来保证数据完整性。以下是使用<code>threading.Lock</code>锁实现的“生产者与消费者模式”的一个例子：</p>
+<pre><code class="language-python">import threading
+import random
+import time
+
+gMoney = 1000
+gLock = threading.Lock()
+# 记录生产者生产的次数，达到10次就不再生产
+gTimes = 0
+
+class Producer(threading.Thread):
+    def run(self):
+        global gMoney
+        global gLock
+        global gTimes
+        while True:
+            money = random.randint(100, 1000)
+            gLock.acquire()
+            # 如果已经达到10次了，就不再生产了
+            if gTimes &gt;= 10:
+                gLock.release()
+                break
+            gMoney += money
+            print('%s当前存入%s元钱，剩余%s元钱' % (threading.current_thread(), money, gMoney))
+            gTimes += 1
+            time.sleep(0.5)
+            gLock.release()
+
+class Consumer(threading.Thread):
+    def run(self):
+        global gMoney
+        global gLock
+        global gTimes
+        while True:
+            money = random.randint(100, 500)
+            gLock.acquire()
+            if gMoney &gt; money:
+                gMoney -= money
+                print('%s当前取出%s元钱，剩余%s元钱' % (threading.current_thread(), money, gMoney))
+                time.sleep(0.5)
+            else:
+                # 如果钱不够了，有可能是已经超过了次数，这时候就判断一下
+                if gTimes &gt;= 10:
+                    gLock.release()
+                    break
+                print(&quot;%s当前想取%s元钱，剩余%s元钱，不足！&quot; % (threading.current_thread(),money,gMoney))
+            gLock.release()
+
+def main():
+    for x in range(5):
+        Consumer(name='消费者线程%d'%x).start()
+
+    for x in range(5):
+        Producer(name='生产者线程%d'%x).start()
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<h2 id="condition版的生产者与消费者模式">Condition版的生产者与消费者模式：</h2>
+<p><code>Lock</code>版本的生产者与消费者模式可以正常的运行。但是存在一个不足，在消费者中，总是通过<code>while True</code>死循环并且上锁的方式去判断钱够不够。上锁是一个很耗费CPU资源的行为。因此这种方式不是最好的。还有一种更好的方式便是使用<code>threading.Condition</code>来实现。<code>threading.Condition</code>可以在没有数据的时候处于阻塞等待状态。一旦有合适的数据了，还可以使用<code>notify</code>相关的函数来通知其他处于等待状态的线程。这样就可以不用做一些无用的上锁和解锁的操作。可以提高程序的性能。首先对<code>threading.Condition</code>相关的函数做个介绍，<code>threading.Condition</code>类似<code>threading.Lock</code>，可以在修改全局数据的时候进行上锁，也可以在修改完毕后进行解锁。以下将一些常用的函数做个简单的介绍：</p>
+<ol>
+<li><code>acquire</code>：上锁。</li>
+<li><code>release</code>：解锁。</li>
+<li><code>wait</code>：将当前线程处于等待状态，并且会释放锁。可以被其他线程使用<code>notify</code>和<code>notify_all</code>函数唤醒。被唤醒后会继续等待上锁，上锁后继续执行下面的代码。</li>
+<li><code>notify</code>：通知某个正在等待的线程，默认是第1个等待的线程。</li>
+<li><code>notify_all</code>：通知所有正在等待的线程。<code>notify</code>和<code>notify_all</code>不会释放锁。并且需要在<code>release</code>之前调用。</li>
+</ol>
+<p><code>Condition</code>版的生产者与消费者模式代码如下：</p>
+<pre><code class="language-python">import threading
+import random
+import time
+
+gMoney = 1000
+gCondition = threading.Condition()
+gTimes = 0
+gTotalTimes = 5
+
+class Producer(threading.Thread):
+    def run(self):
+        global gMoney
+        global gCondition
+        global gTimes
+        while True:
+            money = random.randint(100, 1000)
+            gCondition.acquire()
+            if gTimes &gt;= gTotalTimes:
+                gCondition.release()
+                print('当前生产者总共生产了%s次'%gTimes)
+                break
+            gMoney += money
+            print('%s当前存入%s元钱，剩余%s元钱' % (threading.current_thread(), money, gMoney))
+            gTimes += 1
+            time.sleep(0.5)
+            gCondition.notify_all()
+            gCondition.release()
+
+class Consumer(threading.Thread):
+    def run(self):
+        global gMoney
+        global gCondition
+        while True:
+            money = random.randint(100, 500)
+            gCondition.acquire()
+            # 这里要给个while循环判断，因为等轮到这个线程的时候
+            # 条件有可能又不满足了
+            while gMoney &lt; money:
+                if gTimes &gt;= gTotalTimes:
+                    gCondition.release()
+                    return
+                print('%s准备取%s元钱，剩余%s元钱，不足！'%(threading.current_thread(),money,gMoney))
+                gCondition.wait()
+            gMoney -= money
+            print('%s当前取出%s元钱，剩余%s元钱' % (threading.current_thread(), money, gMoney))
+            time.sleep(0.5)
+            gCondition.release()
+
+def main():
+    for x in range(5):
+        Consumer(name='消费者线程%d'%x).start()
+
+    for x in range(2):
+        Producer(name='生产者线程%d'%x).start()
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<h2 id="queue线程安全队列">Queue线程安全队列：</h2>
+<p>在线程中，访问一些全局变量，加锁是一个经常的过程。如果你是想把一些数据存储到某个队列中，那么Python内置了一个线程安全的模块叫做<code>queue</code>模块。Python中的queue模块中提供了同步的、线程安全的队列类，包括FIFO（先进先出）队列Queue，LIFO（后入先出）队列LifoQueue。这些队列都实现了锁原语（可以理解为原子操作，即要么不做，要么都做完），能够在多线程中直接使用。可以使用队列来实现线程间的同步。相关的函数如下：</p>
+<ol>
+<li>初始化Queue(maxsize)：创建一个先进先出的队列。</li>
+<li>qsize()：返回队列的大小。</li>
+<li>empty()：判断队列是否为空。</li>
+<li>full()：判断队列是否满了。</li>
+<li>get()：从队列中取最后一个数据。</li>
+<li>put()：将一个数据放到队列中。</li>
+</ol>
+<h2 id="使用生产者与消费者模式多线程下载表情包">使用生产者与消费者模式多线程下载表情包：</h2>
+<pre><code class="language-python">import threading
+import requests
+from lxml import etree
+from urllib import request
+import os
+import re
+from queue import Queue
+
+class Producer(threading.Thread):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'
+    }
+    def __init__(self,page_queue,img_queue,*args,**kwargs):
+        super(Producer, self).__init__(*args,**kwargs)
+        self.page_queue = page_queue
+        self.img_queue = img_queue
+
+
+    def run(self):
+        while True:
+            if self.page_queue.empty():
+                break
+            url = self.page_queue.get()
+            self.parse_page(url)
+
+    def parse_page(self,url):
+        response = requests.get(url,headers=self.headers)
+        text = response.text
+        html = etree.HTML(text)
+        imgs = html.xpath(&quot;//div[@class='page-content text-center']//a//img&quot;)
+        for img in imgs:
+            if img.get('class') == 'gif':
+                continue
+            img_url = img.xpath(&quot;.//@data-original&quot;)[0]
+            suffix = os.path.splitext(img_url)[1]
+            alt = img.xpath(&quot;.//@alt&quot;)[0]
+            alt = re.sub(r'[，。？?,/\\·]','',alt)
+            img_name = alt + suffix
+            self.img_queue.put((img_url,img_name))
+
+class Consumer(threading.Thread):
+    def __init__(self,page_queue,img_queue,*args,**kwargs):
+        super(Consumer, self).__init__(*args,**kwargs)
+        self.page_queue = page_queue
+        self.img_queue = img_queue
+
+    def run(self):
+        while True:
+            if self.img_queue.empty():
+                if self.page_queue.empty():
+                    return
+            img = self.img_queue.get(block=True)
+            url,filename = img
+            request.urlretrieve(url,'images/'+filename)
+            print(filename+'  下载完成！')
+
+def main():
+    page_queue = Queue(100)
+    img_queue = Queue(500)
+    for x in range(1,101):
+        url = &quot;http://www.doutula.com/photo/list/?page=%d&quot; % x
+        page_queue.put(url)
+
+    for x in range(5):
+        t = Producer(page_queue,img_queue)
+        t.start()
+
+    for x in range(5):
+        t = Consumer(page_queue,img_queue)
+        t.start()
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<h2 id="gil全局解释器锁">GIL全局解释器锁：</h2>
+<p>Python自带的解释器是<code>CPython</code>。<code>CPython</code>解释器的多线程实际上是一个假的多线程（在多核CPU中，只能利用一核，不能利用多核）。同一时刻只有一个线程在执行，为了保证同一时刻只有一个线程在执行，在<code>CPython</code>解释器中有一个东西叫做<code>GIL（Global Intepreter Lock）</code>，叫做全局解释器锁。这个解释器锁是有必要的。因为<code>CPython</code>解释器的内存管理不是线程安全的。当然除了<code>CPython</code>解释器，还有其他的解释器，有些解释器是没有<code>GIL</code>锁的，见下面：</p>
+<ol>
+<li><code>Jython</code>：用Java实现的Python解释器。不存在GIL锁。更多详情请见：https://zh.wikipedia.org/wiki/Jython</li>
+<li><code>IronPython</code>：用<code>.net</code>实现的Python解释器。不存在GIL锁。更多详情请见：https://zh.wikipedia.org/wiki/IronPython</li>
+<li><code>PyPy</code>：用<code>Python</code>实现的Python解释器。存在GIL锁。更多详情请见：https://zh.wikipedia.org/wiki/PyPy<br>
+GIL虽然是一个假的多线程。但是在处理一些IO操作（比如文件读写和网络请求）还是可以在很大程度上提高效率的。在IO操作上建议使用多线程提高效率。在一些CPU计算操作上不建议使用多线程，而建议使用多进程。</li>
+</ol>
+<h2 id="多线程下载百思不得姐段子作业">多线程下载百思不得姐段子作业：</h2>
+<pre><code class="language-python">import requests
+from lxml import etree
+import threading
+from queue import Queue
+import csv
+
+
+class BSSpider(threading.Thread):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'
+    }
+    def __init__(self,page_queue,joke_queue,*args,**kwargs):
+        super(BSSpider, self).__init__(*args,**kwargs)
+        self.base_domain = 'http://www.budejie.com'
+        self.page_queue = page_queue
+        self.joke_queue = joke_queue
+
+    def run(self):
+        while True:
+            if self.page_queue.empty():
+                break
+            url = self.page_queue.get()
+            response = requests.get(url, headers=self.headers)
+            text = response.text
+            html = etree.HTML(text)
+            descs = html.xpath(&quot;//div[@class='j-r-list-c-desc']&quot;)
+            for desc in descs:
+                jokes = desc.xpath(&quot;.//text()&quot;)
+                joke = &quot;\n&quot;.join(jokes).strip()
+                link = self.base_domain+desc.xpath(&quot;.//a/@href&quot;)[0]
+                self.joke_queue.put((joke,link))
+            print('='*30+&quot;第%s页下载完成！&quot;%url.split('/')[-1]+&quot;=&quot;*30)
+
+class BSWriter(threading.Thread):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'
+    }
+
+    def __init__(self, joke_queue, writer,gLock, *args, **kwargs):
+        super(BSWriter, self).__init__(*args, **kwargs)
+        self.joke_queue = joke_queue
+        self.writer = writer
+        self.lock = gLock
+
+    def run(self):
+        while True:
+            try:
+                joke_info = self.joke_queue.get(timeout=40)
+                joke,link = joke_info
+                self.lock.acquire()
+                self.writer.writerow((joke,link))
+                self.lock.release()
+                print('保存一条')
+            except:
+                break
+
+def main():
+    page_queue = Queue(10)
+    joke_queue = Queue(500)
+    gLock = threading.Lock()
+    fp = open('bsbdj.csv', 'a',newline='', encoding='utf-8')
+    writer = csv.writer(fp)
+    writer.writerow(('content', 'link'))
+
+    for x in range(1,11):
+        url = 'http://www.budejie.com/text/%d' % x
+        page_queue.put(url)
+
+    for x in range(5):
+        t = BSSpider(page_queue,joke_queue)
+        t.start()
+
+    for x in range(5):
+        t = BSWriter(joke_queue,writer,gLock)
+        t.start()
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+                        </div>
+                        <section class="post-copyright">
+
+                            <p class="copyright-item">
+                                <span>Author:</span>
+                                <span>💤ISpiker</span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>Permalink:</span>
+                                <span><a href="https://hehelv.github.io//post/1-duo-xian-cheng-pa-chong">https://hehelv.github.io//post/1-duo-xian-cheng-pa-chong</a></span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>License:</span>
+                                <span>MIT License</span>
+                            </p>
+
+                        </section>
+                        <section class="post-tags">
+                            <div>
+                                <span>Tag(s):</span>
+                                <span class="tag">
+                                
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note"># Python爬虫笔记</a>
+                                
+                                
+                            </span>
+                            </div>
+                            <div>
+                                <a href="javascript:window.history.back();">back</a>
+                                <span>·</span>
+                                <a href="#">home</a>
+                            </div>
+                        </section>
+                        <section class="post-nav">
+                            
+                                <a class="prev" rel="prev" href="https://hehelv.github.io//post/13-dong-tai-wang-ye-pa-chong">
+                                    13-动态网页爬虫
+                                </a>
+                                
+                                    
+                                        <a class="next" rel="next" href="https://hehelv.github.io//post/11-mongodb-shu-ju-ku">
+                                            11-MongoDB数据库
+                                        </a>
+                                        
+                        </section>
+
+                    </article>
+                </div>
+                
+            </div>
+    </div>
+    </div>
+
+    </div>
+    <footer id="footer" class="footer">
+    <div class="copyright">
+        
+
+            <script>
+                var xhr = new XMLHttpRequest();
+                xhr.open('get', 'https://v1.hitokoto.cn');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        var data = JSON.parse(xhr.responseText);
+                        var hitokoto = document.getElementById('hitokoto');
+                        hitokoto.innerText = data.hitokoto;
+                    }
+                }
+                xhr.send();
+                (function() {
+                    var bp = document.createElement('script');
+                    var curProtocol = window.location.protocol.split(':')[0];
+                    if (curProtocol === 'https') {
+                        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                    } else {
+                        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                    }
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(bp, s);
+                })();
+            </script>
+            <b id="hitokoto"></b><br>
+            <svg viewBox="0 0 1024 1024" style="margin-left: 5px;margin-right: 5px;" version="1.0" width="8" height="8" class="my-face"><path d="M863.597631 513.574282l-271.33965-140.213484L729.783667 81.926656c3.583731-7.87141 7.167462-15.742819 7.167462-25.214109C736.887134 25.226908 708.345275 0.012799 672.635953 0.012799a63.611229 63.611229 0 0 0-39.293053 12.607055c-1.791866 1.59988-3.519736 3.19976-5.311602 3.19976L147.87531 418.925381a55.547834 55.547834 0 0 0-19.646527 47.356448c1.791866 17.278704 14.27093 33.021523 32.125591 42.492813l271.33965 141.749369L292.504463 945.221908c-12.479064 25.214109-1.791866 53.563983 23.166262 69.306802 10.751194 6.335525 23.230258 9.47129 35.709322 9.47129 16.062795 0 32.125591-4.735645 44.604655-15.742819l480.091993-403.297753a55.547834 55.547834 0 0 0 19.646526-47.228458 61.243407 61.243407 0 0 0-32.12559-44.156688z" fill="#93b5cf"></path></svg>
+            <script>
+                var date = new Date();
+                document.write(" " + date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + " 星期" + "日一二三四五六".charAt(date.getDay()));
+            </script> Copyright&copy;
+            💤ISpiker | Powered by <a href="https://coding.net" target="_blank">Coding.net</a>
+
+    </div>
+</footer>
+<script>
+    hljs.initHighlighting();
+</script>
+        </div>
+</body>
+
+</html>

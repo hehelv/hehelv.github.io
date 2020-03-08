@@ -129,118 +129,103 @@
 </script>
             <div class="main">
                 <div class="container">
-                    <div class="post-wrap archive">
-                        
-                            
-                                <h3>
-                                    2020
-                                </h3>
+                    <article class="post-wrap">
+                        <header class="post-header">
+                            <h1 class="post-title">
+                                15-框架架构
+                            </h1>
+                            <div class="post-meta">
+                                Author:
+                                <a itemprop="author" rel="author" href="/">
+                                    💤ISpiker
+                                </a>
+                                <span class="post-time">
+                                Date: <a href="#">2020-03-03</a>
+                            </span>
                                 
+                                    <span class="post-category">
+                                Category:
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note">Python爬虫笔记</a>
+                                
+                            </span>
                                     
+                            </div>
+                        </header>
 
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/15-kuang-jia-jia-gou">
-                                                15-框架架构
-                                            </a>
-                                            <span class="archive-item-date">2020-03-03 </span>
-                                        </article>
-                                        
-                                            
+                        <div class="post-content">
+                            <h1 id="15-框架架构">15-框架架构</h1>
+<h2 id="scrapy框架介绍">Scrapy框架介绍：</h2>
+<p>写一个爬虫，需要做很多的事情。比如：发送网络请求、数据解析、数据存储、反反爬虫机制（更换ip代理、设置请求头等）、异步请求等。这些工作如果每次都要自己从零开始写的话，比较浪费时间。因此<code>Scrapy</code>把一些基础的东西封装好了，在他上面写爬虫可以变的更加的高效（爬取效率和开发效率）。因此真正在公司里，一些上了量的爬虫，都是使用<code>Scrapy</code>框架来解决。</p>
+<h2 id="scrapy架构图">Scrapy架构图：</h2>
+<ol>
+<li>流程图（1）：<br>
+<img src="../assets/scrapy_all.png" alt="img"></li>
+<li>流程图（2）：<br>
+<img src="../assets/884863172-5985e0b48edf9.png" alt="img"></li>
+</ol>
+<h2 id="scrapy框架模块功能">Scrapy框架模块功能：</h2>
+<ol>
+<li><code>Scrapy Engine（引擎）</code>：<code>Scrapy</code>框架的核心部分。负责在<code>Spider</code>和<code>ItemPipeline</code>、<code>Downloader</code>、<code>Scheduler</code>中间通信、传递数据等。</li>
+<li><code>Spider（爬虫）</code>：发送需要爬取的链接给引擎，最后引擎把其他模块请求回来的数据再发送给爬虫，爬虫就去解析想要的数据。这个部分是我们开发者自己写的，因为要爬取哪些链接，页面中的哪些数据是我们需要的，都是由程序员自己决定。</li>
+<li><code>Scheduler（调度器）</code>：负责接收引擎发送过来的请求，并按照一定的方式进行排列和整理，负责调度请求的顺序等。</li>
+<li><code>Downloader（下载器）</code>：负责接收引擎传过来的下载请求，然后去网络上下载对应的数据再交还给引擎。</li>
+<li><code>Item Pipeline（管道）</code>：负责将<code>Spider（爬虫）</code>传递过来的数据进行保存。具体保存在哪里，应该看开发者自己的需求。</li>
+<li><code>Downloader Middlewares（下载中间件）</code>：可以扩展下载器和引擎之间通信功能的中间件。</li>
+<li><code>Spider Middlewares（Spider中间件）</code>：可以扩展引擎和爬虫之间通信功能的中间件。</li>
+</ol>
+
+                        </div>
+                        <section class="post-copyright">
+
+                            <p class="copyright-item">
+                                <span>Author:</span>
+                                <span>💤ISpiker</span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>Permalink:</span>
+                                <span><a href="https://hehelv.github.io//post/15-kuang-jia-jia-gou">https://hehelv.github.io//post/15-kuang-jia-jia-gou</a></span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>License:</span>
+                                <span>MIT License</span>
+                            </p>
+
+                        </section>
+                        <section class="post-tags">
+                            <div>
+                                <span>Tag(s):</span>
+                                <span class="tag">
+                                
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note"># Python爬虫笔记</a>
+                                
+                                
+                            </span>
+                            </div>
+                            <div>
+                                <a href="javascript:window.history.back();">back</a>
+                                <span>·</span>
+                                <a href="#">home</a>
+                            </div>
+                        </section>
+                        <section class="post-nav">
+                            
                                     
-
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/13-tu-xing-yan-zheng-ma-shi-bie">
-                                                14-图形验证码识别
-                                            </a>
-                                            <span class="archive-item-date">2020-03-03 </span>
-                                        </article>
+                                        <a class="next" rel="next" href="https://hehelv.github.io//post/13-tu-xing-yan-zheng-ma-shi-bie">
+                                            14-图形验证码识别
+                                        </a>
                                         
-                                            
-                                    
+                        </section>
 
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/13-dong-tai-wang-ye-pa-chong">
-                                                13-动态网页爬虫
-                                            </a>
-                                            <span class="archive-item-date">2020-03-03 </span>
-                                        </article>
-                                        
-                                            
-                                    
-
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/1-duo-xian-cheng-pa-chong">
-                                                12-多线程爬虫
-                                            </a>
-                                            <span class="archive-item-date">2020-03-03 </span>
-                                        </article>
-                                        
-                                            
-                                    
-
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/11-mongodb-shu-ju-ku">
-                                                11-MongoDB数据库
-                                            </a>
-                                            <span class="archive-item-date">2020-03-02 </span>
-                                        </article>
-                                        
-                                            
-                                    
-
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/10-mysql-shu-ju-ku">
-                                                10-MySQL数据库
-                                            </a>
-                                            <span class="archive-item-date">2020-03-02 </span>
-                                        </article>
-                                        
-                                            
-                                    
-
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/9-excel-wen-jian-chu-li">
-                                                9-excel文件处理
-                                            </a>
-                                            <span class="archive-item-date">2020-03-02 </span>
-                                        </article>
-                                        
-                                            
-                                    
-
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/8-csv-wen-jian-chu-li">
-                                                8-csv文件处理
-                                            </a>
-                                            <span class="archive-item-date">2020-03-02 </span>
-                                        </article>
-                                        
-                                            
-                                    
-
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/7-json-wen-jian-chu-li">
-                                                7-json文件处理
-                                            </a>
-                                            <span class="archive-item-date">2020-02-28 </span>
-                                        </article>
-                                        
-                                            
-                                    
-
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/6-zheng-ze-biao-da-shi-he-re-mo-kuai">
-                                                6-正则表达式和re模块
-                                            </a>
-                                            <span class="archive-item-date">2020-02-28 </span>
-                                        </article>
-                                        
-                                            
-                                                
-
-                    </div>
+                    </article>
                 </div>
+                
             </div>
+    </div>
+    </div>
 
     </div>
     <footer id="footer" class="footer">

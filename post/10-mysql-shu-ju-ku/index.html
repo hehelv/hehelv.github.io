@@ -129,44 +129,221 @@
 </script>
             <div class="main">
                 <div class="container">
-                    <div class="intro">
-                        <div class="avatar">
-                            <a href="https://hehelv.github.io/"><img src="https://hehelv.github.io//images/avatar.png?v=1583631758887"></a>
-                        </div>
-                        <div class="nickname">
-                            💤ISpiker
-                        </div>
-                        <div class="description">
-                            The proof is in the pudding.
-                        </div>
-                        <div class="links">
-                            
+                    <article class="post-wrap">
+                        <header class="post-header">
+                            <h1 class="post-title">
+                                10-MySQL数据库
+                            </h1>
+                            <div class="post-meta">
+                                Author:
+                                <a itemprop="author" rel="author" href="/">
+                                    💤ISpiker
+                                </a>
+                                <span class="post-time">
+                                Date: <a href="#">2020-03-02</a>
+                            </span>
                                 
-                                        
+                                    <span class="post-category">
+                                Category:
                                 
-                                        
+                                <a href="https://hehelv.github.io//tag/Spider Note">Python爬虫笔记</a>
                                 
-                                        
-                                
-                                        
-                                
-                                        
-                                
-                                        
-                                
-                                        
-                                
-                                        
-                                
-                                        
-                                
-                                        
-                        </div>
-                    </div>
-                </div>
+                            </span>
+                                    
+                            </div>
+                        </header>
 
+                        <div class="post-content">
+                            <h1 id="10-mysql数据库">10-MySQL数据库</h1>
+<h2 id="安装mysql">安装mysql：</h2>
+<ol>
+<li>在官网：https://dev.mysql.com/downloads/windows/installer/5.7.html</li>
+<li>如果提示没有<code>.NET Framework</code>框架。那么就在提示框中找到下载链接，下载一个就可以了。</li>
+<li>如果提示没有<code>Microsoft Virtual C++ x64(x86)</code>，那么百度或者谷歌这个软件安装即可。</li>
+<li>如果没有找到。那么私聊我。</li>
+</ol>
+<h2 id="navicat">navicat：</h2>
+<p>navicat是一个操作mysql数据库非常方便的软件。使用他操作数据库，就跟使用excel操作数据是一样的。</p>
+<h2 id="安装驱动程序">安装驱动程序：</h2>
+<p>Python要想操作MySQL。必须要有一个中间件，或者叫做驱动程序。驱动程序有很多。比如有<code>mysqldb</code>、<code>mysqlclient</code>、<code>pymysql</code>等。在这里，我们选择用<code>pymysql</code>。安装方式也是非常简单，通过命令<code>pip install pymysql</code>即可安装。</p>
+<h2 id="数据库连接">数据库连接：</h2>
+<p>数据库连接之前。首先先确认以下工作完成，这里我们以一个<code>pymysql_test</code>数据库.以下将介绍连接<code>mysql</code>的示例代码：</p>
+<pre><code class="language-python">    import pymysql
+
+    db = pymysql.connect(
+        host=&quot;127.0.0.1&quot;,
+        user='root',
+        password='root',
+        database='pymysql_test',
+        port=3306
+    )
+    cursor = db.cursor()
+    cursor.execute(&quot;select 1&quot;)
+    data = cursor.fetchone()
+    print(data)
+    db.close()
+</code></pre>
+<h2 id="插入数据">插入数据：</h2>
+<pre><code class="language-python">import pymysql
+
+db = pymysql.connect(
+    host=&quot;127.0.0.1&quot;,
+    user='root',
+    password='root',
+    database='pymysql_test',
+    port=3306
+)
+cursor = db.cursor()
+sql = &quot;&quot;&quot;
+insert into user(
+    id,username,gender,age,password
+  ) 
+  values(null,'abc',1,18,'111111');
+&quot;&quot;&quot;
+cursor.execute(sql)
+db.commit()
+db.close()
+</code></pre>
+<p>如果在数据还不能保证的情况下，可以使用以下方式来插入数据：</p>
+<pre><code class="language-python">sql = &quot;&quot;&quot;
+insert into user(
+    id,username,gender,age,password
+  ) 
+  values(null,%s,%s,%s,%s);
+&quot;&quot;&quot;
+
+cursor.execute(sql,('spider',1,20,'222222'))
+</code></pre>
+<h2 id="查找数据">查找数据：</h2>
+<p>使用<code>pymysql</code>查询数据。可以使用<code>fetch*</code>方法。</p>
+<ol>
+<li><code>fetchone()</code>：这个方法每次之获取一条数据。</li>
+<li><code>fetchall()</code>：这个方法接收全部的返回结果。</li>
+<li><code>fetchmany(size)</code>：可以获取指定条数的数据。<br>
+示例代码如下：</li>
+</ol>
+<pre><code class="language-python">cursor = db.cursor()
+
+sql = &quot;&quot;&quot;
+select * from user
+&quot;&quot;&quot;
+
+cursor.execute(sql)
+while True:
+    result = cursor.fetchone()
+    if not result:
+        break
+    print(result)
+db.close()
+</code></pre>
+<p>或者是直接使用<code>fetchall</code>，一次性可以把所有满足条件的数据都取出来：</p>
+<pre><code class="language-python">cursor = db.cursor()
+
+sql = &quot;&quot;&quot;
+select * from user
+&quot;&quot;&quot;
+
+cursor.execute(sql)
+results = cursor.fetchall()
+for result in results:
+    print(result)
+db.close()
+</code></pre>
+<p>或者是使用<code>fetchmany</code>，指定获取多少条数据：</p>
+<pre><code class="language-python">cursor = db.cursor()
+
+sql = &quot;&quot;&quot;
+select * from user
+&quot;&quot;&quot;
+
+cursor.execute(sql)
+results = cursor.fetchmany(1)
+for result in results:
+    print(result)
+db.close()
+</code></pre>
+<h2 id="删除数据">删除数据：</h2>
+<pre><code class="language-python">cursor = db.cursor()
+
+sql = &quot;&quot;&quot;
+delete from user where id=1
+&quot;&quot;&quot;
+
+cursor.execute(sql)
+db.commit()
+db.close()
+</code></pre>
+<h2 id="更新数据">更新数据：</h2>
+<pre><code class="language-python">conn = pymysql.connect(host='localhost',user='root',password='root',database='pymysql_demo',port=3306)
+cursor = conn.cursor()
+
+sql = &quot;&quot;&quot;
+update user set username='aaa' where id=1
+&quot;&quot;&quot;
+cursor.execute(sql)
+conn.commit()
+
+conn.close()
+</code></pre>
+
+                        </div>
+                        <section class="post-copyright">
+
+                            <p class="copyright-item">
+                                <span>Author:</span>
+                                <span>💤ISpiker</span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>Permalink:</span>
+                                <span><a href="https://hehelv.github.io//post/10-mysql-shu-ju-ku">https://hehelv.github.io//post/10-mysql-shu-ju-ku</a></span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>License:</span>
+                                <span>MIT License</span>
+                            </p>
+
+                        </section>
+                        <section class="post-tags">
+                            <div>
+                                <span>Tag(s):</span>
+                                <span class="tag">
+                                
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note"># Python爬虫笔记</a>
+                                
+                                
+                            </span>
+                            </div>
+                            <div>
+                                <a href="javascript:window.history.back();">back</a>
+                                <span>·</span>
+                                <a href="#">home</a>
+                            </div>
+                        </section>
+                        <section class="post-nav">
+                            
+                                <a class="prev" rel="prev" href="https://hehelv.github.io//post/11-mongodb-shu-ju-ku">
+                                    11-MongoDB数据库
+                                </a>
+                                
+                                    
+                                        <a class="next" rel="next" href="https://hehelv.github.io//post/9-excel-wen-jian-chu-li">
+                                            9-excel文件处理
+                                        </a>
+                                        
+                        </section>
+
+                    </article>
+                </div>
+                
             </div>
-            <footer id="footer" class="footer">
+    </div>
+    </div>
+
+    </div>
+    <footer id="footer" class="footer">
     <div class="copyright">
         
 
@@ -206,7 +383,7 @@
 <script>
     hljs.initHighlighting();
 </script>
-    </div>
+        </div>
 </body>
 
 </html>

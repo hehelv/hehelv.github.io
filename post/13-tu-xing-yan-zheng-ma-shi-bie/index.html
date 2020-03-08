@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+<title>
+    💤ISpiker
+</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta name="author" content="💤ISpiker">
+<meta name="description" content="The proof is in the pudding.">
+<meta name="keywords" content="The proof is in the pudding.">
+<link rel="stylesheet" href="https://hehelv.github.io//media/css/main.css" />
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+<script src="https://hehelv.github.io//media/script/tocbot.min.js"></script>
+<script src="https://hehelv.github.io//media/script/script.js"></script>
+<!--<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/default.min.css">
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>-->
+<script src="https://cdn.bootcss.com/highlight.js/9.13.1/highlight.min.js"></script>
+<link href="https://cdn.bootcss.com/highlight.js/9.13.1/styles/atelier-estuary-dark.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo">
+                <a href="https://hehelv.github.io/">
+                    💤ISpiker
+                </a>
+            </div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">
+                        Home
+                    </a>
+                    
+                    <a class="menu-item" href="/archives">
+                        Archives
+                    </a>
+                    
+                    <a class="menu-item" href="/tags">
+                        Tags
+                    </a>
+                    
+                    <a class="menu-item" href="/post/about">
+                        About
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/algorithm">
+                        Algorithm
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/networking">
+                        Computer Networking
+                    </a>
+                    
+                    <a class="menu-item" href="/tag/Spider Note">
+                        Spider Note
+                    </a>
+                    
+                        <input id="switch_default" type="checkbox" class="switch_default">
+                        <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+        <nav class="navbar-mobile" id="nav-mobile">
+            <div class="container">
+                <div class="navbar-header">
+                    <div>
+                        <a href="https://hehelv.github.io/">
+                            💤ISpiker
+                        </a>
+                        <a id="mobile-toggle-theme">&nbsp;Light</a>
+                    </div>
+                    <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+                </div>
+                <div class="menu" id="mobile-menu">
+                    
+                        <a class="menu-item" href="/">
+                            Home
+                        </a>
+                        
+                        <a class="menu-item" href="/archives">
+                            Archives
+                        </a>
+                        
+                        <a class="menu-item" href="/tags">
+                            Tags
+                        </a>
+                        
+                        <a class="menu-item" href="/post/about">
+                            About
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/algorithm">
+                            Algorithm
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/networking">
+                            Computer Networking
+                        </a>
+                        
+                        <a class="menu-item" href="/tag/Spider Note">
+                            Spider Note
+                        </a>
+                        
+                </div>
+            </div>
+        </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if (toggleMenu.classList.contains("active")) {
+            toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        } else {
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+                    <article class="post-wrap">
+                        <header class="post-header">
+                            <h1 class="post-title">
+                                14-图形验证码识别
+                            </h1>
+                            <div class="post-meta">
+                                Author:
+                                <a itemprop="author" rel="author" href="/">
+                                    💤ISpiker
+                                </a>
+                                <span class="post-time">
+                                Date: <a href="#">2020-03-03</a>
+                            </span>
+                                
+                                    <span class="post-category">
+                                Category:
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note">Python爬虫笔记</a>
+                                
+                            </span>
+                                    
+                            </div>
+                        </header>
+
+                        <div class="post-content">
+                            <h1 id="14-图形验证码识别">14-图形验证码识别</h1>
+<p>阻碍我们爬虫的。有时候正是在登录或者请求一些数据时候的图形验证码。因此这里我们讲解一种能将图片翻译成文字的技术。将图片翻译成文字一般被成为光学文字识别（Optical Character Recognition），简写为<code>OCR</code>。实现<code>OCR</code>的库不是很多，特别是开源的。因为这块存在一定的技术壁垒（需要大量的数据、算法、机器学习、深度学习知识等），并且如果做好了具有很高的商业价值。因此开源的比较少。这里介绍一个比较优秀的图像识别开源库：Tesseract。</p>
+<h2 id="tesseract">Tesseract：</h2>
+<p>Tesseract是一个OCR库，目前由谷歌赞助。Tesseract是目前公认最优秀、最准确的开源OCR库。Tesseract具有很高的识别度，也具有很高的灵活性，他可以通过训练识别任何字体。</p>
+<h3 id="安装">安装：</h3>
+<h4 id="windows系统">Windows系统：</h4>
+<p>在以下链接下载可执行文件，然后一顿点击下一步安装即可（放在不需要权限的纯英文路径下）：<br>
+https://github.com/tesseract-ocr/</p>
+<h4 id="linux系统">Linux系统：</h4>
+<p>可以在以下链接下载源码自行编译。<br>
+https://github.com/tesseract-ocr/tesseract/wiki/Compiling<br>
+或者在<code>ubuntu</code>下通过以下命令进行安装：</p>
+<pre><code class="language-shell">sudo apt install tesseract-ocr
+</code></pre>
+<h4 id="mac系统">Mac系统：</h4>
+<p>用<code>Homebrew</code>即可方便安装：</p>
+<pre><code class="language-shell">brew install tesseract
+</code></pre>
+<h4 id="设置环境变量">设置环境变量：</h4>
+<p>安装完成后，如果想要在命令行中使用<code>Tesseract</code>，那么应该设置环境变量。<code>Mac</code>和<code>Linux</code>在安装的时候就默认已经设置好了。在<code>Windows</code>下把<code>tesseract.exe</code>所在的路径添加到<code>PATH</code>环境变量中。</p>
+<p>还有一个环境变量需要设置的是，要把训练的数据文件路径也放到环境变量中。<br>
+在环境变量中，添加一个<code>TESSDATA_PREFIX=C:\path_to_tesseractdata\teseractdata</code>。</p>
+<h3 id="在命令行中使用tesseract识别图像">在命令行中使用tesseract识别图像：</h3>
+<p>如果想要在<code>cmd</code>下能够使用<code>tesseract</code>命令，那么需要把<code>tesseract.exe</code>所在的目录放到<code>PATH</code>环境变量中。然后使用命令：<code>tesseract 图片路径 文件路径</code>。<br>
+示例：</p>
+<pre><code class="language-shell">tesseract a.png a
+</code></pre>
+<p>那么就会识别出<code>a.png</code>中的图片，并且把文字写入到<code>a.txt</code>中。如果不想写入文件直接想显示在终端，那么不要加文件名就可以了。</p>
+<h3 id="在代码中使用tesseract识别图像">在代码中使用tesseract识别图像：</h3>
+<p>在<code>Python</code>代码中操作<code>tesseract</code>。需要安装一个库，叫做<code>pytesseract</code>。通过<code>pip</code>的方式即可安装：</p>
+<pre><code>pip install pytesseract
+</code></pre>
+<p>并且，需要读取图片，需要借助一个第三方库叫做<code>PIL</code>。通过<code>pip list</code>看下是否安装。如果没有安装，通过<code>pip</code>的方式安装：</p>
+<pre><code>pip install PIL
+</code></pre>
+<p>使用<code>pytesseract</code>将图片上的文字转换为文本文字的示例代码如下：</p>
+<pre><code class="language-python"># 导入pytesseract库
+import pytesseract
+# 导入Image库
+from PIL import Image
+
+# 指定tesseract.exe所在的路径
+pytesseract.pytesseract.tesseract_cmd = r'D:\ProgramApp\TesseractOCR\tesseract.exe'
+
+# 打开图片
+image = Image.open(&quot;a.png&quot;)
+# 调用image_to_string将图片转换为文字
+text = pytesseract.image_to_string(image)
+print(text)
+</code></pre>
+<h2 id="用pytesseract处理拉勾网图形验证码">用<code>pytesseract</code>处理拉勾网图形验证码：</h2>
+<pre><code class="language-python">import pytesseract
+from urllib import request
+from PIL import Image
+import time
+
+
+pytesseract.pytesseract.tesseract_cmd = r&quot;D:\ProgramApp\TesseractOCR\tesseract.exe&quot;
+
+
+while True:
+    captchaUrl = &quot;https://passport.lagou.com/vcode/create?from=register&amp;refresh=1513081451891&quot;
+    request.urlretrieve(captchaUrl,'captcha.png')
+    image = Image.open('captcha.png')
+    text = pytesseract.image_to_string(image,lang='eng')
+    print(text)
+    time.sleep(2)
+</code></pre>
+
+                        </div>
+                        <section class="post-copyright">
+
+                            <p class="copyright-item">
+                                <span>Author:</span>
+                                <span>💤ISpiker</span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>Permalink:</span>
+                                <span><a href="https://hehelv.github.io//post/13-tu-xing-yan-zheng-ma-shi-bie">https://hehelv.github.io//post/13-tu-xing-yan-zheng-ma-shi-bie</a></span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>License:</span>
+                                <span>MIT License</span>
+                            </p>
+
+                        </section>
+                        <section class="post-tags">
+                            <div>
+                                <span>Tag(s):</span>
+                                <span class="tag">
+                                
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note"># Python爬虫笔记</a>
+                                
+                                
+                            </span>
+                            </div>
+                            <div>
+                                <a href="javascript:window.history.back();">back</a>
+                                <span>·</span>
+                                <a href="#">home</a>
+                            </div>
+                        </section>
+                        <section class="post-nav">
+                            
+                                <a class="prev" rel="prev" href="https://hehelv.github.io//post/15-kuang-jia-jia-gou">
+                                    15-框架架构
+                                </a>
+                                
+                                    
+                                        <a class="next" rel="next" href="https://hehelv.github.io//post/13-dong-tai-wang-ye-pa-chong">
+                                            13-动态网页爬虫
+                                        </a>
+                                        
+                        </section>
+
+                    </article>
+                </div>
+                
+            </div>
+    </div>
+    </div>
+
+    </div>
+    <footer id="footer" class="footer">
+    <div class="copyright">
+        
+
+            <script>
+                var xhr = new XMLHttpRequest();
+                xhr.open('get', 'https://v1.hitokoto.cn');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        var data = JSON.parse(xhr.responseText);
+                        var hitokoto = document.getElementById('hitokoto');
+                        hitokoto.innerText = data.hitokoto;
+                    }
+                }
+                xhr.send();
+                (function() {
+                    var bp = document.createElement('script');
+                    var curProtocol = window.location.protocol.split(':')[0];
+                    if (curProtocol === 'https') {
+                        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                    } else {
+                        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                    }
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(bp, s);
+                })();
+            </script>
+            <b id="hitokoto"></b><br>
+            <svg viewBox="0 0 1024 1024" style="margin-left: 5px;margin-right: 5px;" version="1.0" width="8" height="8" class="my-face"><path d="M863.597631 513.574282l-271.33965-140.213484L729.783667 81.926656c3.583731-7.87141 7.167462-15.742819 7.167462-25.214109C736.887134 25.226908 708.345275 0.012799 672.635953 0.012799a63.611229 63.611229 0 0 0-39.293053 12.607055c-1.791866 1.59988-3.519736 3.19976-5.311602 3.19976L147.87531 418.925381a55.547834 55.547834 0 0 0-19.646527 47.356448c1.791866 17.278704 14.27093 33.021523 32.125591 42.492813l271.33965 141.749369L292.504463 945.221908c-12.479064 25.214109-1.791866 53.563983 23.166262 69.306802 10.751194 6.335525 23.230258 9.47129 35.709322 9.47129 16.062795 0 32.125591-4.735645 44.604655-15.742819l480.091993-403.297753a55.547834 55.547834 0 0 0 19.646526-47.228458 61.243407 61.243407 0 0 0-32.12559-44.156688z" fill="#93b5cf"></path></svg>
+            <script>
+                var date = new Date();
+                document.write(" " + date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + " 星期" + "日一二三四五六".charAt(date.getDay()));
+            </script> Copyright&copy;
+            💤ISpiker | Powered by <a href="https://coding.net" target="_blank">Coding.net</a>
+
+    </div>
+</footer>
+<script>
+    hljs.initHighlighting();
+</script>
+        </div>
+</body>
+
+</html>

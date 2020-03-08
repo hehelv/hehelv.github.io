@@ -129,118 +129,134 @@
 </script>
             <div class="main">
                 <div class="container">
-                    <div class="post-wrap archive">
-                        
+                    <article class="post-wrap">
+                        <header class="post-header">
+                            <h1 class="post-title">
+                                8-csv文件处理
+                            </h1>
+                            <div class="post-meta">
+                                Author:
+                                <a itemprop="author" rel="author" href="/">
+                                    💤ISpiker
+                                </a>
+                                <span class="post-time">
+                                Date: <a href="#">2020-03-02</a>
+                            </span>
+                                
+                                    <span class="post-category">
+                                Category:
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note">Python爬虫笔记</a>
+                                
+                            </span>
+                                    
+                            </div>
+                        </header>
+
+                        <div class="post-content">
+                            <h1 id="8-csv文件处理">8-csv文件处理</h1>
+<h2 id="读取csv文件">读取csv文件：</h2>
+<pre><code class="language-python">import csv
+
+with open('stock.csv','r') as fp:
+    reader = csv.reader(fp)
+    titles = next(reader)
+    for x in reader:
+        print(x)
+</code></pre>
+<p>这样操作，以后获取数据的时候，就要通过下表来获取数据。如果想要在获取数据的时候通过标题来获取。那么可以使用<code>DictReader</code>。示例代码如下：</p>
+<pre><code class="language-python">import csv
+
+with open('stock.csv','r') as fp:
+    reader = csv.DictReader(fp)
+    for x in reader:
+        print(x['turnoverVol'])
+</code></pre>
+<h2 id="写入数据到csv文件">写入数据到csv文件：</h2>
+<p>写入数据到csv文件，需要创建一个<code>writer</code>对象，主要用到两个方法。一个是<code>writerow</code>，这个是写入一行。一个是<code>writerows</code>，这个是写入多行。示例代码如下：</p>
+<pre><code class="language-python">import csv
+
+headers = ['name','age','classroom']
+values = [
+    ('zhiliao',18,'111'),
+    ('wena',20,'222'),
+    ('bbc',21,'111')
+]
+with open('test.csv','w',newline='') as fp:
+    writer = csv.writer(fp)
+    writer.writerow(headers)
+    writer.writerows(values)
+</code></pre>
+<p>也可以使用字典的方式把数据写入进去。这时候就需要使用<code>DictWriter</code>了。示例代码如下：</p>
+<pre><code class="language-python">import csv
+
+headers = ['name','age','classroom']
+values = [
+    {&quot;name&quot;:'wenn',&quot;age&quot;:20,&quot;classroom&quot;:'222'},
+    {&quot;name&quot;:'abc',&quot;age&quot;:30,&quot;classroom&quot;:'333'}
+]
+with open('test.csv','w',newline='') as fp:
+    writer = csv.DictWriter(fp,headers)
+    writer = csv.writeheader()
+    writer.writerow({'name':'zhiliao',&quot;age&quot;:18,&quot;classroom&quot;:'111'})
+    writer.writerows(values
+</code></pre>
+
+                        </div>
+                        <section class="post-copyright">
+
+                            <p class="copyright-item">
+                                <span>Author:</span>
+                                <span>💤ISpiker</span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>Permalink:</span>
+                                <span><a href="https://hehelv.github.io//post/8-csv-wen-jian-chu-li">https://hehelv.github.io//post/8-csv-wen-jian-chu-li</a></span>
+                            </p>
+
+                            <p class="copyright-item">
+                                <span>License:</span>
+                                <span>MIT License</span>
+                            </p>
+
+                        </section>
+                        <section class="post-tags">
+                            <div>
+                                <span>Tag(s):</span>
+                                <span class="tag">
+                                
+                                
+                                <a href="https://hehelv.github.io//tag/Spider Note"># Python爬虫笔记</a>
+                                
+                                
+                            </span>
+                            </div>
+                            <div>
+                                <a href="javascript:window.history.back();">back</a>
+                                <span>·</span>
+                                <a href="#">home</a>
+                            </div>
+                        </section>
+                        <section class="post-nav">
                             
-                                <h3>
-                                    2020
-                                </h3>
+                                <a class="prev" rel="prev" href="https://hehelv.github.io//post/9-excel-wen-jian-chu-li">
+                                    9-excel文件处理
+                                </a>
                                 
                                     
-
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/15-kuang-jia-jia-gou">
-                                                15-框架架构
-                                            </a>
-                                            <span class="archive-item-date">2020-03-03 </span>
-                                        </article>
+                                        <a class="next" rel="next" href="https://hehelv.github.io//post/7-json-wen-jian-chu-li">
+                                            7-json文件处理
+                                        </a>
                                         
-                                            
-                                    
+                        </section>
 
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/13-tu-xing-yan-zheng-ma-shi-bie">
-                                                14-图形验证码识别
-                                            </a>
-                                            <span class="archive-item-date">2020-03-03 </span>
-                                        </article>
-                                        
-                                            
-                                    
-
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/13-dong-tai-wang-ye-pa-chong">
-                                                13-动态网页爬虫
-                                            </a>
-                                            <span class="archive-item-date">2020-03-03 </span>
-                                        </article>
-                                        
-                                            
-                                    
-
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/1-duo-xian-cheng-pa-chong">
-                                                12-多线程爬虫
-                                            </a>
-                                            <span class="archive-item-date">2020-03-03 </span>
-                                        </article>
-                                        
-                                            
-                                    
-
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/11-mongodb-shu-ju-ku">
-                                                11-MongoDB数据库
-                                            </a>
-                                            <span class="archive-item-date">2020-03-02 </span>
-                                        </article>
-                                        
-                                            
-                                    
-
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/10-mysql-shu-ju-ku">
-                                                10-MySQL数据库
-                                            </a>
-                                            <span class="archive-item-date">2020-03-02 </span>
-                                        </article>
-                                        
-                                            
-                                    
-
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/9-excel-wen-jian-chu-li">
-                                                9-excel文件处理
-                                            </a>
-                                            <span class="archive-item-date">2020-03-02 </span>
-                                        </article>
-                                        
-                                            
-                                    
-
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/8-csv-wen-jian-chu-li">
-                                                8-csv文件处理
-                                            </a>
-                                            <span class="archive-item-date">2020-03-02 </span>
-                                        </article>
-                                        
-                                            
-                                    
-
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/7-json-wen-jian-chu-li">
-                                                7-json文件处理
-                                            </a>
-                                            <span class="archive-item-date">2020-02-28 </span>
-                                        </article>
-                                        
-                                            
-                                    
-
-                                        <article class="archive-item">
-                                            <a class="archive-item-link" href="https://hehelv.github.io//post/6-zheng-ze-biao-da-shi-he-re-mo-kuai">
-                                                6-正则表达式和re模块
-                                            </a>
-                                            <span class="archive-item-date">2020-02-28 </span>
-                                        </article>
-                                        
-                                            
-                                                
-
-                    </div>
+                    </article>
                 </div>
+                
             </div>
+    </div>
+    </div>
 
     </div>
     <footer id="footer" class="footer">
